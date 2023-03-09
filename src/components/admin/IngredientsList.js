@@ -19,9 +19,10 @@ const IngredientsList = (props) => {
                     return (
                         <li key={ingredient.description}>
                             {ingredient.quantity} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
-                            <button className={classes.button}
-                                    onClick={() => props.onRemoveIngredientHandler(ingredient.description)}>Remove
-                            </button>
+                            {!props.isReadOnly &&
+                                <button className={classes.button}
+                                        onClick={() => props.onRemoveIngredientHandler(ingredient.description)}>Remove
+                                </button>}
                         </li>);
                 })
                 }
