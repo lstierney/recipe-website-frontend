@@ -6,6 +6,9 @@ import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Recipe from "./pages/Recipe";
+import {fetchUnitsData} from "./store/meta-actions";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 
 const router = createBrowserRouter([
     {
@@ -17,12 +20,18 @@ const router = createBrowserRouter([
             {path: 'recipes', element: <Recipes/>},
             {path: 'recipes/:recipeId', element: <Recipe/>},
             {path: 'recipes/add', element: <AddRecipe/>}
-
         ]
     },
 ]);
 
 function App() {
+    // Load and store the meta data (Units)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchUnitsData());
+    }, [dispatch]);
+
     return <RouterProvider router={router}/>
 }
 
