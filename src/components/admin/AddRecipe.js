@@ -1,55 +1,60 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import classes from './AddRecipe.module.css';
 import IngredientInput from "./IngredientInput";
 import IngredientsList from "./IngredientsList";
 import MethodStepsList from "./MethodStepsList";
 import MethodStepInput from "./MethodStepInput";
+import {useDispatch, useSelector} from "react-redux";
+import {uiActions} from "../../store/ui-slice";
+
 
 const AddRecipe = () => {
-        const [ingredients, setIngredients] = useState([]);
-        const [methodSteps, setMethodSteps] = useState([]);
-        const [units, setUnits] = useState([]);
-        const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
-        const [name, setName] = useState('');
-        const [description, setDescription] = useState('');
-        const [cookingTime, setCookingTime] = useState(0);
+    const [ingredients, setIngredients] = useState([]);
+    const [methodSteps, setMethodSteps] = useState([]);
+    const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [cookingTime, setCookingTime] = useState(0);
 
-        const fetchUnitsHandler = useCallback(async () => {
-            try {
-                const response = await fetch("http://localhost:8080/units");
-                if (!response.ok) {
-                    throw new Error("Something went wrong!");
-                }
-                const data = await response.json();
-                setUnits(data);
-            } catch (error) {
-                alert("Error! Something went wrong: " + JSON.stringify(error, null, 2));
-            }
-        }, []);
+    const units = useSelector(state => state.meta.units);
+    const dispatch = useDispatch();
 
-        useEffect(() => {
-            fetchUnitsHandler();
-        }, [fetchUnitsHandler]);
-
-        const addRecipeHandler = async () => {
-            const recipe = {
-                name: name,
-                description: description,
-                cookingTime: +cookingTime,
-                ingredients: ingredients,
-                methodSteps: methodSteps
-            };
+    const addRecipeHandler = async () => {
+        const recipe = {
+            // Set to undef so that the backend will fail "NOT NULL" checks
+            name: name.length !== 0 ? name : undefined,
+            description: description.length !== 0 ? description : undefined,
+            cookingTime: +cookingTime < 0 ? +cookingTime : undefined,
+            ingredients: ingredients,
+            methodSteps: methodSteps
+        };
             if (window.confirm(JSON.stringify(recipe, null, 2))) {
-                const response = await fetch("http://localhost:8080/recipes", {
-                    method: 'POST',
-                    body: JSON.stringify(recipe),
-                    headers: {
-                        'Content-Type': 'application/json'
+                let response;
+                try {
+                    response = await fetch("http://localhost:8080/recipes", {
+                        method: 'POST',
+                        body: JSON.stringify(recipe),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error('Sending Recipe data failed');
                     }
-                });
-                const data = await response.json();
-                console.log(data);
+                } catch (Error) {
+                    const errorMessage = response ? await response.text() : '';
+                    dispatch(uiActions.showNotification({
+                        status: 'error',
+                        title: 'Error!',
+                        message: "Could not POST Recipe data: " + errorMessage
+                    }));
+                }
+                dispatch(uiActions.showNotification({
+                    status: 'success',
+                    title: 'Success!',
+                    message: "Successfully added Recipe!"
+                }));
             }
         }
         const onAddIngredientHandler = (ingredient) => {
