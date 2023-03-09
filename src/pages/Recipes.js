@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 const RECIPES = [
     {id: '1', title: 'Recipe 1'},
     {id: '2', title: 'Recipe 2'},
-    {id: '3', title: 'Recipe 3'},
+    {id: '6', title: 'Recipe 6'},
 ];
 
 const Recipes = () => {

@@ -36,9 +36,9 @@ const MainNavigation = () => {
                         </li>
                     </ul>
                 </nav>
+                {notification && <Notification status={notification.status} title={notification.title}
+                                               message={notification.message}/>}
             </header>
-            {notification &&
-                <Notification status={notification.status} title={notification.title} message={notification.message}/>}
         </>
     );
 };
