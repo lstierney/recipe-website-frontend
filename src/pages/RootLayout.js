@@ -1,14 +1,20 @@
 import React from 'react';
-import MainNavigation from "../components/MainNavigation";
+import Header from "../components/Header";
 import {Outlet} from "react-router-dom";
+import classes from '../main.module.css';
 
 const RootLayout = () => {
     return (
         <>
-            <MainNavigation/>
-            <main>
-                <Outlet/>
-            </main>
+            <div className={classes.parent}>
+                <Header/>
+                <main className={classes.content}>
+                    <Outlet/>
+                </main>
+                <footer className={classes.footer}>
+                    This is the footer
+                </footer>
+            </div>
         </>
     );
 };

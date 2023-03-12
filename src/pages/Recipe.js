@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchRecipe} from "../store/recipes-actions";
-import IngredientsList from "../components/admin/IngredientsList";
-import MethodStepsList from "../components/admin/MethodStepsList";
-import classes from '../components/admin/AddRecipe.module.css'
+import IngredientsList from "../components/recipe/IngredientsList";
+import MethodStepsList from "../components/recipe/MethodStepsList";
+import classes from '../main.module.css';
 
 const Recipe = () => {
     console.log("Component Rendering");
@@ -25,15 +25,17 @@ const Recipe = () => {
     if (recipe === undefined) {
 
     } else {
-        return <div className={classes["add-recipe"]}>
-            <section>
-                <h2>{recipe.name}</h2>
-                <p>{recipe.description}</p>
-                <dl>
-                    <dt>Cooking Time</dt>
-                    <dd>{recipe.cookingTime} mins</dd>
-                </dl>
-            </section>
+        return <>
+            <div className={classes.information}>
+                <h1>{recipe.name}</h1>
+                <section>
+                    <p className={classes.description}>{recipe.description}</p>
+                    <dl>
+                        <dt>Cooking Time</dt>
+                        <dd>{recipe.cookingTime} mins</dd>
+                    </dl>
+                </section>
+            </div>
             <section>
                 <h2>Ingredients</h2>
                 <IngredientsList ingredients={recipe.ingredients} units={units} isReadOnly={true}/>
@@ -43,7 +45,7 @@ const Recipe = () => {
                 <MethodStepsList methodSteps={recipe.methodSteps}/>
             </section>
             <p><Link to=".." relative="path">Back</Link></p>
-        </div>;
+        </>;
     }
 };
 

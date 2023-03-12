@@ -3,6 +3,11 @@ import {metaActions} from "./meta-slice";
 
 export const fetchUnitsData = () => {
     return async (dispatch) => {
+        dispatch(uiActions.showNotification({
+            status: 'pending',
+            title: 'Getting data',
+            message: 'Loading Unit Data'
+        }));
         const fetchData = async () => {
             const response = await fetch('http://localhost:8080/units');
 
@@ -25,5 +30,6 @@ export const fetchUnitsData = () => {
                 message: error.message
             }));
         }
+        dispatch(uiActions.hideNotification());
     }
 };

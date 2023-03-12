@@ -29,5 +29,6 @@ export const fetchRecipe = (recipeId) => {
                 message: error.message
             }));
         }
+        dispatch(uiActions.hideNotification());
     }
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from "./AddRecipe.module.css";
 
 const IngredientsList = (props) => {
     // For a given Ingredient will return the human readable label for it's Unit (if it has a Unit)
@@ -20,9 +19,8 @@ const IngredientsList = (props) => {
                         <li key={ingredient.description}>
                             {ingredient.quantity} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
                             {!props.isReadOnly &&
-                                <button className={classes.button}
-                                        onClick={() => props.onRemoveIngredientHandler(ingredient.description)}>Remove
-                                </button>}
+                                <button
+                                    onClick={() => props.onRemoveIngredientHandler(ingredient.description)}>Remove</button>}
                         </li>);
                 })
                 }
