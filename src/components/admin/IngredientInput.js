@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 
-import classes from './AddRecipe.module.css';
-
 const IngredientInput = (props) => {
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
@@ -33,7 +31,7 @@ const IngredientInput = (props) => {
                 )}
             </select>
             <input type="text" name="description" value={description} onChange={e => setDescription(e.target.value)}/>
-            <button type="button" onClick={handleAddIngredient} className={classes.button}>Add</button>
+            <button type="button" onClick={handleAddIngredient}>Add</button>
         </div>
     );
 };

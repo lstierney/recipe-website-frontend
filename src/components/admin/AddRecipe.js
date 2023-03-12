@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 
-import classes from './AddRecipe.module.css';
 import IngredientInput from "./IngredientInput";
-import IngredientsList from "./IngredientsList";
-import MethodStepsList from "./MethodStepsList";
+import IngredientsList from "../recipe/IngredientsList";
+import MethodStepsList from "../recipe/MethodStepsList";
 import MethodStepInput from "./MethodStepInput";
 import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../../store/ui-slice";
@@ -29,16 +28,16 @@ const AddRecipe = () => {
             ingredients: ingredients,
             methodSteps: methodSteps
         };
-            if (window.confirm(JSON.stringify(recipe, null, 2))) {
-                let response;
-                try {
-                    response = await fetch("http://localhost:8080/recipes", {
-                        method: 'POST',
-                        body: JSON.stringify(recipe),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
+        if (window.confirm(JSON.stringify(recipe, null, 2))) {
+            let response;
+            try {
+                response = await fetch("http://localhost:8080/recipes", {
+                    method: 'POST',
+                    body: JSON.stringify(recipe),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
                     if (!response.ok) {
                         throw new Error('Sending Recipe data failed');
                     }
@@ -78,26 +77,30 @@ const AddRecipe = () => {
         }
 
         return (
-            <div className={classes["add-recipe"]}>
+            <div>
                 <h1>Add Recipe</h1>
-                <label htmlFor="name">Name:</label>
-                <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/>
-                <label htmlFor="description">Description:</label>
-                <textarea name="description" value={description} onChange={e => setDescription(e.target.value)}/>
-                <label htmlFor="cookingTime">Cooking Time:</label>
-                <input type="number" name="cookingTime" value={cookingTime}
-                       onChange={e => setCookingTime(+e.target.value)}/>
-
-                <h2>Ingredients</h2>
-                <IngredientsList ingredients={ingredients} onRemoveIngredientHandler={onRemoveIngredientHandler}
-                                 units={units}/>
-                <IngredientInput onAdd={onAddIngredientHandler} units={units}/>
-
-                <h2>Method Steps</h2>
-                <MethodStepsList methodSteps={methodSteps}/>
-                <MethodStepInput onAdd={onAddMethodStepHandler}/>
-
-                <button className={classes.button} type="submit" onClick={addRecipeHandler}>Add Recipe</button>
+                <section>
+                    <h2>General</h2>
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/>
+                    <label htmlFor="description">Description:</label>
+                    <textarea name="description" value={description} onChange={e => setDescription(e.target.value)}/>
+                    <label htmlFor="cookingTime">Cooking Time:</label>
+                    <input type="number" name="cookingTime" value={cookingTime}
+                           onChange={e => setCookingTime(+e.target.value)}/>
+                </section>
+                <section>
+                    <h2>Ingredients</h2>
+                    <IngredientsList ingredients={ingredients} onRemoveIngredientHandler={onRemoveIngredientHandler}
+                                     units={units}/>
+                    <IngredientInput onAdd={onAddIngredientHandler} units={units}/>
+                </section>
+                <section>
+                    <h2>Method Steps</h2>
+                    <MethodStepsList methodSteps={methodSteps}/>
+                    <MethodStepInput onAdd={onAddMethodStepHandler}/>
+                </section>
+                <button type="submit" onClick={addRecipeHandler}>Add Recipe</button>
 
             </div>
         );

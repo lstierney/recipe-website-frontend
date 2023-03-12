@@ -6,6 +6,8 @@
     padding: 0.5rem 10%;
     align-items: center;
     color: white;
+    max-width: 60rem;
+    margin: auto;
 }
 
 .notification h2,

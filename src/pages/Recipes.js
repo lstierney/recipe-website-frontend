@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {uiActions} from "../store/ui-slice";
 import {useDispatch} from "react-redux";
+import classes from '../main.module.css';
 
 const Recipes = () => {
     const [recipesList, setRecipesList] = useState(null);
@@ -49,16 +50,18 @@ const Recipes = () => {
 
     return (
         <>
-            <h1>The recipes page!</h1>
-            <ul>
-                {recipesList.map(recipe =>
-                    <li key={recipe.id}>
-                        <Link to={`/recipes/${recipe.id}`}>
-                            {recipe.name}
-                        </Link>
-                    </li>
-                )}
-            </ul>
+            <h1>The big list of Recipes</h1>
+            <section>
+                <ul>
+                    {recipesList.map(recipe =>
+                        <li key={recipe.id} className={classes.description}>
+                            <Link to={`/recipes/${recipe.id}`}>
+                                {recipe.name}
+                            </Link>
+                        </li>
+                    )}
+                </ul>
+            </section>
         </>
     );
 }
