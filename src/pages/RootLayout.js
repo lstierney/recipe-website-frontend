@@ -9,7 +9,9 @@ const RootLayout = () => {
             <div className={classes.parent}>
                 <Header/>
                 <main className={classes.content}>
-                    <Outlet/>
+                    <div className={classes.mainContent}>
+                        <Outlet/>
+                    </div>
                 </main>
                 <footer className={classes.footer}>
                     This is the footer
