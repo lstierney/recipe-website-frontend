@@ -24,7 +24,7 @@ const AddRecipe = () => {
             // Set to undef so that the backend will fail "NOT NULL" checks
             name: name.length !== 0 ? name : undefined,
             description: description.length !== 0 ? description : undefined,
-            cookingTime: +cookingTime < 0 ? +cookingTime : undefined,
+            cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
             ingredients: ingredients,
             methodSteps: methodSteps
         };
