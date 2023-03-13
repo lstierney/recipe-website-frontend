@@ -29,11 +29,11 @@ const Header = () => {
                         Recipes
                     </NavLink>
                     </li>
-                    <li><NavLink to="/recipes/add" className={({isActive}) =>
+                    <li><NavLink to="/admin/" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }
                     >
-                        Add Recipe
+                        Admin
                     </NavLink>
                     </li>
                 </ul>

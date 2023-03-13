@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 
-import IngredientInput from "./IngredientInput";
-import IngredientsList from "../recipe/IngredientsList";
-import MethodStepsList from "../recipe/MethodStepsList";
-import MethodStepInput from "./MethodStepInput";
+import IngredientInput from "../../components/admin/IngredientInput";
+import IngredientsList from "../../components/recipe/IngredientsList";
+import MethodStepsList from "../../components/recipe/MethodStepsList";
+import MethodStepInput from "../../components/admin/MethodStepInput";
 import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../../store/ui-slice";
 
