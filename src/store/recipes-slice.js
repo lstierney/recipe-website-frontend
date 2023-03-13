@@ -6,7 +6,7 @@ const recipesSlice = createSlice({
         recipes: {}
     },
     reducers: {
-        setRecipe(state, action) {
+        addRecipe(state, action) {
             state.recipes[action.payload.recipe.id] = action.payload.recipe;
         }
     }
