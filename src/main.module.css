@@ -29,9 +29,16 @@ a {
 }
 
 .content {
-    grid-area: 2 / 4 / 10 / 8;
+    grid-area: 2 / 1 / 10 / 11;
     height: 100%;
+    overflow: auto;
 }
+
+.mainContent {
+    width: 30%;
+    margin: auto;
+}
+
 
 .footer {
     grid-area: 10 / 1 / 11 / 11;
