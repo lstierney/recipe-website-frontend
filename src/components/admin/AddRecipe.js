@@ -82,9 +82,10 @@ const AddRecipe = () => {
                 <section>
                     <h2>General</h2>
                     <label htmlFor="name">Name:</label>
-                    <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/>
-                    <label htmlFor="description">Description:</label>
-                    <textarea name="description" value={description} onChange={e => setDescription(e.target.value)}/>
+                    <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/><br/>
+                    <label htmlFor="description">Description:</label><br/>
+                    <textarea name="description" rows="10" cols="80" value={description}
+                              onChange={e => setDescription(e.target.value)}/><br/>
                     <label htmlFor="cookingTime">Cooking Time:</label>
                     <input type="number" name="cookingTime" value={cookingTime}
                            onChange={e => setCookingTime(+e.target.value)}/>
