@@ -34,10 +34,10 @@ const AddTag = (props) => {
 
     return (
         <section>
-            {props.mode === 'add' && <h2>Add tag</h2>}
-            <label htmlFor="name">Name:</label>
+            {props.mode === 'add' && <h2>Add Tag</h2>}
+            <label htmlFor="name">Name:</label><br/>
             <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/><br/>
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="description">Description:</label><br/>
             <input type="text" name="description" value={description}
                    onChange={e => setDescription(e.target.value)}/><br/>
 
