@@ -3,11 +3,15 @@ import {createSlice} from "@reduxjs/toolkit";
 const recipesSlice = createSlice({
     name: 'recipes',
     initialState: {
-        recipes: {}
+        recipes: {},
+        by_tag: {}
     },
     reducers: {
         addRecipe(state, action) {
             state.recipes[action.payload.recipe.id] = action.payload.recipe;
+        },
+        addRecipesForTagName(state, action) {
+            state.by_tag[action.payload.tagName] = action.payload.recipes;
         }
     }
 });

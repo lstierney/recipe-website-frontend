@@ -33,6 +33,39 @@ export const fetchRecipe = (recipeId) => {
     }
 };
 
+export const fetchRecipesForTagName = (tagName) => {
+    return async (dispatch) => {
+        dispatch(uiActions.showNotification({
+            status: 'pending',
+            title: 'Getting..',
+            message: 'Getting Recipes for tag ' + tagName
+        }));
+        const fetchRecipes = async () => {
+            const response = await fetch('http://localhost:8080/recipes?' + new URLSearchParams({tagName}));
+
+            if (!response.ok) {
+                throw new Error('Could not fetch Recipes for Tag ' + tagName);
+            }
+            return await response.json();
+        };
+
+        try {
+            const recipes = await fetchRecipes();
+            dispatch(recipesActions.addRecipesForTagName({
+                recipes: recipes || {},
+                tagName
+            }));
+        } catch (error) {
+            dispatch(uiActions.showNotification({
+                status: 'error',
+                title: 'Error!',
+                message: error.message
+            }));
+        }
+        dispatch(uiActions.hideNotification());
+    }
+};
+
 export const addRecipe = (recipe) => {
     return async (dispatch) => {
         dispatch(uiActions.showNotification({

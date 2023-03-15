@@ -29,6 +29,13 @@ const Header = () => {
                         Recipes
                     </NavLink>
                     </li>
+                    <li><NavLink to="/tags" className={({isActive}) =>
+                        isActive ? classes.active : undefined
+                    }
+                    >
+                        Tags
+                    </NavLink>
+                    </li>
                     <li><NavLink to="/admin/" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }
