@@ -6,6 +6,7 @@ import Recipe from "../pages/Recipe";
 import AddRecipe from "../pages/admin/AddRecipe";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import ManageTags from "../pages/admin/ManageTags";
+import Tags from "../pages/Tags";
 
 export const routes = [
     {
@@ -16,7 +17,8 @@ export const routes = [
             {index: true, element: <HomePage/>},
             {path: 'recipes', element: <Recipes/>},
             {path: 'recipes/:recipeId', element: <Recipe/>},
-            {path: 'recipes/add', element: <AddRecipe/>}
+            {path: 'recipes/add', element: <AddRecipe/>},
+            {path: 'tags', element: <Tags/>},
         ]
     },
     {
