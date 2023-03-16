@@ -15,8 +15,9 @@ const AddRecipe = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
-    const [selectedTags, setSelectedTags] = useState([])
-    const [availableTags, setAvailableTags] = useState([])
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [availableTags, setAvailableTags] = useState([]);
+    const [image, setImage] = useState(null);
 
     const units = useSelector(state => state.meta.units);
     const metaTags = useSelector(state => state.meta.tags);
@@ -26,7 +27,9 @@ const AddRecipe = () => {
         setAvailableTags(metaTags);
     }, [metaTags]);
 
-    const addRecipeHandler = () => {
+    const addRecipeHandler = (e) => {
+        e.preventDefault();
+
         const recipe = {
             // Set to undef so that the backend will fail "NOT NULL" checks
             name: name.length !== 0 ? name : undefined,
@@ -36,8 +39,13 @@ const AddRecipe = () => {
             methodSteps: methodSteps,
             tags: selectedTags
         };
+
+        const formData = new FormData();
+        formData.append('imageFile', image);
+        formData.append('recipe', JSON.stringify(recipe));
+
         if (window.confirm(JSON.stringify(recipe, null, 2))) {
-            dispatch(addRecipe(recipe));
+            dispatch(addRecipe(formData));
         }
     }
 
@@ -106,37 +114,42 @@ const AddRecipe = () => {
     return (
         <div>
             <h1>Add Recipe</h1>
-            <section>
-                <h2>General</h2>
-                <label htmlFor="name">Name:</label>
-                <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/><br/>
-                <label htmlFor="description">Description:</label><br/>
-                <textarea name="description" rows="10" cols="80" value={description}
-                          onChange={e => setDescription(e.target.value)}/><br/>
-                <label htmlFor="cookingTime">Cooking Time:</label>
-                <input type="number" name="cookingTime" value={cookingTime}
-                       onChange={e => setCookingTime(+e.target.value)}/>
-            </section>
-            <section>
-                <h2>Tags</h2>
-                <h3>Available</h3>
-                {availableTagsContent()}
-                <h3>Selected</h3>
-                {selectedTagsContent()}
-            </section>
-            <section>
-                <h2>Ingredients</h2>
-                <IngredientsList ingredients={ingredients} onRemoveIngredientHandler={onRemoveIngredientHandler}
-                                 units={units}/>
-                <IngredientInput onAdd={onAddIngredientHandler} units={units}/>
-            </section>
-            <section>
-                <h2>Method Steps</h2>
-                <MethodStepsList methodSteps={methodSteps}/>
-                <MethodStepInput onAdd={onAddMethodStepHandler}/>
+            <form>
+                <section>
+                    <h2>General</h2>
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" name="name" value={name} onChange={e => setName(e.target.value)}/><br/>
+                    <label htmlFor="description">Description:</label><br/>
+                    <textarea name="description" rows="10" cols="80" value={description}
+                              onChange={e => setDescription(e.target.value)}/><br/>
+                    <label htmlFor="cookingTime">Cooking Time:</label>
+                    <input type="number" name="cookingTime" value={cookingTime}
+                           onChange={e => setCookingTime(+e.target.value)}/>
+                </section>
+                <section>
+                    <label htmlFor="image">Choose an image:</label>
+                    <input type="file" id="image" name="image" onChange={e => setImage(e.target.files[0])}/>
+                </section>
+                <section>
+                    <h2>Tags</h2>
+                    <h3>Available</h3>
+                    {availableTagsContent()}
+                    <h3>Selected</h3>
+                    {selectedTagsContent()}
+                </section>
+                <section>
+                    <h2>Ingredients</h2>
+                    <IngredientsList ingredients={ingredients} onRemoveIngredientHandler={onRemoveIngredientHandler}
+                                     units={units}/>
+                    <IngredientInput onAdd={onAddIngredientHandler} units={units}/>
+                </section>
+                <section>
+                    <h2>Method Steps</h2>
+                    <MethodStepsList methodSteps={methodSteps}/>
+                    <MethodStepInput onAdd={onAddMethodStepHandler}/>
                 </section>
                 <button type="submit" onClick={addRecipeHandler}>Add Recipe</button>
-
+            </form>
             </div>
         );
     }

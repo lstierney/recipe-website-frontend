@@ -25,6 +25,7 @@ const Recipe = () => {
     if (recipe === undefined) {
 
     } else {
+        const imgSrc = "http://localhost:8080/images/" + recipe.imageFileName;
         return <>
             <div className={classes.information}>
                 <h1>{recipe.name}</h1>
@@ -36,6 +37,9 @@ const Recipe = () => {
                     </dl>
                 </section>
             </div>
+            <section>
+                <img alt={recipe.name} width="100" height="100" src={imgSrc}/>
+            </section>
             <section>
                 <h2>Ingredients</h2>
                 <IngredientsList ingredients={recipe.ingredients} units={units} isReadOnly={true}/>

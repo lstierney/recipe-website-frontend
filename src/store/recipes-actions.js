@@ -66,7 +66,7 @@ export const fetchRecipesForTagName = (tagName) => {
     }
 };
 
-export const addRecipe = (recipe) => {
+export const addRecipe = (formData) => {
     return async (dispatch) => {
         dispatch(uiActions.showNotification({
             status: 'pending',
@@ -76,10 +76,7 @@ export const addRecipe = (recipe) => {
         const postData = async () => {
             const response = await fetch("http://localhost:8080/recipes", {
                 method: 'POST',
-                body: JSON.stringify(recipe),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: formData
             });
             if (!response.ok) {
                 throw new Error('Sending Recipe data failed');
