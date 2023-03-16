@@ -25,6 +25,7 @@ const Recipe = () => {
     if (recipe === undefined) {
 
     } else {
+        // TODO - hostname should be in a conf file
         const imgSrc = "http://localhost:8080/images/" + recipe.imageFileName;
         return <>
             <div className={classes.information}>
