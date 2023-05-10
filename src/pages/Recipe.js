@@ -39,7 +39,7 @@ const Recipe = () => {
                 </section>
             </div>
             <section>
-                <img alt={recipe.name} width="100" height="100" src={imgSrc}/>
+                <img alt={recipe.name} width="200" height="200" src={imgSrc}/>
             </section>
             <section>
                 <h2>Ingredients</h2>
