@@ -11,6 +11,7 @@ function App() {
     // Load and store Meta Data
     const dispatch = useDispatch();
 
+    // TODO - do these need to be loaded here?
     useEffect(() => {
         dispatch(fetchUnitsData());
         dispatch(fetchTagsData());

@@ -99,3 +99,35 @@ export const addRecipe = (formData) => {
         dispatch(uiActions.hideNotification());
     }
 };
+
+export const fetchRecipeTitlesAndIds = () => {
+    return async (dispatch) => {
+        dispatch(uiActions.showNotification({
+            status: 'pending',
+            title: 'Getting Data',
+            message: 'Loading Recipe Title Data'
+        }));
+        const fetchData = async () => {
+            const response = await fetch('http://localhost:8080/recipes/list');
+
+            if (!response.ok) {
+                throw new Error('Could not fetch Recipe title data');
+            }
+            return await response.json();
+        };
+
+        try {
+            const titleData = await fetchData();
+            dispatch(recipesActions.storeTitlesAndIds({
+                titleData: titleData || []
+            }));
+        } catch (error) {
+            dispatch(uiActions.showNotification({
+                status: 'error',
+                title: 'Error!',
+                message: error.message
+            }));
+        }
+        dispatch(uiActions.hideNotification());
+    }
+};
