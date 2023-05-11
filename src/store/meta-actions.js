@@ -1,20 +1,14 @@
-import {uiActions} from "./ui-slice";
 import {metaActions} from "./meta-slice";
+import {toastUtils} from "../utils/toast-utils";
 
 export const fetchUnitsData = () => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Getting data',
-            message: 'Loading Unit Data'
-        }));
         const fetchData = async () => {
             const response = await fetch('http://localhost:8080/units');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Units data');
             }
-
             return await response.json();
         };
 
@@ -24,22 +18,12 @@ export const fetchUnitsData = () => {
                 units: unitsData || []
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toastUtils().showError("Failed to fetch Units: " + error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 export const fetchTagsData = () => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Getting Data',
-            message: 'Loading Tag Data'
-        }));
         const fetchData = async () => {
             const response = await fetch('http://localhost:8080/api/tags');
 
@@ -56,23 +40,16 @@ export const fetchTagsData = () => {
                 tags: tagsData || []
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toastUtils().showError("Failed to fetch Tags: " + error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 
 export const addTag = (tag) => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Sending Data',
-            message: 'Sending Tag Data'
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Adding Tag...");
+
         const postData = async () => {
             const response = await fetch("http://localhost:8080/api/tags", {
                 method: 'POST',
@@ -89,27 +66,23 @@ export const addTag = (tag) => {
 
         try {
             const newTag = await postData();
+
+            toast.showSuccess("Tag Added");
+
             dispatch(metaActions.addTag({
                 tag: newTag || {}
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.showError(error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 
 export const updateTag = (tag) => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Sending Data',
-            message: 'Sending Updated Tag Data'
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Updating Tag...");
+
         const putData = async () => {
             const response = await fetch("http://localhost:8080/api/tags/" + tag.id, {
                 method: 'PUT',
@@ -126,27 +99,22 @@ export const updateTag = (tag) => {
 
         try {
             const updatedTag = await putData();
+            toast.showSuccess("Tag Updated");
+
             dispatch(metaActions.updateTag({
                 tag: updatedTag || {}
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.showError(error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 
 export const deleteTag = (id) => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Sending Data',
-            message: 'Deleting Tag'
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Deleting Tag...");
+
         const deleteData = async () => {
             const response = await fetch("http://localhost:8080/api/tags/" + id, {
                 method: 'DELETE'
@@ -157,17 +125,14 @@ export const deleteTag = (id) => {
         };
 
         try {
-            await deleteData()
+            await deleteData();
+            toast.showSuccess("Tag Deleted");
+
             dispatch(metaActions.deleteTag({
                 id: id || 0
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.showError(error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };

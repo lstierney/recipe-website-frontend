@@ -1,13 +1,11 @@
-import {uiActions} from "./ui-slice";
 import {recipesActions} from "./recipes-slice";
+import {toastUtils} from "../utils/toast-utils";
 
 export const fetchRecipe = (recipeId) => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Getting..',
-            message: 'Getting Recipe...'
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Loading Recipe...");
+
         const fetchRecipe = async () => {
             const response = await fetch('http://localhost:8080/recipes/' + recipeId);
 
@@ -19,27 +17,21 @@ export const fetchRecipe = (recipeId) => {
 
         try {
             const recipe = await fetchRecipe();
+            toast.dismiss();
             dispatch(recipesActions.addRecipe({
                 recipe: recipe || {}
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.error(error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 
 export const fetchRecipesForTagName = (tagName) => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Getting..',
-            message: 'Getting Recipes for tag ' + tagName
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Getting Recipes for Tag " + tagName + "... ");
+
         const fetchRecipes = async () => {
             const response = await fetch('http://localhost:8080/recipes?' + new URLSearchParams({tagName}));
 
@@ -51,28 +43,22 @@ export const fetchRecipesForTagName = (tagName) => {
 
         try {
             const recipes = await fetchRecipes();
+            toast.dismiss();
             dispatch(recipesActions.addRecipesForTagName({
                 recipes: recipes || {},
                 tagName
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.showError(error.message)
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 
 export const addRecipe = (formData) => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Sending Data',
-            message: 'Sending Recipe Data'
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Adding Recipe...");
+
         const postData = async () => {
             const response = await fetch("http://localhost:8080/recipes", {
                 method: 'POST',
@@ -86,27 +72,21 @@ export const addRecipe = (formData) => {
 
         try {
             const newRecipe = await postData();
+            toast.showSuccess("Recipe Added")
             dispatch(recipesActions.addRecipe({
                 recipe: newRecipe || {}
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.showError(error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
 
 export const fetchRecipeTitlesAndIds = () => {
     return async (dispatch) => {
-        dispatch(uiActions.showNotification({
-            status: 'pending',
-            title: 'Getting Data',
-            message: 'Loading Recipe Title Data'
-        }));
+        const toast = toastUtils();
+        toast.showLoading("Fetching Recipe List...");
+
         const fetchData = async () => {
             const response = await fetch('http://localhost:8080/recipes/list');
 
@@ -118,16 +98,12 @@ export const fetchRecipeTitlesAndIds = () => {
 
         try {
             const titleData = await fetchData();
+            toast.dismiss();
             dispatch(recipesActions.storeTitlesAndIds({
                 titleData: titleData || []
             }));
         } catch (error) {
-            dispatch(uiActions.showNotification({
-                status: 'error',
-                title: 'Error!',
-                message: error.message
-            }));
+            toast.showError(error.message);
         }
-        dispatch(uiActions.hideNotification());
     }
 };
