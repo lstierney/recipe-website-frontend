@@ -5,7 +5,7 @@ export const toastUtils = () => {
     let toastInstance;
 
 
-    const showError = message => {
+    const error = message => {
         if (toastInstance) {
             toast.update(toastInstance, {
                     isLoading: false,
@@ -19,13 +19,11 @@ export const toastUtils = () => {
         }
     }
 
-    const showLoading = message => {
-        toastInstance = toast.loading(message,
-
-            {});
+    const loading = message => {
+        toastInstance = toast.loading(message, {});
     }
 
-    const showSuccess = message => {
+    const success = message => {
         if (toastInstance) {
             toast.update(toastInstance, {
                 isLoading: false,
@@ -49,9 +47,9 @@ export const toastUtils = () => {
     }
 
     return {
-        showError,
-        showLoading,
-        showSuccess,
+        error,
+        loading,
+        success,
         dismiss
     }
 }

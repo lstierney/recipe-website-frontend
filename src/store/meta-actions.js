@@ -18,7 +18,7 @@ export const fetchUnitsData = () => {
                 units: unitsData || []
             }));
         } catch (error) {
-            toastUtils().showError("Failed to fetch Units: " + error.message);
+            toastUtils().error("Failed to fetch Units: " + error.message);
         }
     }
 };
@@ -40,7 +40,7 @@ export const fetchTagsData = () => {
                 tags: tagsData || []
             }));
         } catch (error) {
-            toastUtils().showError("Failed to fetch Tags: " + error.message);
+            toastUtils().error("Failed to fetch Tags: " + error.message);
         }
     }
 };
@@ -48,7 +48,7 @@ export const fetchTagsData = () => {
 export const addTag = (tag) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Adding Tag...");
+        toast.loading("Adding Tag...");
 
         const postData = async () => {
             const response = await fetch("http://localhost:8080/api/tags", {
@@ -67,13 +67,13 @@ export const addTag = (tag) => {
         try {
             const newTag = await postData();
 
-            toast.showSuccess("Tag Added");
+            toast.success("Tag Added");
 
             dispatch(metaActions.addTag({
                 tag: newTag || {}
             }));
         } catch (error) {
-            toast.showError(error.message);
+            toast.error(error.message);
         }
     }
 };
@@ -81,7 +81,7 @@ export const addTag = (tag) => {
 export const updateTag = (tag) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Updating Tag...");
+        toast.loading("Updating Tag...");
 
         const putData = async () => {
             const response = await fetch("http://localhost:8080/api/tags/" + tag.id, {
@@ -99,13 +99,13 @@ export const updateTag = (tag) => {
 
         try {
             const updatedTag = await putData();
-            toast.showSuccess("Tag Updated");
+            toast.success("Tag Updated");
 
             dispatch(metaActions.updateTag({
                 tag: updatedTag || {}
             }));
         } catch (error) {
-            toast.showError(error.message);
+            toast.error(error.message);
         }
     }
 };
@@ -113,7 +113,7 @@ export const updateTag = (tag) => {
 export const deleteTag = (id) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Deleting Tag...");
+        toast.loading("Deleting Tag...");
 
         const deleteData = async () => {
             const response = await fetch("http://localhost:8080/api/tags/" + id, {
@@ -126,13 +126,13 @@ export const deleteTag = (id) => {
 
         try {
             await deleteData();
-            toast.showSuccess("Tag Deleted");
+            toast.success("Tag Deleted");
 
             dispatch(metaActions.deleteTag({
                 id: id || 0
             }));
         } catch (error) {
-            toast.showError(error.message);
+            toast.error(error.message);
         }
     }
 };

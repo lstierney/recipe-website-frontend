@@ -4,7 +4,7 @@ import {toastUtils} from "../utils/toast-utils";
 export const fetchRecipe = (recipeId) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Loading Recipe...");
+        toast.loading("Loading Recipe...");
 
         const fetchRecipe = async () => {
             const response = await fetch('http://localhost:8080/recipes/' + recipeId);
@@ -30,7 +30,7 @@ export const fetchRecipe = (recipeId) => {
 export const fetchRecipesForTagName = (tagName) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Getting Recipes for Tag " + tagName + "... ");
+        toast.loading("Getting Recipes for Tag " + tagName + "... ");
 
         const fetchRecipes = async () => {
             const response = await fetch('http://localhost:8080/recipes?' + new URLSearchParams({tagName}));
@@ -49,7 +49,7 @@ export const fetchRecipesForTagName = (tagName) => {
                 tagName
             }));
         } catch (error) {
-            toast.showError(error.message)
+            toast.error(error.message)
         }
     }
 };
@@ -57,7 +57,7 @@ export const fetchRecipesForTagName = (tagName) => {
 export const addRecipe = (formData) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Adding Recipe...");
+        toast.loading("Adding Recipe...");
 
         const postData = async () => {
             const response = await fetch("http://localhost:8080/recipes", {
@@ -72,12 +72,12 @@ export const addRecipe = (formData) => {
 
         try {
             const newRecipe = await postData();
-            toast.showSuccess("Recipe Added")
+            toast.success("Recipe Added")
             dispatch(recipesActions.addRecipe({
                 recipe: newRecipe || {}
             }));
         } catch (error) {
-            toast.showError(error.message);
+            toast.error(error.message);
         }
     }
 };
@@ -85,7 +85,7 @@ export const addRecipe = (formData) => {
 export const fetchRecipeTitlesAndIds = () => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.showLoading("Fetching Recipe List...");
+        toast.loading("Fetching Recipe List...");
 
         const fetchData = async () => {
             const response = await fetch('http://localhost:8080/recipes/list');
@@ -103,7 +103,7 @@ export const fetchRecipeTitlesAndIds = () => {
                 titleData: titleData || []
             }));
         } catch (error) {
-            toast.showError(error.message);
+            toast.error(error.message);
         }
     }
 };
