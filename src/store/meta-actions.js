@@ -4,7 +4,7 @@ import {toastUtils} from "../utils/toast-utils";
 export const fetchUnitsData = () => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/units');
+            const response = await fetch('http://localhost:8080/api/units');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Units data');

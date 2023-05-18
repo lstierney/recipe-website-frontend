@@ -7,6 +7,7 @@ import AddRecipe from "../pages/admin/AddRecipe";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import ManageTags from "../pages/admin/ManageTags";
 import Tags from "../pages/Tags";
+import Login from "../pages/Login";
 
 export const routes = [
     {
@@ -19,6 +20,7 @@ export const routes = [
             {path: 'recipes/:recipeId', element: <Recipe/>},
             {path: 'recipes/add', element: <AddRecipe/>},
             {path: 'tags', element: <Tags/>},
+            {path: 'login', element: <Login/>},
         ]
     },
     {
