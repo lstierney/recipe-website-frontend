@@ -62,7 +62,10 @@ export const addRecipe = (formData) => {
         const postData = async () => {
             const response = await fetch("http://localhost:8080/recipes", {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Authorization':  'Bearer ' + localStorage.getItem('token')
+                }
             });
             if (!response.ok) {
                 throw new Error('Sending Recipe data failed');

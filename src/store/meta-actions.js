@@ -55,7 +55,8 @@ export const addTag = (tag) => {
                 method: 'POST',
                 body: JSON.stringify(tag),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization':  'Bearer ' + localStorage.getItem('token')
                 }
             });
             if (!response.ok) {
@@ -88,7 +89,8 @@ export const updateTag = (tag) => {
                 method: 'PUT',
                 body: JSON.stringify(tag),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization':  'Bearer ' + localStorage.getItem('token')
                 }
             });
             if (!response.ok) {
@@ -117,7 +119,10 @@ export const deleteTag = (id) => {
 
         const deleteData = async () => {
             const response = await fetch("http://localhost:8080/api/tags/" + id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Authorization':  'Bearer ' + localStorage.getItem('token')
+                }
             });
             if (!response.ok) {
                 throw new Error('Deleting Tag failed');
