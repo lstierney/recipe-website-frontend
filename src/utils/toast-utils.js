@@ -11,7 +11,8 @@ export const toastUtils = () => {
                     isLoading: false,
                     type: "error",
                     render: message,
-                    autoClose: 5000
+                    autoClose: 5000,
+                    closeButton: true
                 }
             );
         } else {
@@ -35,7 +36,8 @@ export const toastUtils = () => {
                 progress: undefined,
                 theme: "light",
                 render: message,
-                type: "success"
+                type: "success",
+                closeButton: true
             })
         }
     }
