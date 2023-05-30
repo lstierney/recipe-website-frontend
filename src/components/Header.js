@@ -1,17 +1,11 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import classes from '../main.module.css';
-import {useSelector} from "react-redux";
-import Notification from "./UI/Notification";
 
 const Header = () => {
-    const notification = useSelector(state => state.ui.notification);
-
     return (
         <>
-            <header className={classes.header}>
-
-            </header>
+            <header className={classes.header}></header>
             <nav className={classes.navigation}>
                 <ul className={classes.nav_list}>
                     <li><NavLink to="/" className={({isActive}) =>
@@ -52,8 +46,7 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
-            {notification && <Notification status={notification.status} title={notification.title}
-                                           message={notification.message}/>}
+
         </>
     );
 };
