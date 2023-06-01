@@ -7,7 +7,7 @@ export const fetchRecipe = (recipeId) => {
         toast.loading("Loading Recipe...");
 
         const fetchRecipe = async () => {
-            const response = await fetch('http://localhost:8080/recipes/' + recipeId);
+            const response = await fetch('http://localhost:8080/api/recipes/' + recipeId);
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipe: ' + recipeId);
@@ -33,7 +33,7 @@ export const fetchRecipesForTagName = (tagName) => {
         toast.loading("Getting Recipes for Tag " + tagName + "... ");
 
         const fetchRecipes = async () => {
-            const response = await fetch('http://localhost:8080/recipes?' + new URLSearchParams({tagName}));
+            const response = await fetch('http://localhost:8080/api/recipes?' + new URLSearchParams({tagName}));
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipes for Tag ' + tagName);
@@ -60,7 +60,7 @@ export const addRecipe = (formData) => {
         toast.loading("Adding Recipe...");
 
         const postData = async () => {
-            const response = await fetch("http://localhost:8080/recipes", {
+            const response = await fetch("http://localhost:8080/api/recipes", {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -91,7 +91,7 @@ export const fetchRecipeTitlesAndIds = () => {
         toast.loading("Fetching Recipe List...");
 
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/recipes/list');
+            const response = await fetch('http://localhost:8080/api/recipes/list');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipe title data');
