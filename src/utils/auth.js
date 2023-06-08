@@ -1,7 +1,17 @@
 import {redirect} from "react-router-dom";
 
+const TOKEN = 'token';
+
 export const getAuthToken = () => {
-    return localStorage.getItem('token');
+    return localStorage.getItem(TOKEN);
+}
+
+export const saveAuthToken = (token) => {
+    localStorage.setItem(TOKEN, token);
+}
+
+export const removeAuthToken = () => {
+    localStorage.removeItem(TOKEN)
 }
 
 export const tokenLoader = () => {

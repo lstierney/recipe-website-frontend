@@ -1,6 +1,7 @@
 import {metaActions} from "./meta-slice";
 import {toastUtils} from "../utils/toast-utils";
 import config from "../config";
+import {getAuthToken} from "../utils/auth";
 
 export const fetchUnitsData = () => {
     return async (dispatch) => {
@@ -57,7 +58,7 @@ export const addTag = (tag) => {
                 body: JSON.stringify(tag),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + getAuthToken
                 }
             });
             if (!response.ok) {
@@ -91,7 +92,7 @@ export const updateTag = (tag) => {
                 body: JSON.stringify(tag),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + getAuthToken
                 }
             });
             if (!response.ok) {
@@ -122,7 +123,7 @@ export const deleteTag = (id) => {
             const response = await fetch(config.API_URL + '/tags/' + id, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + getAuthToken
                 }
             });
             if (!response.ok) {
