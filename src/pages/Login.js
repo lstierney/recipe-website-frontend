@@ -3,6 +3,7 @@ import LoginForm from "../components/LoginForm";
 import {toastUtils} from "../utils/toast-utils";
 import {redirect} from "react-router-dom";
 import config from "../config";
+import {saveAuthToken} from "../utils/auth";
 
 const Login = () => {
     return (
@@ -38,7 +39,7 @@ export const action = async ({request}) => {
         const token = await response.text();
         //const decodedToken = jwt_decode(token);
 
-        localStorage.setItem('token', token);
+        saveAuthToken(token);
 
         toast.success("Success");
 

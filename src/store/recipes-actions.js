@@ -1,6 +1,7 @@
 import {recipesActions} from "./recipes-slice";
 import {toastUtils} from "../utils/toast-utils";
 import config from '../config';
+import {getAuthToken} from "../utils/auth";
 
 export const fetchRecipe = (recipeId) => {
     return async (dispatch) => {
@@ -65,7 +66,7 @@ export const addRecipe = (formData) => {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + getAuthToken
                 }
             });
             if (!response.ok) {
