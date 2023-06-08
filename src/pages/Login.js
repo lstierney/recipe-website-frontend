@@ -2,6 +2,7 @@ import React from 'react';
 import LoginForm from "../components/LoginForm";
 import {toastUtils} from "../utils/toast-utils";
 import {redirect} from "react-router-dom";
+import config from "../config";
 
 const Login = () => {
     return (
@@ -19,7 +20,7 @@ export const action = async ({request}) => {
     toast.loading("Submitting...");
 
     const postData = async () => {
-        const response = await fetch("http://localhost:8080/authenticate", {
+        const response = await fetch(config.API_HOST + '/authenticate', {
             method: 'POST',
             body: JSON.stringify({'username': username, 'password': password}),
             headers: {
