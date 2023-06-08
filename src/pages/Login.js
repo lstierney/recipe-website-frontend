@@ -3,7 +3,8 @@ import LoginForm from "../components/LoginForm";
 import {toastUtils} from "../utils/toast-utils";
 import {redirect} from "react-router-dom";
 import config from "../config";
-import {saveAuthToken} from "../utils/auth";
+import {EXPIRATION, saveAuthToken} from "../utils/auth";
+import jwt_decode from 'jwt-decode';
 
 const Login = () => {
     return (
@@ -37,7 +38,9 @@ export const action = async ({request}) => {
     try {
         const response = await postData();
         const token = await response.text();
-        //const decodedToken = jwt_decode(token);
+        const decoded = jwt_decode(token);
+        const expiration = new Date(decoded.exp * 1000);
+        localStorage.setItem(EXPIRATION, expiration.toISOString());
 
         saveAuthToken(token);
 
