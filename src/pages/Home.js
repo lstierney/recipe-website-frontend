@@ -1,6 +1,6 @@
-import {Fragment} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import classes from '../main.module.css';
+import config from "../config";
 
 const HomePage = () => {
     let navigate = useNavigate();
@@ -10,8 +10,8 @@ const HomePage = () => {
     }
 
     return (
-        <Fragment>
-            <h1>My Veggie Recipes</h1>
+        <>
+            <h1>{config.PAGE_TITLE}</h1>
             <h2>An opinionated recipe website</h2>
             <section>
                 <p className={`${classes.description} ${classes.information}`}>
@@ -29,7 +29,7 @@ const HomePage = () => {
                     <button onClick={navigateHandler}>Navigate</button>
                 </p>
             </section>
-        </Fragment>
+        </>
     );
 }
 
