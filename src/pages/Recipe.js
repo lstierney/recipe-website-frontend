@@ -5,6 +5,7 @@ import {fetchRecipe} from "../store/recipes-actions";
 import IngredientsList from "../components/recipe/IngredientsList";
 import MethodStepsList from "../components/recipe/MethodStepsList";
 import classes from '../main.module.css';
+import config from "../config";
 
 const Recipe = () => {
     console.log("Component Rendering");
@@ -26,7 +27,7 @@ const Recipe = () => {
 
     } else {
         // TODO - hostname should be in a conf file
-        const imgSrc = "http://localhost:8080/images/" + recipe.imageFileName;
+        const imgSrc = config.API_HOST + '/images/' + recipe.imageFileName;
         return <>
             <div className={classes.information}>
                 <h1>{recipe.name}</h1>

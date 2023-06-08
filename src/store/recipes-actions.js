@@ -1,5 +1,6 @@
 import {recipesActions} from "./recipes-slice";
 import {toastUtils} from "../utils/toast-utils";
+import config from '../config';
 
 export const fetchRecipe = (recipeId) => {
     return async (dispatch) => {
@@ -7,7 +8,7 @@ export const fetchRecipe = (recipeId) => {
         toast.loading("Loading Recipe...");
 
         const fetchRecipe = async () => {
-            const response = await fetch('http://localhost:8080/api/recipes/' + recipeId);
+            const response = await fetch(config.API_URL + '/recipes/' + recipeId);
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipe: ' + recipeId);
@@ -33,7 +34,7 @@ export const fetchRecipesForTagName = (tagName) => {
         toast.loading("Getting Recipes for Tag " + tagName + "... ");
 
         const fetchRecipes = async () => {
-            const response = await fetch('http://localhost:8080/api/recipes?' + new URLSearchParams({tagName}));
+            const response = await fetch(config.API_URL + '/recipes?' + new URLSearchParams({tagName}));
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipes for Tag ' + tagName);
@@ -60,11 +61,11 @@ export const addRecipe = (formData) => {
         toast.loading("Adding Recipe...");
 
         const postData = async () => {
-            const response = await fetch("http://localhost:8080/api/recipes", {
+            const response = await fetch(config.API_URL + '/recipes', {
                 method: 'POST',
                 body: formData,
                 headers: {
-                    'Authorization':  'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             });
             if (!response.ok) {
@@ -91,7 +92,7 @@ export const fetchRecipeTitlesAndIds = () => {
         toast.loading("Fetching Recipe List...");
 
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/api/recipes/list');
+            const response = await fetch(config.API_URL + '/recipes/list');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipe title data');

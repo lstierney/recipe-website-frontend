@@ -1,10 +1,11 @@
 import {metaActions} from "./meta-slice";
 import {toastUtils} from "../utils/toast-utils";
+import config from "../config";
 
 export const fetchUnitsData = () => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/api/units');
+            const response = await fetch(config.API_URL + '/units');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Units data');
@@ -25,7 +26,7 @@ export const fetchUnitsData = () => {
 export const fetchTagsData = () => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/api/tags');
+            const response = await fetch(config.API_URL + '/tags');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Tags data');
@@ -51,12 +52,12 @@ export const addTag = (tag) => {
         toast.loading("Adding Tag...");
 
         const postData = async () => {
-            const response = await fetch("http://localhost:8080/api/tags", {
+            const response = await fetch(config.API_URL + '/tags', {
                 method: 'POST',
                 body: JSON.stringify(tag),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization':  'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             });
             if (!response.ok) {
@@ -85,12 +86,12 @@ export const updateTag = (tag) => {
         toast.loading("Updating Tag...");
 
         const putData = async () => {
-            const response = await fetch("http://localhost:8080/api/tags/" + tag.id, {
+            const response = await fetch(config.API_URL + '/tags/' + tag.id, {
                 method: 'PUT',
                 body: JSON.stringify(tag),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization':  'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             });
             if (!response.ok) {
@@ -118,10 +119,10 @@ export const deleteTag = (id) => {
         toast.loading("Deleting Tag...");
 
         const deleteData = async () => {
-            const response = await fetch("http://localhost:8080/api/tags/" + id, {
+            const response = await fetch(config.API_URL + '/tags/' + id, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization':  'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             });
             if (!response.ok) {
