@@ -95,16 +95,4 @@ h1, h2, h3 {
     font-weight: normal;
 }
 
-.linkyButton {
-    font-size: 1rem;
-    background: none !important;
-    border: none;
-    padding: 0 !important;
-    /*optional*/
-    font-family: "Frank Ruhl Libre", Georgia, serif;
-    /*input has OS specific font-family*/
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
 

@@ -42,6 +42,7 @@ export const routes = [
             },
             {
                 path: 'logout',
+                element: <HomePage/>,
                 action: logoutAction
             },
             {
