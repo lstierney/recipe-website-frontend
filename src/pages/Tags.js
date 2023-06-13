@@ -28,6 +28,7 @@ const Tags = () => {
         <>
             <h1>Search by Tag</h1>
             <section>
+                {!tags.length > 0 && <p>No tags found</p>}
                 {tags.map(tag =>
                     <button type="button" onClick={() => performSearchHandler(tag.name)}
                             key={tag.id}>{tag.name}</button>
