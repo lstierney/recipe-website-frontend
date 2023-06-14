@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {setupStore} from "../store";
 import {MemoryRouter} from "react-router-dom";
 
-export function renderWithProviders(
+export const renderWithProviders = (
     ui,
     {
         preloadedState = {},
@@ -12,8 +12,8 @@ export function renderWithProviders(
         store = setupStore(preloadedState),
         ...renderOptions
     } = {}
-) {
-    function Wrapper({children}) {
+) => {
+    const Wrapper = ({children}) => {
         return <Provider store={store}><MemoryRouter>{children}</MemoryRouter></Provider>
     }
 
