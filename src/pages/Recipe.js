@@ -26,7 +26,6 @@ const Recipe = () => {
     if (recipe === undefined) {
 
     } else {
-        // TODO - hostname should be in a conf file
         const imgSrc = config.API_HOST + '/images/' + recipe.imageFileName;
         return <>
             <div className={classes.information}>

@@ -1,12 +1,13 @@
 import React from 'react';
 import classes from "../../main.module.css";
 import {Link} from "react-router-dom";
+import _ from 'lodash';
 
 const RecipesList = (props) => {
     return (
         <section>
             <ul>
-                {props.recipes.length > 0 && props.recipes.map(recipe =>
+                {!_.isEmpty(props.recipes) && props.recipes.map(recipe =>
                     <>
                         <li key={recipe.id} className={classes.description}>
                             <Link to={`/recipes/${recipe.id}`}>
@@ -15,7 +16,7 @@ const RecipesList = (props) => {
                         </li>
                     </>
                 )}
-                {!props.recipes.length > 0 && <p>No recipes found!</p>}
+                {_.isEmpty(props.recipes) && <p>No recipes found!</p>}
             </ul>
         </section>
     );
