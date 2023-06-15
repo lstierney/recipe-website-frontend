@@ -1,6 +1,5 @@
-import {removeAuthToken, removeExpiration} from "../utils/auth";
+import {handleLogout} from "../utils/auth";
 
 export const action = () => {
-    removeAuthToken();
-    removeExpiration();
+    handleLogout();
 }

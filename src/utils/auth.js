@@ -1,8 +1,10 @@
 import {redirect} from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
-const TOKEN = 'token';
-export const EXPIRATION = 'expiration';
 export const EXPIRED = 'EXPIRED';
+const TOKEN = 'token';
+const EXPIRATION = 'expiration';
+const SUB = 'sub';
 
 export const getTokenDuration = () => {
     const storedExpirationDate = localStorage.getItem(EXPIRATION);
@@ -26,18 +28,6 @@ export const getAuthToken = () => {
     return token;
 }
 
-export const saveAuthToken = (token) => {
-    localStorage.setItem(TOKEN, token);
-}
-
-export const removeAuthToken = () => {
-    localStorage.removeItem(TOKEN)
-}
-
-export const removeExpiration = () => {
-    localStorage.removeItem(EXPIRATION)
-}
-
 export const tokenLoader = () => {
     return getAuthToken();
 }
@@ -49,5 +39,24 @@ export const checkAuthLoader = () => {
         return redirect('/login');
     }
     return null;
+}
+
+export const handleLogin = (token) => {
+    const decoded = jwt_decode(token);
+    const expiration = new Date(decoded.exp * 1000);
+
+    localStorage.setItem(EXPIRATION, expiration.toISOString());
+    localStorage.setItem(SUB, decoded.sub);
+    localStorage.setItem(TOKEN, token);
+}
+
+export const handleLogout = () => {
+    localStorage.removeItem(TOKEN);
+    localStorage.removeItem(EXPIRATION);
+    localStorage.removeItem(SUB);
+}
+
+export const getSubject = () => {
+    return localStorage.getItem(SUB);
 }
 
