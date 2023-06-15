@@ -1,10 +1,12 @@
 import React from 'react';
 import {NavLink, useRouteLoaderData, useSubmit} from "react-router-dom";
 import classes from '../main.module.css';
+import {getSubject} from "../utils/auth";
 
 const Header = () => {
     const token = useRouteLoaderData('root');
     const submit = useSubmit();
+    const subject = getSubject();
 
     const handleLogout = () => {
         submit(null, {action: '/logout', method: 'post'});
@@ -56,7 +58,7 @@ const Header = () => {
                             isActive ? classes.active : undefined
                         }
                         >
-                            Logout
+                            Logout (<span className={classes.small}>{subject}</span>)
                         </NavLink>
                         </li>
                     }

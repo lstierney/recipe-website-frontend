@@ -81,6 +81,11 @@ ul {
     padding: 1rem;
 }
 
+.small {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+}
+
 button {
     font-size: 1.125rem;
     background: #be2a77;
