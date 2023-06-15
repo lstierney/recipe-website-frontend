@@ -16,7 +16,7 @@ const RecipesList = (props) => {
                         </li>
                     </>
                 )}
-                {_.isEmpty(props.recipes) && <p>No recipes found!</p>}
+                {_.isEmpty(props.recipes) && <h2>No recipes found</h2>}
             </ul>
         </section>
     );
