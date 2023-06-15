@@ -98,6 +98,7 @@ button {
 h1, h2, h3 {
     padding: 1rem;
     font-weight: normal;
+    text-align: center;
 }
 
 

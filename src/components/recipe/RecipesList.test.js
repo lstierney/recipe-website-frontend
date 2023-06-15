@@ -22,7 +22,7 @@ describe('RecipesList component', () => {
         // ... nothing
 
         // Assert
-        const message = screen.getByText('No recipes found!', {exact: true});
+        const message = screen.getByText('No recipes found', {exact: true});
         expect(message).toBeInTheDocument();
     });
 
@@ -58,7 +58,7 @@ describe('RecipesList component', () => {
         // ... nothing
 
         // Assert
-        const message = screen.queryByText('No recipes found!', {exact: false});
+        const message = screen.queryByText('No recipes found', {exact: false});
         expect(message).not.toBeInTheDocument();
     });
 });

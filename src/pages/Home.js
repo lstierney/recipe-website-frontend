@@ -1,14 +1,8 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import classes from '../main.module.css';
 import config from "../config";
 
 const HomePage = () => {
-    let navigate = useNavigate();
-
-    const navigateHandler = () => {
-        navigate('/recipes');
-    }
-
     return (
         <>
             <h1>{config.PAGE_TITLE}</h1>
@@ -21,13 +15,7 @@ const HomePage = () => {
                     Referencing my ingredients.<br/>
                     The way I like them<br/>
                 </p>
-                <p>
-                    <br/>Go to <Link to="/recipes">the the list of recipes</Link>
-                </p>
-                <p>
-                    <br/>
-                    <button onClick={navigateHandler}>Navigate</button>
-                </p>
+                <Link to="/recipes"><h3>the list of recipes</h3></Link>
             </section>
         </>
     );

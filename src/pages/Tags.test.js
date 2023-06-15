@@ -59,7 +59,7 @@ describe('Tags page', () => {
         let message = screen.getByText('Recipes for Tag "Tag Number One"', {exact: true});
         expect(message).toBeInTheDocument();
 
-        message = screen.getByText('No recipes found!', {exact: true});
+        message = screen.getByText('No recipes found', {exact: true});
         expect(message).toBeInTheDocument();
     });
 });
