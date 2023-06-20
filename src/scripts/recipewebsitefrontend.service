@@ -1,0 +1,11 @@
+[Unit]
+Description=Controls the server which runs the recipewebsitefrontend React app
+
+[Service]
+# install "serve" with npm install -g serve
+ExecStart=/usr/local/bin/serve -s /srv/recipewebsitefrontend/react/build
+# DO NOT run service as root
+User=react
+
+[Install]
+WantedBy=multi-user.target
