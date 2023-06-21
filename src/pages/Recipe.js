@@ -5,6 +5,7 @@ import {fetchRecipe} from "../store/recipes-actions";
 import IngredientsList from "../components/recipe/IngredientsList";
 import MethodStepsList from "../components/recipe/MethodStepsList";
 import classes from '../main.module.css';
+import clockImage from '../assets/images/clock.png';
 
 const Recipe = () => {
     console.log("Component Rendering");
@@ -27,25 +28,28 @@ const Recipe = () => {
     } else {
         const imgSrc = process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName;
         return <>
-            <div className={classes.information}>
-                <h1>{recipe.name}</h1>
-                <section>
-                    <p className={classes.description}>{recipe.description}</p>
-                    <dl>
-                        <dt>Cooking Time</dt>
-                        <dd>{recipe.cookingTime} mins</dd>
-                    </dl>
-                </section>
-            </div>
-            <section>
-                <img alt={recipe.name} width="200" height="200" src={imgSrc}/>
+            <section className={classes.information}>
+                <div className={classes.recipe_panel}>
+                    <img alt={recipe.name} width="200" height="200" src={imgSrc}/>
+                    <div>
+                        <h1>{recipe.name}</h1>
+                        <p className={classes.description}>{recipe.description}</p>
+                    </div>
+                </div>
+                <div className={classes.cooking_time}>
+                    <img src={clockImage} alt="Clock"/>
+                    <p>Cook: {recipe.cookingTime} mins</p>
+                </div>
             </section>
             <section>
-                <h2>Ingredients</h2>
+                <br/>
+                <h2 className={classes.left_align}>Ingredients</h2>
+                <hr/>
                 <IngredientsList ingredients={recipe.ingredients} units={units} isReadOnly={true}/>
             </section>
             <section>
-                <h2>Method</h2>
+                <br/>
+                <h2 className={classes.left_align}>Method</h2>
                 <MethodStepsList methodSteps={recipe.methodSteps}/>
             </section>
             <p><Link to=".." relative="path">Back</Link></p>
