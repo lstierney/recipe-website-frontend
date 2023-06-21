@@ -1,6 +1,5 @@
 import {recipesActions} from "./recipes-slice";
 import {toastUtils} from "../utils/toast-utils";
-import config from '../config';
 import {getAuthToken} from "../utils/auth";
 
 export const fetchRecipe = (recipeId) => {
@@ -9,7 +8,7 @@ export const fetchRecipe = (recipeId) => {
         toast.loading("Loading Recipe...");
 
         const fetchRecipe = async () => {
-            const response = await fetch(config.API_URL + '/recipes/' + recipeId);
+            const response = await fetch(process.env.REACT_APP_API_URL + '/recipes/' + recipeId);
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipe: ' + recipeId);
@@ -35,7 +34,7 @@ export const fetchRecipesForTagName = (tagName) => {
         toast.loading("Getting Recipes for Tag " + tagName + "... ");
 
         const fetchRecipes = async () => {
-            const response = await fetch(config.API_URL + '/recipes?' + new URLSearchParams({tagName}));
+            const response = await fetch(process.env.REACT_APP_API_URL + '/recipes?' + new URLSearchParams({tagName}));
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipes for Tag ' + tagName);
@@ -62,7 +61,7 @@ export const addRecipe = (formData) => {
         toast.loading("Adding Recipe...");
 
         const postData = async () => {
-            const response = await fetch(config.API_URL + '/recipes', {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/recipes', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -93,7 +92,7 @@ export const fetchRecipeTitlesAndIds = () => {
         toast.loading("Fetching Recipe List...");
 
         const fetchData = async () => {
-            const response = await fetch(config.API_URL + '/recipes/list');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/recipes/list');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Recipe title data');

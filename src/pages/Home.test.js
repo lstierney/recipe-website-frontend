@@ -1,4 +1,3 @@
-import config from "../config";
 import Home from "./Home";
 import {render, screen} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
@@ -12,7 +11,7 @@ describe('Home page', () => {
         // ...nothing
 
         // Assert
-        const mainTitle = screen.getByText(config.PAGE_TITLE, {exact: true});
+        const mainTitle = screen.getByText("My Veggie Recipes", {exact: true});
         expect(mainTitle).toBeInTheDocument();
     });
 });

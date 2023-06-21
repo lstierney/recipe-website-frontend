@@ -5,7 +5,6 @@ import {fetchRecipe} from "../store/recipes-actions";
 import IngredientsList from "../components/recipe/IngredientsList";
 import MethodStepsList from "../components/recipe/MethodStepsList";
 import classes from '../main.module.css';
-import config from "../config";
 
 const Recipe = () => {
     console.log("Component Rendering");
@@ -26,7 +25,7 @@ const Recipe = () => {
     if (recipe === undefined) {
 
     } else {
-        const imgSrc = config.API_HOST + '/images/' + recipe.imageFileName;
+        const imgSrc = process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName;
         return <>
             <div className={classes.information}>
                 <h1>{recipe.name}</h1>

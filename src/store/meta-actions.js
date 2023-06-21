@@ -1,12 +1,11 @@
 import {metaActions} from "./meta-slice";
 import {toastUtils} from "../utils/toast-utils";
-import config from "../config";
 import {getAuthToken} from "../utils/auth";
 
 export const fetchUnitsData = () => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch(config.API_URL + '/units');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/units');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Units data');
@@ -27,7 +26,7 @@ export const fetchUnitsData = () => {
 export const fetchTagsData = () => {
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch(config.API_URL + '/tags');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/tags');
 
             if (!response.ok) {
                 throw new Error('Could not fetch Tags data');
@@ -53,7 +52,7 @@ export const addTag = (tag) => {
         toast.loading("Adding Tag...");
 
         const postData = async () => {
-            const response = await fetch(config.API_URL + '/tags', {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/tags', {
                 method: 'POST',
                 body: JSON.stringify(tag),
                 headers: {
@@ -87,7 +86,7 @@ export const updateTag = (tag) => {
         toast.loading("Updating Tag...");
 
         const putData = async () => {
-            const response = await fetch(config.API_URL + '/tags/' + tag.id, {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/tags/' + tag.id, {
                 method: 'PUT',
                 body: JSON.stringify(tag),
                 headers: {
@@ -120,7 +119,7 @@ export const deleteTag = (id) => {
         toast.loading("Deleting Tag...");
 
         const deleteData = async () => {
-            const response = await fetch(config.API_URL + '/tags/' + id, {
+            const response = await fetch(process.env.REACT_APP_API_URL + '/tags/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + getAuthToken
