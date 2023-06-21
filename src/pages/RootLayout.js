@@ -32,7 +32,7 @@ const RootLayout = () => {
                     </div>
                 </main>
                 <footer className={classes.footer}>
-                    This is the footer
+                    {process.env.REACT_APP_NAME} v{process.env.REACT_APP_VERSION}
                 </footer>
             </div>
         </>
