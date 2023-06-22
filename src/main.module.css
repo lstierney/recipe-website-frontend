@@ -152,5 +152,22 @@ hr {
     font-size: 2rem;
 }
 
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 1rem;
+}
+
+*:disabled {
+    border: 0;
+    margin-top: 2px;
+    color: black;
+}
+
+.middle {
+    margin: 0 auto;
+}
+
 
 
