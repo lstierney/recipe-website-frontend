@@ -10,6 +10,7 @@ import Tags from "../pages/Tags";
 import {checkAuthLoader, tokenLoader} from '../utils/auth';
 import {action as logoutAction} from '../pages/Logout';
 import Login, {action as loginAction} from '../pages/Login';
+import Convertor from "../pages/Convertor";
 
 export const routes = [
     {
@@ -34,6 +35,10 @@ export const routes = [
             {
                 path: 'tags',
                 element: <Tags/>
+            },
+            {
+                path: 'convertors',
+                element: <Convertor/>
             },
             {
                 path: 'login',

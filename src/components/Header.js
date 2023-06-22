@@ -39,6 +39,13 @@ const Header = () => {
                         Tags
                     </NavLink>
                     </li>
+                    <li><NavLink to="/convertors" className={({isActive}) =>
+                        isActive ? classes.active : undefined
+                    }
+                    >
+                        Convertors
+                    </NavLink>
+                    </li>
                     {token && <li><NavLink to="/admin/" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }
