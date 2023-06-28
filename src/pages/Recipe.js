@@ -1,60 +1,160 @@
-import React, {useEffect} from 'react';
-import {Link, useParams} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+
 import {useDispatch, useSelector} from "react-redux";
-import {fetchRecipe} from "../store/recipes-actions";
-import IngredientsList from "../components/recipe/IngredientsList";
-import MethodStepsList from "../components/recipe/MethodStepsList";
-import classes from '../main.module.css';
-import clockImage from '../assets/images/clock.png';
+import {fetchRecipe, persistRecipe} from "../store/recipes-actions";
+import {useParams, useRouteLoaderData} from "react-router-dom";
+import differenceBy from 'lodash/differenceBy'
+import Method from "../components/recipe/Method";
+import Ingredients from "../components/recipe/Ingredients";
+import Tags from "../components/recipe/Tags";
+import _ from "lodash";
+import InfoPanel from "../components/recipe/InfoPanel";
 
 const Recipe = () => {
-    console.log("Component Rendering");
-    const recipeId = useParams().recipeId;
-    const dispatch = useDispatch();
-    const recipe = useSelector(state => state.recipes.recipes[recipeId]);
-    const units = useSelector(state => state.meta.units);
+        const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
+        const [ingredients, setIngredients] = useState([]);
+        const [methodSteps, setMethodSteps] = useState([]);
+        const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
+        const [name, setName] = useState('');
+        const [description, setDescription] = useState('');
+        const [cookingTime, setCookingTime] = useState(0);
+        const [selectedTags, setSelectedTags] = useState([]);
+        const [availableTags, setAvailableTags] = useState([]);
+        const [image, setImage] = useState(null);
+        const [imageFileName, setImageFileName] = useState('');
 
-    //console.log("Recipe here:" + JSON.stringify(reduxRecipe, null, 2));
 
-    useEffect(() => {
-        if (recipe === undefined) {
-            console.log("Fetching Recipe");
-            dispatch(fetchRecipe(recipeId));
+        const dispatch = useDispatch();
+
+        const recipeId = useParams().recipeId;
+
+        const isUpdate = recipeId !== undefined && isAdmin;
+        const metaTags = useSelector(state => state.meta.tags);
+        const recipe = useSelector(state => state.recipes.recipes[recipeId]);
+
+        useEffect(() => {
+            if (recipe !== undefined) {
+                setName(recipe.name);
+                setDescription(recipe.description);
+                setCookingTime(recipe.cookingTime);
+                setIngredients(recipe.ingredients);
+                setMethodSteps(recipe.methodSteps);
+                setSelectedTags(recipe.tags);
+                setAvailableTags(differenceBy(metaTags, recipe.tags, 'id'));
+                setImageFileName(recipe.imageFileName);
+            } else {
+                setAvailableTags(metaTags);
+            }
+        }, [recipe, metaTags]);
+
+
+        useEffect(() => {
+            if (recipeId !== undefined && recipe === undefined) {
+                dispatch(fetchRecipe(recipeId));
+            }
+        }, [dispatch, recipe, recipeId]);
+
+        const addRecipeHandler = (e) => {
+            e.preventDefault();
+
+            const recipe = {
+                // Set to undef so that the backend will fail "NOT NULL" checks
+                name: name.length !== 0 ? name : undefined,
+                description: description.length !== 0 ? description : undefined,
+                cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
+                ingredients: ingredients,
+                methodSteps: methodSteps,
+                imageFileName: imageFileName,
+                tags: selectedTags
+            };
+            if (isUpdate) {
+                recipe.id = +recipeId;
+            }
+
+            const formData = new FormData();
+            formData.append('imageFile', image);
+            formData.append('recipe', JSON.stringify(recipe));
+
+            if (window.confirm(JSON.stringify(recipe, null, 2))) {
+                dispatch(persistRecipe(formData, isUpdate));
+            }
         }
-    }, [dispatch, recipeId, recipe]);
 
-    if (recipe === undefined) {
+        const onAddIngredientHandler = ingredient => {
+            const newIngredients = ingredients.slice();
+            newIngredients.push(ingredient);
+            setIngredients(newIngredients);
+        }
+        const onRemoveIngredientHandler = description => {
+            const filteredIngredients = ingredients.filter(ingredient => ingredient.description !== description);
+            setIngredients(filteredIngredients)
+        }
 
-    } else {
-        const imgSrc = process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName;
-        return <>
-            <section className={classes.information}>
-                <div className={classes.recipe_panel}>
-                    <img alt={recipe.name} width="200" height="200" src={imgSrc}/>
-                    <div>
-                        <h1>{recipe.name}</h1>
-                        <p className={classes.description}>{recipe.description}</p>
-                    </div>
-                </div>
-                <div className={classes.cooking_time}>
-                    <img src={clockImage} alt="Clock"/>
-                    <p>Cook: {recipe.cookingTime} mins</p>
-                </div>
-            </section>
-            <section>
-                <br/>
-                <h2 className={classes.left_align}>Ingredients</h2>
-                <hr/>
-                <IngredientsList ingredients={recipe.ingredients} units={units} isReadOnly={true}/>
-            </section>
-            <section>
-                <br/>
-                <h2 className={classes.left_align}>Method</h2>
-                <MethodStepsList methodSteps={recipe.methodSteps}/>
-            </section>
-            <p><Link to=".." relative="path">Back</Link></p>
-        </>;
+        const onAddMethodStepHandler = (description) => {
+            const newMethodSteps = methodSteps.slice();
+            newMethodSteps.push({
+                ordering: methodStepOrderingId,
+                description: description
+            });
+            setMethodSteps(newMethodSteps);
+            setMethodStepOrderingId(methodStepOrderingId + 1);
+        }
+
+        const onAddTagHandler = (id) => {
+            // Remove tag from available list
+            const selectedTag = availableTags.filter(tag => tag.id === id)[0];
+            setAvailableTags(availableTags.filter(tag => tag.id !== id));
+            // add tag to recipe list
+            const recipeList = selectedTags.slice();
+            recipeList.push(selectedTag);
+            setSelectedTags(recipeList);
+        }
+
+        const onRemoveTagHandler = (id) => {
+            // Remove tag from available list
+            const selectedTag = selectedTags.filter(tag => tag.id === id)[0];
+            setSelectedTags(selectedTags.filter(tag => tag.id !== id));
+            // add tag to recipe list
+            const availableList = availableTags.slice();
+            availableList.push(selectedTag);
+            setAvailableTags(availableList);
+        }
+
+        return (
+            <div>
+                <form>
+                    <InfoPanel
+                        recipe={recipe}
+                        setCookingTime={setCookingTime}
+                        setDescription={setDescription}
+                        setName={setName}
+                        setImage={setImage}
+                    />
+                    <Tags
+                        onAdd={onAddTagHandler}
+                        onRemove={onRemoveTagHandler}
+                        availableTags={availableTags}
+                        selectedTags={selectedTags}
+                    />
+
+                    <Ingredients
+                        ingredients={ingredients}
+                        onAdd={onAddIngredientHandler}
+                        onRemove={onRemoveIngredientHandler}
+                    />
+
+                    <Method
+                        methodSteps={methodSteps}
+                        onAdd={onAddMethodStepHandler}
+                    />
+
+                    {isAdmin &&
+                        <button type="submit" onClick={addRecipeHandler}>Submit</button>}
+
+                </form>
+            </div>
+        );
     }
-};
+;
 
 export default Recipe;

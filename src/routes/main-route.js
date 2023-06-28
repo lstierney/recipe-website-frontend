@@ -3,7 +3,6 @@ import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/Home";
 import Recipes from "../pages/Recipes";
 import Recipe from "../pages/Recipe";
-import AddRecipe from "../pages/admin/AddRecipe";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import ManageTags from "../pages/admin/ManageTags";
 import Tags from "../pages/Tags";
@@ -59,12 +58,12 @@ export const routes = [
                         element: <AdminHomePage/>
                     },
                     {
-                        path: 'manageTags',
-                        element: <ManageTags/>
+                        path: 'addRecipe',
+                        element: <Recipe/>
                     },
                     {
-                        path: 'addRecipe',
-                        element: <AddRecipe/>
+                        path: 'manageTags',
+                        element: <ManageTags/>
                     }
                 ]
             }

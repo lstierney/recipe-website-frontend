@@ -11,7 +11,7 @@ const RecipesList = (props) => {
                     <li key={recipe.id} className={classes.description}>
                         <Link to={`/recipes/${recipe.id}`}>
                             {recipe.name}
-                        </Link>
+                        </Link>&nbsp;
                     </li>
                 )}
                 {_.isEmpty(props.recipes) && <h2>No recipes found</h2>}

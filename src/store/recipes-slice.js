@@ -9,7 +9,7 @@ const recipesSlice = createSlice({
     },
     reducers: {
         // TODO could these be named better?
-        addRecipe(state, action) {
+        putRecipe(state, action) {
             state.recipes[action.payload.recipe.id] = action.payload.recipe;
         },
         addRecipesForTagName(state, action) {

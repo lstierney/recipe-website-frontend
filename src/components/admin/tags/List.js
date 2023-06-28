@@ -1,8 +1,8 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import AddTag from "./AddTag";
+import AddTag from "./Add";
 
-const TagsList = () => {
+const List = () => {
     const tags = useSelector(state => state.meta.tags);
     const hasTags = tags !== undefined && tags.length > 0;
 
@@ -17,4 +17,4 @@ const TagsList = () => {
     );
 };
 
-export default TagsList;
+export default List;
