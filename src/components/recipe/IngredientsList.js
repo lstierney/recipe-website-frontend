@@ -1,10 +1,16 @@
 import React from 'react';
 import classes from '../../main.module.css';
+import _ from "lodash";
+import {useRouteLoaderData} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const IngredientsList = (props) => {
+    const units = useSelector(state => state.meta.units);
+    const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
+
     // For a given Ingredient will return the human readable label for it's Unit (if it has a Unit)
     const getUnitDescriptionForIngredient = (ingredient) => {
-        const filteredUnits = props.units.filter(unit => ingredient.unit && ingredient.unit.id && ingredient.unit.id === unit.id);
+        const filteredUnits = units.filter(unit => ingredient.unit && ingredient.unit.id && ingredient.unit.id === unit.id);
         let filteredUnitDescription = '';
         if (filteredUnits.length === 1) {
             filteredUnitDescription = filteredUnits[0].name;
@@ -21,9 +27,11 @@ const IngredientsList = (props) => {
                             <li className={classes.ingredient} key={ingredient.description}>
                                 {ingredient.quantity} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
 
-                                {!props.isReadOnly &&
+                                {isAdmin &&
                                     <button
-                                        onClick={() => props.onRemoveIngredientHandler(ingredient.description)}>Remove</button>}
+                                        onClick={() => {
+                                            props.onRemove(ingredient.description)
+                                        }}>Remove</button>}
                             </li>
                             <hr/>
                         </>);

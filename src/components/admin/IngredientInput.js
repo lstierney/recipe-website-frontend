@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
+import {useSelector} from "react-redux";
 
 const IngredientInput = (props) => {
+    const units = useSelector(state => state.meta.units);
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [unitId, setUnitId] = useState(0);
@@ -26,7 +28,7 @@ const IngredientInput = (props) => {
             <input type="number" name="quantity" value={quantity} onChange={e => setQuantity(+e.target.value)}/>
             <select name="unit_id" onChange={e => setUnitId(+e.target.value)} value={unitId}>
                 <option key="0" value="0"></option>
-                {props.units.map(unit =>
+                {units.map(unit =>
                     <option key={unit.id} value={unit.id}>{unit.name}</option>
                 )}
             </select>

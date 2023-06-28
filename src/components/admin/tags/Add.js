@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {addTag, deleteTag, updateTag} from "../../store/meta-actions";
+import {addTag, deleteTag, updateTag} from "../../../store/meta-actions";
 
 const AddTag = (props) => {
     const [name, setName] = useState("");

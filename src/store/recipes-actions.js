@@ -19,7 +19,7 @@ export const fetchRecipe = (recipeId) => {
         try {
             const recipe = await fetchRecipe();
             toast.dismiss();
-            dispatch(recipesActions.addRecipe({
+            dispatch(recipesActions.putRecipe({
                 recipe: recipe || {}
             }));
         } catch (error) {
@@ -55,17 +55,19 @@ export const fetchRecipesForTagName = (tagName) => {
     }
 };
 
-export const addRecipe = (formData) => {
+export const persistRecipe = (formData, isUpdate) => {
     return async (dispatch) => {
         const toast = toastUtils();
-        toast.loading("Adding Recipe...");
+        toast.loading("Sending Recipe...");
 
-        const postData = async () => {
+        const method = !isUpdate ? 'POST' : 'PUT';
+
+        const data = async () => {
             const response = await fetch(process.env.REACT_APP_API_URL + '/recipes', {
-                method: 'POST',
+                method: method,
                 body: formData,
                 headers: {
-                    'Authorization': 'Bearer ' + getAuthToken
+                    'Authorization': 'Bearer ' + getAuthToken()
                 }
             });
             if (!response.ok) {
@@ -75,16 +77,17 @@ export const addRecipe = (formData) => {
         };
 
         try {
-            const newRecipe = await postData();
-            toast.success("Recipe Added")
-            dispatch(recipesActions.addRecipe({
-                recipe: newRecipe || {}
+            const recipe = await data();
+            toast.success("Recipe Sent")
+            dispatch(recipesActions.putRecipe({
+                recipe: recipe || {}
             }));
         } catch (error) {
             toast.error(error.message);
         }
     }
-};
+}
+
 
 export const fetchRecipeTitlesAndIds = () => {
     return async (dispatch) => {
