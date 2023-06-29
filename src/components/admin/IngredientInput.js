@@ -25,7 +25,8 @@ const IngredientInput = (props) => {
     }
     return (
         <div>
-            <input type="number" name="quantity" value={quantity} onChange={e => setQuantity(+e.target.value)}/>
+            <input type="number" name="quantity" step="0.25" value={quantity}
+                   onChange={e => setQuantity(+e.target.value)}/>
             <select name="unit_id" onChange={e => setUnitId(+e.target.value)} value={unitId}>
                 <option key="0" value="0"></option>
                 {units.map(unit =>
