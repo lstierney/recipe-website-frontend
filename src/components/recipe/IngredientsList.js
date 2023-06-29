@@ -15,6 +15,9 @@ const IngredientsList = (props) => {
         if (filteredUnits.length === 1) {
             filteredUnitDescription = filteredUnits[0].name;
         }
+        if (ingredient.quantity === 0) {
+            filteredUnitDescription = _.capitalize(filteredUnitDescription);
+        }
         return filteredUnitDescription;
     }
 
@@ -25,7 +28,7 @@ const IngredientsList = (props) => {
                     return (
                         <>
                             <li className={classes.ingredient} key={ingredient.description}>
-                                {ingredient.quantity} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
+                                {ingredient.quantity > 0 ? ingredient.quantity : ''} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
 
                                 {isAdmin &&
                                     <button
