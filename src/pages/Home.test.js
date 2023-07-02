@@ -1,11 +1,11 @@
 import Home from "./Home";
-import {render, screen} from "@testing-library/react";
-import {MemoryRouter} from "react-router-dom";
+import {screen} from "@testing-library/react";
+import {renderWithProviders} from "../utils/test-utils";
 
 describe('Home page', () => {
     test('renders main title (using config)', () => {
         // Arrange
-        render(<MemoryRouter><Home/></MemoryRouter>);
+        renderWithProviders(<Home/>);
 
         // Act
         // ...nothing

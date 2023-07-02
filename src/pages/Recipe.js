@@ -2,20 +2,22 @@ import React, {useEffect, useState} from 'react';
 
 import {useDispatch, useSelector} from "react-redux";
 import {fetchRecipe, persistRecipe} from "../store/recipes-actions";
-import {useParams, useRouteLoaderData} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import differenceBy from 'lodash/differenceBy'
 import Method from "../components/recipe/Method";
 import Ingredients from "../components/recipe/Ingredients";
 import Tags from "../components/recipe/Tags";
 import _ from "lodash";
 import InfoPanel from "../components/recipe/InfoPanel";
+import {isAdminUser} from "../utils/auth";
 
 const Recipe = () => {
-        const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
-        const [ingredients, setIngredients] = useState([]);
+    const isAdmin = isAdminUser();
+    const [ingredients, setIngredients] = useState([]);
         const [methodSteps, setMethodSteps] = useState([]);
-        const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
-        const [name, setName] = useState('');
+    const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
+    const [ingredientOrderingId, setIngredientOrderingId] = useState(1);
+    const [name, setName] = useState('');
         const [description, setDescription] = useState('');
         const [cookingTime, setCookingTime] = useState(0);
         const [selectedTags, setSelectedTags] = useState([]);
@@ -42,6 +44,12 @@ const Recipe = () => {
                 setSelectedTags(recipe.tags);
                 setAvailableTags(differenceBy(metaTags, recipe.tags, 'id'));
                 setImageFileName(recipe.imageFileName);
+                if (!_.isEmpty(recipe.methodSteps)) {
+                    setMethodStepOrderingId(_.orderBy(recipe.methodSteps, ['ordering'], ['desc'])[0].ordering + 1);
+                }
+                if (!_.isEmpty(recipe.ingredients)) {
+                    setIngredientOrderingId(_.orderBy(recipe.ingredients, ['ordering'], ['desc'])[0].ordering + 1);
+                }
             } else {
                 setAvailableTags(metaTags);
             }
@@ -54,17 +62,17 @@ const Recipe = () => {
             }
         }, [dispatch, recipe, recipeId]);
 
-        const addRecipeHandler = (e) => {
-            e.preventDefault();
+    const addRecipeHandler = e => {
+        e.preventDefault();
 
-            const recipe = {
-                // Set to undef so that the backend will fail "NOT NULL" checks
-                name: name.length !== 0 ? name : undefined,
-                description: description.length !== 0 ? description : undefined,
-                cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
-                ingredients: ingredients,
-                methodSteps: methodSteps,
-                imageFileName: imageFileName,
+        const recipe = {
+            // Set to undef so that the backend will fail "NOT NULL" checks
+            name: name.length !== 0 ? name : undefined,
+            description: description.length !== 0 ? description : undefined,
+            cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
+            ingredients: ingredients,
+            methodSteps: methodSteps,
+            imageFileName: imageFileName,
                 tags: selectedTags
             };
             if (isUpdate) {
@@ -80,55 +88,66 @@ const Recipe = () => {
             }
         }
 
-        const onAddIngredientHandler = ingredient => {
-            const newIngredients = ingredients.slice();
-            newIngredients.push(ingredient);
-            setIngredients(newIngredients);
-        }
-        const onRemoveIngredientHandler = description => {
-            const filteredIngredients = ingredients.filter(ingredient => ingredient.description !== description);
-            setIngredients(filteredIngredients)
-        }
+    const onAddIngredientHandler = ingredient => {
+        const newIngredients = ingredients.slice();
+        newIngredients.push({...ingredient, ordering: ingredientOrderingId});
+        setIngredients(newIngredients);
+        setIngredientOrderingId(ingredientOrderingId + 1);
+    }
+    const onRemoveIngredientHandler = description => {
+        const filteredIngredients = ingredients.filter(ingredient => ingredient.description !== description);
+        setIngredients(filteredIngredients)
+    }
+    const onRemoveMethodStepHandler = description => {
+        const filteredMethodSteps = methodSteps.filter(methodStep => methodStep.description !== description);
+        setMethodSteps(filteredMethodSteps)
+    }
+    const onAddMethodStepHandler = description => {
+        const newMethodSteps = methodSteps.slice();
+        newMethodSteps.push({description, ordering: methodStepOrderingId});
+        setMethodSteps(newMethodSteps);
+        setMethodStepOrderingId(methodStepOrderingId + 1);
+    }
 
-        const onAddMethodStepHandler = (description) => {
-            const newMethodSteps = methodSteps.slice();
-            newMethodSteps.push({
-                ordering: methodStepOrderingId,
-                description: description
-            });
-            setMethodSteps(newMethodSteps);
-            setMethodStepOrderingId(methodStepOrderingId + 1);
-        }
+    const onAddTagHandler = id => {
+        // Remove tag from available list
+        const selectedTag = availableTags.filter(tag => tag.id === id)[0];
+        setAvailableTags(availableTags.filter(tag => tag.id !== id));
+        // add tag to recipe list
+        const recipeList = selectedTags.slice();
+        recipeList.push(selectedTag);
+        setSelectedTags(recipeList);
+    }
 
-        const onAddTagHandler = (id) => {
-            // Remove tag from available list
-            const selectedTag = availableTags.filter(tag => tag.id === id)[0];
-            setAvailableTags(availableTags.filter(tag => tag.id !== id));
-            // add tag to recipe list
-            const recipeList = selectedTags.slice();
-            recipeList.push(selectedTag);
-            setSelectedTags(recipeList);
-        }
+    const onRemoveTagHandler = id => {
+        // Remove tag from available list
+        const selectedTag = selectedTags.filter(tag => tag.id === id)[0];
+        setSelectedTags(selectedTags.filter(tag => tag.id !== id));
+        // add tag to recipe list
+        const availableList = availableTags.slice();
+        availableList.push(selectedTag);
+        setAvailableTags(availableList);
+    }
 
-        const onRemoveTagHandler = (id) => {
-            // Remove tag from available list
-            const selectedTag = selectedTags.filter(tag => tag.id === id)[0];
-            setSelectedTags(selectedTags.filter(tag => tag.id !== id));
-            // add tag to recipe list
-            const availableList = availableTags.slice();
-            availableList.push(selectedTag);
-            setAvailableTags(availableList);
-        }
+    const onReorderMethodStepHandler = methodSteps => {
+        const updatedSteps = methodSteps.map((step, index) => ({...step, ordering: index + 1}));
+        setMethodSteps(updatedSteps);
+    }
 
-        return (
-            <div>
-                <form>
-                    <InfoPanel
-                        recipe={recipe}
-                        setCookingTime={setCookingTime}
-                        setDescription={setDescription}
-                        setName={setName}
-                        setImage={setImage}
+    const onReorderIngredientsHandler = ingredients => {
+        const updatedIngredients = ingredients.map((ingredient, index) => ({...ingredient, ordering: index + 1}));
+        setIngredients(updatedIngredients);
+    }
+
+    return (
+        <div>
+            <form>
+                <InfoPanel
+                    recipe={recipe}
+                    setCookingTime={setCookingTime}
+                    setDescription={setDescription}
+                    setName={setName}
+                    setImage={setImage}
                     />
                     <Tags
                         onAdd={onAddTagHandler}
@@ -141,12 +160,15 @@ const Recipe = () => {
                         ingredients={ingredients}
                         onAdd={onAddIngredientHandler}
                         onRemove={onRemoveIngredientHandler}
+                        onReorder={onReorderIngredientsHandler}
                     />
 
-                    <Method
-                        methodSteps={methodSteps}
-                        onAdd={onAddMethodStepHandler}
-                    />
+                <Method
+                    methodSteps={methodSteps}
+                    onAdd={onAddMethodStepHandler}
+                    onReorder={onReorderMethodStepHandler}
+                    onRemove={onRemoveMethodStepHandler}
+                />
 
                     {isAdmin &&
                         <button type="submit" onClick={addRecipeHandler}>Submit</button>}

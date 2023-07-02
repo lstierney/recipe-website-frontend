@@ -1,10 +1,10 @@
 import React from 'react';
-import {NavLink, useRouteLoaderData, useSubmit} from "react-router-dom";
+import {NavLink, useSubmit} from "react-router-dom";
 import classes from '../main.module.css';
-import {getSubject} from "../utils/auth";
+import {getSubject, isAdminUser} from "../utils/auth";
 
 const Header = () => {
-    const token = useRouteLoaderData('root');
+    const isAdmin = isAdminUser();
     const submit = useSubmit();
     const subject = getSubject();
 
@@ -46,21 +46,21 @@ const Header = () => {
                         Convertors
                     </NavLink>
                     </li>
-                    {token && <li><NavLink to="/admin/" className={({isActive}) =>
+                    {isAdmin && <li><NavLink to="/admin/" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }
                     >
                         Admin
                     </NavLink>
                     </li>}
-                    {!token && <li><NavLink to="/login" className={({isActive}) =>
+                    {!isAdmin && <li><NavLink to="/login" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }
                     >
                         Login
                     </NavLink>
                     </li>}
-                    {token &&
+                    {isAdmin &&
                         <li><NavLink to="/logout" onClick={handleLogout} className={({isActive}) =>
                             isActive ? classes.active : undefined
                         }

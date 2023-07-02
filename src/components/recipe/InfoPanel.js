@@ -3,11 +3,11 @@ import classes from '../../main.module.css';
 import RecipeImage from "./RecipeImage";
 import clockImage from "../../assets/images/clock.png";
 import _ from "lodash";
-import {useRouteLoaderData} from "react-router-dom";
+import {isAdminUser} from "../../utils/auth";
 
 const InfoPanel = (props) => {
     const recipe = props.recipe;
-    const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
+    const isAdmin = isAdminUser();
     const [showFilePicker, setShowFilePicker] = useState(false);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');

@@ -28,6 +28,11 @@ export const getAuthToken = () => {
     return token;
 }
 
+export const isAdminUser = () => {
+    const token = getAuthToken();
+    return token && token !== EXPIRED;
+}
+
 export const tokenLoader = () => {
     return getAuthToken();
 }
@@ -35,7 +40,7 @@ export const tokenLoader = () => {
 export const checkAuthLoader = () => {
     const token = getAuthToken();
 
-    if (!token) {
+    if (!token || token === EXPIRED) {
         return redirect('/login');
     }
     return null;
