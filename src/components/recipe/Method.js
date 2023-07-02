@@ -1,18 +1,17 @@
 import React from 'react';
 import classes from "../../main.module.css";
 import MethodStepsList from "./MethodStepsList";
-import {useRouteLoaderData} from "react-router-dom";
-import _ from 'lodash';
 import MethodStepInput from "../admin/MethodStepInput";
+import {isAdminUser} from "../../utils/auth";
 
 const Method = (props) => {
-    const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
+    const isAdmin = isAdminUser();
 
     return (
         <section>
             <br/>
             <h2 className={classes.left_align}>Method</h2>
-            <MethodStepsList methodSteps={props.methodSteps}/>
+            <MethodStepsList onReorder={props.onReorder} onRemove={props.onRemove} methodSteps={props.methodSteps}/>
             {isAdmin && <MethodStepInput onAdd={props.onAdd}/>}
         </section>
     );

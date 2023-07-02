@@ -1,11 +1,10 @@
 import React from 'react';
 import TagsList from "./TagsList";
-import _ from "lodash";
-import {useRouteLoaderData} from "react-router-dom";
 import classes from '../../main.module.css';
+import {isAdminUser} from "../../utils/auth";
 
 const Tags = (props) => {
-    const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
+    const isAdmin = isAdminUser();
     const onRemove = isAdmin ? props.onRemove : undefined;
 
     return (

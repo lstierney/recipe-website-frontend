@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from '../../main.module.css';
 import _ from "lodash";
-import {useRouteLoaderData} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {Reorder} from "framer-motion";
+import {isAdminUser} from "../../utils/auth";
 
 const IngredientsList = (props) => {
     const units = useSelector(state => state.meta.units);
-    const isAdmin = !_.isEmpty(useRouteLoaderData('root'));
+    const isAdmin = isAdminUser();
+    const [ingredients, setIngredients] = useState(props.ingredients);
+
+    useEffect(() => {
+        setIngredients(props.ingredients);
+    }, [props.ingredients]);
 
     // For a given Ingredient will return the human readable label for it's Unit (if it has a Unit)
-    const getUnitDescriptionForIngredient = (ingredient) => {
+    const getUnitDescriptionForIngredient = ingredient => {
         const filteredUnits = units.filter(unit => ingredient.unit && ingredient.unit.id && ingredient.unit.id === unit.id);
         let filteredUnitDescription = '';
         if (filteredUnits.length === 1) {
@@ -22,26 +28,24 @@ const IngredientsList = (props) => {
     }
 
     return (
-        <div>
-            <ul>
-                {props.ingredients.map(ingredient => {
-                    return (
-                        <>
-                            <li className={classes.ingredient} key={ingredient.description}>
-                                {ingredient.quantity > 0 ? ingredient.quantity : ''} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
+        <Reorder.Group axis="y" values={ingredients}
+                       onReorder={setIngredients}>
+            {!_.isEmpty(ingredients) && ingredients.map(ingredient => (
+                <Reorder.Item key={ingredient.id} value={ingredient}>
+                    <div className={classes.ingredient} key={ingredient.description} onMouseUp={() => {
+                        props.onReorder(ingredients)
+                    }}>
+                        {ingredient.quantity > 0 ? ingredient.quantity : ''} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}&nbsp;
 
-                                {isAdmin &&
-                                    <button
-                                        onClick={() => {
-                                            props.onRemove(ingredient.description)
-                                        }}>Remove</button>}
-                            </li>
-                            <hr/>
-                        </>);
-                })
-                }
-            </ul>
-        </div>
+                        {isAdmin &&
+                            <button type="button"
+                                    onClick={() => {
+                                        props.onRemove(ingredient.description)
+                                    }}>Remove</button>}
+                    </div>
+                </Reorder.Item>))}
+            {_.isEmpty(props.ingredients) && <p>No Ingredients found</p>}
+        </Reorder.Group>
     );
 };
 

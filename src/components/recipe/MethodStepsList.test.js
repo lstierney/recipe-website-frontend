@@ -4,10 +4,12 @@ import MethodStepsList from "./MethodStepsList";
 
 const METHOD_STEPS = [
     {
+        id: 1,
         ordering: 1,
         description: 'Method Step One desc'
     },
     {
+        id: 2,
         ordering: 2,
         description: 'Method Step Two desc'
     }
@@ -39,7 +41,7 @@ describe('MethodStepsList component', () => {
     });
     test('displays "No Method Steps found" when no MethodSteps are supplied', () => {
         // Arrange
-        renderWithProviders(<MethodStepsList/>);
+        renderWithProviders(<MethodStepsList methodSteps={[]}/>);
 
         // Act
         // ... nothing
@@ -50,7 +52,7 @@ describe('MethodStepsList component', () => {
     });
     test('does not render any MethodSteps when none are supplied', () => {
         // Arrange
-        renderWithProviders(<MethodStepsList/>);
+        renderWithProviders(<MethodStepsList methodSteps={[]}/>);
 
         // Act
         // ... nothing
@@ -58,6 +60,4 @@ describe('MethodStepsList component', () => {
         // Assert
         expect(screen.queryAllByRole('listitem')).toHaveLength(0);
     });
-
-
 });
