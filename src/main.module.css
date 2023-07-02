@@ -130,6 +130,12 @@ hr {
     padding: 0.25rem;
 }
 
+.note {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    padding: 0.25rem;
+}
+
 .ingredient {
     font-size: 1.125rem;
     line-height: 1.6875rem;

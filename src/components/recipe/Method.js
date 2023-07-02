@@ -11,6 +11,7 @@ const Method = (props) => {
         <section>
             <br/>
             <h2 className={classes.left_align}>Method</h2>
+            <hr/>
             <MethodStepsList onReorder={props.onReorder} onRemove={props.onRemove} methodSteps={props.methodSteps}/>
             {isAdmin && <MethodStepInput onAdd={props.onAdd}/>}
         </section>
