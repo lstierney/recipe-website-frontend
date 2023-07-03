@@ -124,6 +124,12 @@ hr {
     padding-left: 0;
 }
 
+.draggable_list_item {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    padding: 0.25rem;
+}
+
 .method_step {
     font-size: 1.125rem;
     line-height: 1.5rem;

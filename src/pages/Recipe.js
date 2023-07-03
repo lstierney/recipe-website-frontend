@@ -192,7 +192,7 @@ const Recipe = () => {
                     onReorder={onReorderIngredientsHandler}
                 />
                 <Method
-                    methodSteps={methodSteps}
+                    items={methodSteps}
                     onAdd={onAddMethodStepHandler}
                     onReorder={onReorderMethodStepHandler}
                     onRemove={onRemoveMethodStepHandler}

@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from "../../main.module.css";
-import MethodStepsList from "./MethodStepsList";
 import MethodStepInput from "../admin/MethodStepInput";
 import {isAdminUser} from "../../utils/auth";
+import DraggableList from "./DraggableList";
 
 const Method = (props) => {
     const isAdmin = isAdminUser();
@@ -12,7 +12,8 @@ const Method = (props) => {
             <br/>
             <h2 className={classes.left_align}>Method</h2>
             <hr/>
-            <MethodStepsList onReorder={props.onReorder} onRemove={props.onRemove} methodSteps={props.methodSteps}/>
+            <DraggableList onReorder={props.onReorder} onRemove={props.onRemove} items={props.items}
+                           type={'methodSteps'}/>
             {isAdmin && <MethodStepInput onAdd={props.onAdd}/>}
         </section>
     );

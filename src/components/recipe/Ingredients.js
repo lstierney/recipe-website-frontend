@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from "../../main.module.css";
-import IngredientsList from "./IngredientsList";
 import IngredientInput from "../admin/IngredientInput";
 import {isAdminUser} from "../../utils/auth";
+import DraggableList from "./DraggableList";
 
 const Ingredients = (props) => {
     const isAdmin = isAdminUser();
@@ -12,7 +12,8 @@ const Ingredients = (props) => {
             <br/>
             <h2 className={classes.left_align}>Ingredients</h2>
             <hr/>
-            <IngredientsList ingredients={props.ingredients} onRemove={props.onRemove} onReorder={props.onReorder}/>
+            <DraggableList items={props.ingredients} onRemove={props.onRemove} onReorder={props.onReorder}
+                           type={'ingredients'}/>
             {isAdmin && <IngredientInput onAdd={props.onAdd}/>}
         </section>
     );
