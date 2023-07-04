@@ -43,6 +43,9 @@ a {
 .footer {
     grid-area: 10 / 1 / 11 / 11;
     background-color: #0c5f5f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 
@@ -60,13 +63,15 @@ ul {
     gap: 1rem;
 }
 
-.nav_list a {
+.nav_list a, .footer a {
     color: white;
     text-decoration: none;
 }
 
 .nav_list a:hover,
-.nav_list a.active {
+.nav_list a.active,
+.footer a:hover,
+.footer a.active {
     text-decoration: underline;
 }
 
