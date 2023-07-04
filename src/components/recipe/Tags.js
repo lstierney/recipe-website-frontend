@@ -5,7 +5,7 @@ import {isAdminUser} from "../../utils/auth";
 
 const Tags = (props) => {
     const isAdmin = isAdminUser();
-    const onRemove = isAdmin ? props.onRemove : undefined;
+    const onClickSelectedTag = isAdmin ? props.onRemove : props.onSearch;
 
     return (
         <section>
@@ -16,7 +16,7 @@ const Tags = (props) => {
                 <h3 className={classes.left_align}>Selected</h3>
             </>
             }
-            <TagsList tags={props.selectedTags} onClickHandler={onRemove}/>
+            <TagsList tags={props.selectedTags} onClickHandler={onClickSelectedTag}/>
         </section>
     );
 };

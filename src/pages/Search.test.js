@@ -1,5 +1,5 @@
 import {screen} from "@testing-library/react";
-import Tags from "./Tags";
+import Search from "./Search";
 import {renderWithProviders} from "../utils/test-utils";
 import userEvent from "@testing-library/user-event";
 import {act} from "react-dom/test-utils";
@@ -15,11 +15,11 @@ const preloadedState = {
     }
 }
 
-describe('Tags page', () => {
+describe('Search page', () => {
     test('renders the Tags from Redux as buttons', () => {
 
         // Arrange
-        renderWithProviders(<Tags/>, preloadedState);
+        renderWithProviders(<Search/>, preloadedState);
 
         // Act
         // ...nothing
@@ -31,7 +31,7 @@ describe('Tags page', () => {
     test('displays message when no Tags found', () => {
 
         // Arrange
-        renderWithProviders(<Tags/>);
+        renderWithProviders(<Search/>);
 
         // Act
         // ...nothing
@@ -45,7 +45,7 @@ describe('Tags page', () => {
     });
     test('displays a message when no Recipes are found for a Tag', () => {
         // Arrange
-        renderWithProviders(<Tags/>, preloadedState);
+        renderWithProviders(<Search/>, preloadedState);
 
         // Act
         const button = screen.getByText('Tag Number One');

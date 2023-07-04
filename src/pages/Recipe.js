@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 
 import {useDispatch, useSelector} from "react-redux";
 import {fetchRecipe, persistRecipe} from "../store/recipes-actions";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import differenceBy from 'lodash/differenceBy'
 import Method from "../components/recipe/Method";
 import Ingredients from "../components/recipe/Ingredients";
@@ -28,6 +28,7 @@ const Recipe = () => {
     const [imageFileName, setImageFileName] = useState('');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const recipeId = useParams().recipeId;
 
@@ -162,6 +163,9 @@ const Recipe = () => {
         availableList.push(selectedTag);
         setAvailableTags(availableList);
     }
+    const onSearchTagHandler = tagId => {
+        navigate('/search?tagId=' + tagId);
+    }
 
     return (
         <div>
@@ -178,6 +182,7 @@ const Recipe = () => {
                     onRemove={onRemoveTagHandler}
                     availableTags={availableTags}
                     selectedTags={selectedTags}
+                    onSearch={onSearchTagHandler}
                 />
                 <Notes
                     notes={notes}

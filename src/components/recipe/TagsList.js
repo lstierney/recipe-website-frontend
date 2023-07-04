@@ -1,9 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
+import classes from '../../main.module.css';
 
 const TagsList = (props) => {
     return (
-        <div>
+        <div className={classes.tagList}>
             {_.isEmpty(props.tags) && 'No tags available'}
             {!_.isEmpty(props.tags) && props.tags.map(
                 tag => <button key={tag.id} type="button"
