@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 const RecipesList = (props) => {
     return (
-        <section>
+        <section className={classes['recipe-search-results']}>
             <ul>
                 {!_.isEmpty(props.recipes) && props.recipes.map(recipe =>
                     <li key={recipe.id} className={classes.description}>

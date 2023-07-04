@@ -14,7 +14,7 @@ const Recipes = () => {
     }, [recipesList.length, dispatch]);
 
     return <>
-        <h1>The Big List of Recipes</h1>
+        <h1>Recipes</h1>
         <RecipesList recipes={recipesList}/>
     </>;
 }

@@ -5,7 +5,7 @@ import Recipes from "../pages/Recipes";
 import Recipe from "../pages/Recipe";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import ManageTags from "../pages/admin/ManageTags";
-import Tags from "../pages/Tags";
+import Search from "../pages/Search";
 import {checkAuthLoader, tokenLoader} from '../utils/auth';
 import {action as logoutAction} from '../pages/Logout';
 import Login, {action as loginAction} from '../pages/Login';
@@ -32,8 +32,8 @@ export const routes = [
                 element: <Recipe/>
             },
             {
-                path: 'tags',
-                element: <Tags/>
+                path: 'search',
+                element: <Search/>
             },
             {
                 path: 'convertors',
