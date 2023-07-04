@@ -31,7 +31,8 @@ const Search = () => {
         if (searchParams.get('tagId')) {
             const tagId = +searchParams.get('tagId');
             const tag = tags.find(tag => tag.id === tagId);
-            if (tag && !isSearchPerformed) {
+            if (tag) {
+                setSearchParams({});
                 performSearchHandler(tag.name);
             }
         }
