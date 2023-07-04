@@ -36,7 +36,7 @@ const Search = () => {
                 performSearchHandler(tag.name);
             }
         }
-    }, [searchParams, tags, performSearchHandler, isSearchPerformed]);
+    }, [searchParams, tags, performSearchHandler, isSearchPerformed, setSearchParams]);
 
     return (
         <>
