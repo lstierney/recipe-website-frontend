@@ -40,7 +40,7 @@ const DraggableList = props => {
                             props.onReorder(items)
                         }}>
                             {type === 'methodSteps' && <><span className={classes.step}>STEP {index + 1}</span><br/></>}
-                            {type === 'ingredients' && <>{item.quantity > 0 ? item.quantity : ''} {getUnitDescriptionForIngredient(item)}</>}
+                            {type === 'ingredients' && <>{item.quantity > 0 ? item.quantity : ''} {getUnitDescriptionForIngredient(item)}&nbsp;</>}
                             {item.description}&nbsp;
                             <button type="button" onClick={() => {
                                 props.onRemove(item.description)
@@ -57,7 +57,7 @@ const DraggableList = props => {
                     <li key={item.description}>
                         <div className={classes.draggable_list_item}>
                             {type === 'methodSteps' && <><span className={classes.step}>STEP {index + 1}</span><br/></>}
-                            {type === 'ingredients' && <>{item.quantity > 0 ? item.quantity : ''} {getUnitDescriptionForIngredient(item)}</>}
+                            {type === 'ingredients' && <>{item.quantity > 0 ? item.quantity : ''} {getUnitDescriptionForIngredient(item)}&nbsp;</>}
                             {item.description}
                         </div>
                     </li>)
