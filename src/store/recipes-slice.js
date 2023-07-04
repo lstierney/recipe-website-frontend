@@ -8,14 +8,13 @@ const recipesSlice = createSlice({
         id_to_title: []
     },
     reducers: {
-        // TODO could these be named better?
         putRecipe(state, action) {
             state.recipes[action.payload.recipe.id] = action.payload.recipe;
         },
-        addRecipesForTagName(state, action) {
+        putRecipesForTagName(state, action) {
             state.by_tag[action.payload.tagName] = action.payload.recipes;
         },
-        storeTitlesAndIds(state, action) {
+        putTitlesAndIds(state, action) {
             state.id_to_title = action.payload.titleData;
         }
     }

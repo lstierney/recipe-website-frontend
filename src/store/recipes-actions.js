@@ -45,7 +45,7 @@ export const fetchRecipesForTagName = (tagName) => {
         try {
             const recipes = await fetchRecipes();
             toast.dismiss();
-            dispatch(recipesActions.addRecipesForTagName({
+            dispatch(recipesActions.putRecipesForTagName({
                 recipes: recipes || {},
                 tagName
             }));
@@ -79,9 +79,13 @@ export const persistRecipe = (formData, isUpdate) => {
         try {
             const recipe = await data();
             toast.success("Recipe Sent")
+
             dispatch(recipesActions.putRecipe({
                 recipe: recipe || {}
             }));
+
+            // Update the List to reflect new/updated recipes
+            dispatch(fetchRecipeTitlesAndIds());
         } catch (error) {
             toast.error(error.message);
         }
@@ -106,7 +110,7 @@ export const fetchRecipeTitlesAndIds = () => {
         try {
             const titleData = await fetchData();
             toast.dismiss();
-            dispatch(recipesActions.storeTitlesAndIds({
+            dispatch(recipesActions.putTitlesAndIds({
                 titleData: titleData || []
             }));
         } catch (error) {
