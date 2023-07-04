@@ -57,7 +57,7 @@ export const addTag = (tag) => {
                 body: JSON.stringify(tag),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getAuthToken
+                    'Authorization': 'Bearer ' + getAuthToken()
                 }
             });
             if (!response.ok) {
@@ -91,7 +91,7 @@ export const updateTag = (tag) => {
                 body: JSON.stringify(tag),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getAuthToken
+                    'Authorization': 'Bearer ' + getAuthToken()
                 }
             });
             if (!response.ok) {
@@ -122,7 +122,7 @@ export const deleteTag = (id) => {
             const response = await fetch(process.env.REACT_APP_API_URL + '/tags/' + id, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': 'Bearer ' + getAuthToken
+                    'Authorization': 'Bearer ' + getAuthToken()
                 }
             });
             if (!response.ok) {
