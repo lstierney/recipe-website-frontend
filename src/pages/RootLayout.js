@@ -32,7 +32,8 @@ const RootLayout = () => {
                     </div>
                 </main>
                 <footer className={classes.footer}>
-                    {process.env.REACT_APP_NAME} v{process.env.REACT_APP_VERSION}
+                    <a href="https://github.com/lstierney/recipe-website-frontend" rel="noreferrer"
+                       target="_blank">{process.env.REACT_APP_NAME} v{process.env.REACT_APP_VERSION}</a>
                 </footer>
             </div>
         </>
