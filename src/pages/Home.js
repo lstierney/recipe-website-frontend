@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import classes from '../main.module.css';
+import LatestRecipe from "../components/LatestRecipe";
 
 const HomePage = () => {
     return (
@@ -14,6 +15,7 @@ const HomePage = () => {
                     Using my ingredients.<br/>
                     The way I like them<br/>
                 </p>
+                <LatestRecipe/>
                 <Link to="/recipes"><h3>the list of recipes</h3></Link>
             </section>
         </>
