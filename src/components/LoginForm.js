@@ -1,28 +1,35 @@
 import React from 'react';
 import {Form} from "react-router-dom";
+import classes from './LoginForm.module.css';
 
 const LoginForm = () => {
     return (
-        <div>
+        <section>
             <h1>Login</h1>
-            <Form method="post">
+            <Form method="post" className={classes['login-form']}>
                 <div>
-                    <label>Username:</label>
+                    <label>Username</label>
+                </div>
+                <div>
                     <input
                         type="text"
                         name="username"
                         required/>
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>Password</label>
+                </div>
+                <div>
                     <input
                         type="password"
                         name="password"
                         required/>
                 </div>
-                <button>Login</button>
+                <div>
+                    <button>Login</button>
+                </div>
             </Form>
-        </div>
+        </section>
     );
 };
 

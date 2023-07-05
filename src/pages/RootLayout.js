@@ -27,9 +27,7 @@ const RootLayout = () => {
                 <Header/>
                 <ToastContainer/>
                 <main className={classes.content}>
-                    <div className={classes.mainContent}>
-                        <Outlet/>
-                    </div>
+                    <Outlet/>
                 </main>
                 <footer className={classes.footer}>
                     <a href="https://github.com/lstierney/recipe-website-frontend" rel="noreferrer"
