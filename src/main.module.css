@@ -240,5 +240,21 @@ hr {
     }
 }
 
+/* Tablet */
+@media screen and (max-width: 850px) {
+    .content {
+        grid-area: 2 / 3 / 10 / 9;
+        height: 100%;
+        overflow: auto;
+        padding: 5px;
+    }
+
+    .recipe_panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 
 
