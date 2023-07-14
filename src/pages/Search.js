@@ -1,42 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {fetchRecipesForTagName} from "../store/recipes-actions";
 import RecipesList from "../components/recipe/RecipesList";
-import {useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import classes from '../main.module.css';
+import {useGetRecipesByTagQuery, useGetTagsQuery} from "../store/api";
 
 const Search = () => {
-    const [recipes, setRecipes] = useState([]);
-    const [tagName, setTagName] = useState(undefined);
-    const [isSearchPerformed, setIsSearchPerformed] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams();
-    const dispatch = useDispatch();
-    const tags = useSelector(state => state.meta.tags);
-    const recipesFromRedux = useSelector(state => state.recipes.by_tag);
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const tagName = searchParams.get('tag');
 
-    const performSearchHandler = useCallback(tagName => {
-        if (recipesFromRedux[tagName] === undefined) {
-            dispatch(fetchRecipesForTagName(tagName));
-        }
-        setRecipes(recipesFromRedux[tagName] || []);
-        setIsSearchPerformed(true);
-        setTagName(tagName);
-    }, [dispatch, recipesFromRedux, setRecipes, setIsSearchPerformed, setTagName]);
+    const {data: tags = []} = useGetTagsQuery();
+    const {data: recipesByTag = []} = useGetRecipesByTagQuery(tagName);
 
-    useEffect(() => {
-        setRecipes(recipesFromRedux[tagName] || []);
-    }, [recipesFromRedux, tagName]);
-
-    useEffect(() => {
-        if (searchParams.get('tagId')) {
-            const tagId = +searchParams.get('tagId');
-            const tag = tags.find(tag => tag.id === tagId);
-            if (tag) {
-                setSearchParams({});
-                performSearchHandler(tag.name);
-            }
-        }
-    }, [searchParams, tags, performSearchHandler, isSearchPerformed, setSearchParams]);
+    const performSearchHandler = tagName => {
+        navigate("/search?tag=" + tagName);
+    };
 
     return (
         <>
@@ -48,10 +25,10 @@ const Search = () => {
                             key={tag.id}>{tag.name}</button>
                 )}
             </section>
-            {isSearchPerformed &&
+            {tagName &&
                 <>
                     <h2>Recipes for Tag "{tagName}"</h2>
-                    <RecipesList recipes={recipes}/>
+                    <RecipesList recipes={recipesByTag}/>
                 </>
             }
         </>

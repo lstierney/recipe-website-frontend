@@ -1,10 +1,11 @@
 import React from 'react';
-import {useSelector} from "react-redux";
 import AddTag from "./Add";
+import {useGetTagsQuery} from "../../../store/api";
+import _ from "lodash";
 
 const List = () => {
-    const tags = useSelector(state => state.meta.tags);
-    const hasTags = tags !== undefined && tags.length > 0;
+    const {data: tags = []} = useGetTagsQuery();
+    const hasTags = !_.isEmpty(tags);
 
     return (
         <section>

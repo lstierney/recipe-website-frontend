@@ -1,11 +1,18 @@
 import React, {useState} from 'react';
-import {useSelector} from "react-redux";
+import {useGetUnitsQuery} from "../../store/api";
+import {toastUtils} from "../../utils/toast-utils";
+
+const toast = toastUtils();
 
 const IngredientInput = (props) => {
-    const units = useSelector(state => state.meta.units);
+    const {data: units = [], isError} = useGetUnitsQuery();
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [unitId, setUnitId] = useState(0);
+
+    if (isError) {
+        toast.error("An error occurred whilst loading Units");
+    }
 
     const handleAddIngredient = () => {
         const ingredient = {
