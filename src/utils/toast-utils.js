@@ -39,6 +39,8 @@ export const toastUtils = () => {
                 type: "success",
                 closeButton: true
             })
+        } else {
+            toast.success(message);
         }
     }
 

@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
-import {addTag, deleteTag, updateTag} from "../../../store/meta-actions";
+import {useAddTagMutation, useDeleteTagMutation, useUpdateTagMutation} from "../../../store/api";
+import {toastUtils} from "../../../utils/toast-utils";
+
 
 const AddTag = (props) => {
     const [name, setName] = useState("");
     const [id, setId] = useState();
     const [description, setDescription] = useState("");
-    const dispatch = useDispatch();
+    const [addTag] = useAddTagMutation();
+    const [deleteTag] = useDeleteTagMutation();
+    const [updateTag] = useUpdateTagMutation();
+    const toast = toastUtils();
 
     useEffect(() => {
         if (props.tag) {
@@ -16,20 +20,33 @@ const AddTag = (props) => {
         }
     }, [props.tag]);
 
-    const addTagHandler = () => {
-        dispatch(addTag({
-            name, description
-        }));
+    const addTagHandler = async () => {
+        try {
+            await addTag({name, description}).unwrap();
+            setName('');
+            setDescription('');
+            toast.success("Added Tag");
+        } catch (err) {
+            toast.error('Failed to add Tag: ' + err);
+        }
     }
 
-    const updateTagHandler = () => {
-        dispatch(updateTag({
-            id, name, description
-        }));
+    const updateTagHandler = async () => {
+        try {
+            await updateTag({id, name, description}).unwrap();
+            toast.success("Updated Tag");
+        } catch (err) {
+            toast.error('Failed to update Tag: ' + err);
+        }
     }
 
-    const deleteTagHandler = () => {
-        dispatch(deleteTag(id));
+    const deleteTagHandler = async () => {
+        try {
+            await deleteTag(id);
+            toast.success("Deleted Tag");
+        } catch (err) {
+            toast.error('Failed to delete Tag: ' + err);
+        }
     }
 
     return (

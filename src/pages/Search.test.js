@@ -3,23 +3,33 @@ import Search from "./Search";
 import {renderWithProviders} from "../utils/test-utils";
 import userEvent from "@testing-library/user-event";
 import {act} from "react-dom/test-utils";
+import {useGetRecipesByTagQuery, useGetTagsQuery} from "../store/api";
 
-const preloadedState = {
-    preloadedState: {
-        meta: {
-            tags: [
-                {id: 1, name: 'Tag Number One'},
-                {id: 2, name: 'Tag Number Two'}
-            ]
-        }
-    }
+const TAGS = [
+    {id: 1, name: 'Tag Number One'},
+    {id: 2, name: 'Tag Number Two'}
+];
+
+const prepareGetTagsMock = (tags = []) => {
+    useGetTagsQuery.mockReturnValue({
+        data: tags
+    });
 }
 
-describe('Search page', () => {
-    test('renders the Tags from Redux as buttons', () => {
+const prepareGetRecipesByTagMock = (tags = []) => {
+    useGetRecipesByTagQuery.mockReturnValue({
+        data: tags
+    });
+}
 
+jest.mock('../store/api');
+
+describe('Search page', () => {
+    test('renders the Tags as buttons', () => {
         // Arrange
-        renderWithProviders(<Search/>, preloadedState);
+        prepareGetTagsMock(TAGS);
+        prepareGetRecipesByTagMock();
+        renderWithProviders(<Search/>);
 
         // Act
         // ...nothing
@@ -29,8 +39,9 @@ describe('Search page', () => {
         expect(tagButtons).toHaveLength(2);
     });
     test('displays message when no Tags found', () => {
-
         // Arrange
+        prepareGetTagsMock();
+        prepareGetRecipesByTagMock();
         renderWithProviders(<Search/>);
 
         // Act
@@ -45,7 +56,9 @@ describe('Search page', () => {
     });
     test('displays a message when no Recipes are found for a Tag', () => {
         // Arrange
-        renderWithProviders(<Search/>, preloadedState);
+        prepareGetTagsMock(TAGS);
+        prepareGetRecipesByTagMock();
+        renderWithProviders(<Search/>);
 
         // Act
         const button = screen.getByText('Tag Number One');
@@ -53,7 +66,6 @@ describe('Search page', () => {
         act(() => {
             userEvent.click(button);
         });
-
 
         // Assert
         let message = screen.getByText('Recipes for Tag "Tag Number One"', {exact: true});

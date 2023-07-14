@@ -1,16 +1,23 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import metaSlice from "./meta-slice";
-import recipesSlice from "./recipes-slice";
+import api from "./api";
+import {setupListeners} from "@reduxjs/toolkit/query";
 
 const rootReducer = combineReducers({
-    meta: metaSlice.reducer,
-    recipes: recipesSlice.reducer
-})
+    [api.reducerPath]: api.reducer,
+});
 
-export const setupStore = preloadedState => {
-    return configureStore({
+export const setupStore = (preloadedState) => {
+    const store = configureStore({
         reducer: rootReducer,
-        preloadedState
-
+        preloadedState,
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().concat(api.middleware),
     });
-}
+
+    // Set up listeners for automatic refetching and cache invalidation
+    setupListeners(store.dispatch);
+
+    return store;
+};
+
+export default api;

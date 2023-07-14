@@ -1,6 +1,17 @@
 import {renderWithProviders} from "../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import DraggableList from './DraggableList';
+import {useGetUnitsQuery} from "../../store/api";
+
+jest.mock('../../store/api');
+
+const UNITS = [
+    {
+        id: 1,
+        abbreviation: 'tbsp',
+        name: 'tablespoon'
+    },
+];
 
 const ITEMS = [
     {
@@ -16,6 +27,13 @@ const ITEMS = [
 ];
 
 describe('DraggableList component', () => {
+
+    beforeEach(() => {
+        useGetUnitsQuery.mockReturnValueOnce({
+            data: UNITS
+        });
+    });
+
     test('renders list of Items', () => {
         // Arrange
         renderWithProviders(<DraggableList items={ITEMS}/>);
