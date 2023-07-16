@@ -163,12 +163,6 @@ hr {
     padding: 0.25rem;
 }
 
-.step {
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding-bottom: 0.25rem;
-}
-
 .cooking_time {
     display: flex;
     align-items: center;

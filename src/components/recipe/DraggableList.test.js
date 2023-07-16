@@ -5,14 +5,6 @@ import {useGetUnitsQuery} from "../../store/api";
 
 jest.mock('../../store/api');
 
-const UNITS = [
-    {
-        id: 1,
-        abbreviation: 'tbsp',
-        name: 'tablespoon'
-    },
-];
-
 const ITEMS = [
     {
         id: 1,
@@ -29,14 +21,14 @@ const ITEMS = [
 describe('DraggableList component', () => {
 
     beforeEach(() => {
-        useGetUnitsQuery.mockReturnValueOnce({
-            data: UNITS
+        useGetUnitsQuery.mockReturnValue({
+            data: []
         });
     });
 
     test('renders list of Items', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={ITEMS}/>);
+        renderWithProviders(<DraggableList items={ITEMS} type={'notes'}/>);
 
         // Act
         // ... nothing
