@@ -1,0 +1,11 @@
+.method-step {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.step-number {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding-bottom: 0.25rem;
+}
