@@ -28,13 +28,12 @@ const Recipe = () => {
 
         const navigate = useNavigate();
         const recipeId = useParams().recipeId;
-
         const isAdmin = isAdminUser();
         const isUpdate = recipeId !== undefined && isAdmin;
 
         const {data: metaTags = []} = useGetTagsQuery();
-        const {data: recipe} = useGetRecipeQuery(recipeId);
-        const [addRecipe] = useAddRecipeMutation();
+    const {data: recipe} = useGetRecipeQuery(recipeId, {skip: recipeId === undefined});
+    const [addRecipe] = useAddRecipeMutation();
         const [updateRecipe] = useUpdateRecipeMutation();
 
         const getHighestOrdering = items => {

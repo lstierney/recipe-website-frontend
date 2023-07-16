@@ -2,15 +2,25 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
 import {getAuthToken} from "../utils/auth";
 import {toastUtils} from "../utils/toast-utils";
 
-const toast = toastUtils();
-
-async function handleLifeCycle(queryFulfilled, loadingMsg, errorMsg) {
+async function handleQueryLifeCycle(queryFulfilled, loadingMsg, errorMsg) {
+    const toast = toastUtils();
     toast.loading(loadingMsg);
     try {
         await queryFulfilled;
         toast.dismiss();
     } catch (err) {
-        toast.error("Failed to ");
+        toast.error("Failed to " + errorMsg);
+    }
+}
+
+async function handleMutationLifeCycle(queryFulfilled, initialMsg, successMsg, errorMsg) {
+    const toast = toastUtils();
+    toast.loading(initialMsg);
+    try {
+        await queryFulfilled;
+        toast.success(successMsg);
+    } catch (err) {
+        toast.error("Failed to " + errorMsg);
     }
 }
 
@@ -24,6 +34,7 @@ const api = createApi({
             }
             return headers;
         },
+
     }),
 
     tagTypes: ['Tags', 'Units', 'Recipes'],
@@ -32,7 +43,7 @@ const api = createApi({
         getRecipesByTag: builder.query({
             query: tagName => '/recipes?' + new URLSearchParams({tagName}),
             async onQueryStarted(tagName, {queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Loading Recipes for Tag: " + tagName, "get Recipes for Tag: " + tagName);
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes for Tag: " + tagName, "get Recipes for Tag: " + tagName);
             }
         }),
         getRecipe: builder.query({
@@ -40,23 +51,23 @@ const api = createApi({
             providesTags: (result, error, id) => [{type: 'Recipes', id}],
 
             async onQueryStarted(id, {queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Loading Recipe: " + id, "get Recipe: " + id);
-            }
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipe: " + id, "get Recipe: " + id);
+            },
 
         }),
         getLatestRecipes: builder.query({
             query: () => '/recipes/latest',
             providesTags: [{type: 'Recipes', id: 'LATEST'}],
 
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Loading Latest Recipes", "get Latest Recipes");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Latest Recipes", "get Latest Recipes");
             }
         }),
 
         getRecipeTitlesAndIds: builder.query({
             query: () => '/recipes/list',
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Loading Recipes List", "get Recipes List");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes List", "get Recipes List");
             }
 
         }),
@@ -74,8 +85,9 @@ const api = createApi({
             },
             invalidatesTags: [{type: 'Recipes', id: 'LATEST'}],
 
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Adding Recipe", "add Recipe");
+
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Adding Recipe", "Added Recipe", "add recipe");
             }
         }),
         updateRecipe: builder.mutation({
@@ -96,25 +108,22 @@ const api = createApi({
                 id: recipe.id
             }],
 
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Updating Recipe", "update Recipe");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Updating Recipe", "Updated Recipe", "update recipe");
             }
         }),
         getUnits: builder.query({
             query: () => '/units',
-            providesTags: (result, error, arg) =>
-                result
-                    ? [...result.map(({id}) => ({type: 'Units', id})), 'Units']
-                    : ['Units'],
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Loading Units", "load Units");
+            providesTags: [{type: 'Units', id: 'LIST'}],
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Units", "load Units");
             }
         }),
         getTags: builder.query({
             query: () => '/tags',
             providesTags: [{type: 'Tags', id: 'LIST'}],
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Loading Tags", "load Tags");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Tags", "load Tags");
             }
 
         }),
@@ -126,8 +135,8 @@ const api = createApi({
                 headers: {Authorization: 'Bearer ' + getAuthToken()}
             }),
             invalidatesTags: (result, error, tag) => [{type: 'Tags', id: 'LIST'}],
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Deleting Tag", "delete Tag");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Updating Tag", "Updated Tag", "update Tag");
             }
         }),
 
@@ -139,8 +148,8 @@ const api = createApi({
                 headers: {Authorization: 'Bearer ' + getAuthToken()}
             }),
             invalidatesTags: [{type: 'Tags', id: 'LIST'}],
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Add Tag", "add Tag");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Adding Tag", "Added Tag", "add Tag");
             }
         }),
 
@@ -151,8 +160,8 @@ const api = createApi({
                 headers: {Authorization: 'Bearer ' + getAuthToken()}
             }),
             invalidatesTags: (result, error, arg) => [{type: 'Tags', id: arg}],
-            async onQueryStarted({queryFulfilled}) {
-                await handleLifeCycle(queryFulfilled, "Deleting Tag", "delete Tag");
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Deleting Tag", "Deleting Tag", "delete Tag");
             }
         })
 
