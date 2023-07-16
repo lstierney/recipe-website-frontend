@@ -53,10 +53,6 @@ a {
 
 }
 
-.tester {
-    background-color: red;
-}
-
 ul {
     list-style-type: none;
 }
@@ -67,15 +63,13 @@ ul {
     gap: 1rem;
 }
 
-.nav_list a, .footer a {
+.nav_list a {
     color: white;
     text-decoration: none;
 }
 
 .nav_list a:hover,
-.nav_list a.active,
-.footer a:hover,
-.footer a.active {
+.nav_list a.active {
     text-decoration: underline;
 }
 
