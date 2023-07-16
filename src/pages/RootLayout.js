@@ -4,6 +4,7 @@ import {Outlet, useLoaderData, useSubmit} from "react-router-dom";
 import classes from '../main.module.css';
 import {ToastContainer} from "react-toastify";
 import {EXPIRED, getTokenDuration} from "../utils/auth";
+import Footer from "../components/footer/Footer";
 
 const RootLayout = () => {
     const token = useLoaderData();
@@ -29,10 +30,7 @@ const RootLayout = () => {
                 <main className={classes.content}>
                     <Outlet/>
                 </main>
-                <footer className={classes.footer}>
-                    <a href="https://github.com/lstierney/recipe-website-frontend" rel="noreferrer"
-                       target="_blank">{process.env.REACT_APP_NAME} v{process.env.REACT_APP_VERSION}</a>
-                </footer>
+                <Footer/>
             </div>
         </>
     );
