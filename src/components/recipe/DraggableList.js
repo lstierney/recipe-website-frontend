@@ -6,6 +6,7 @@ import {isAdminUser} from "../../utils/auth";
 import Ingredient from "./ingredient/Ingredient";
 import MethodStep from "./methodstep/MethodStep";
 import Note from "./note/Note";
+import Button from "../button/Button";
 
 function renderListItem(type, index, item) {
     return <>
@@ -41,10 +42,10 @@ const DraggableList = (props) => {
                             props.onReorder(items);
                         }}>
                             {renderListItem(type, index, item)}
-                            <button type="button" onClick={() => {
+                            <Button type="button" onClick={() => {
                                 props.onRemove(item.description);
                             }}>Remove
-                            </button>
+                            </Button>
                         </div>
                     </Reorder.Item>
                 ))}

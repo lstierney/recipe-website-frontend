@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useAddTagMutation, useDeleteTagMutation, useUpdateTagMutation} from "../../../store/api";
 import {toastUtils} from "../../../utils/toast-utils";
+import Button from "../../button/Button";
 
 
 const AddTag = (props) => {
@@ -59,13 +60,13 @@ const AddTag = (props) => {
                    onChange={e => setDescription(e.target.value)}/><br/>
 
             {props.mode === 'add' &&
-                <button type="button" onClick={() => addTagHandler()}>Add Tag</button>
+                <Button type="button" onClick={() => addTagHandler()}>Add Tag</Button>
             }
             {props.mode !== 'add' &&
-                <button type="button" onClick={() => updateTagHandler()}>Update Tag</button>
+                <Button type="button" onClick={() => updateTagHandler()}>Update Tag</Button>
             }
             {props.mode !== 'add' &&
-                <button type="button" onClick={() => deleteTagHandler()}>Delete</button>
+                <Button type="button" onClick={() => deleteTagHandler()}>Delete</Button>
             }
         </section>
     );

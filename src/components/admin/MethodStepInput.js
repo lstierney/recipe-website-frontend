@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Button from "../button/Button";
 
 const MethodStepInput = (props) => {
     const [description, setDescription] = useState('');
@@ -6,7 +7,7 @@ const MethodStepInput = (props) => {
     return (
         <div>
             <textarea cols="60" onChange={e => setDescription(e.target.value)} name="methodStep"/>
-            <button type="button" onClick={() => props.onAdd(description)}>Add</button>
+            <Button type="button" onClick={() => props.onAdd(description)}>Add</Button>
         </div>
     );
 };

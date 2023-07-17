@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form} from "react-router-dom";
 import classes from './LoginForm.module.css';
+import Button from "./button/Button";
 
 const LoginForm = () => {
     return (
@@ -26,7 +27,7 @@ const LoginForm = () => {
                         required/>
                 </div>
                 <div>
-                    <button>Login</button>
+                    <Button>Login</Button>
                 </div>
             </Form>
         </section>

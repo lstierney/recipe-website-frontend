@@ -90,21 +90,6 @@ ul {
     line-height: 0.75rem;
 }
 
-button {
-    font-size: 1.125rem;
-    background: #be2a77;
-    border: 2px solid #be2a77;
-    border-radius: 3px;
-    color: white;
-    margin: 1px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #a9256a;
-    border: 2px solid #a9256a;
-}
-
 .curly_text, h1, a {
     font-family: "Frank Ruhl Libre", Georgia, serif;
 }
