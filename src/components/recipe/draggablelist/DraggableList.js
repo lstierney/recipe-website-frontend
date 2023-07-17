@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import _ from 'lodash';
-import classes from '../../main.module.css';
+import classes from './DraggableList.module.css';
 import {Reorder} from "framer-motion";
-import {isAdminUser} from "../../utils/auth";
-import Ingredient from "./ingredient/Ingredient";
-import MethodStep from "./methodstep/MethodStep";
-import Note from "./note/Note";
-import Button from "../button/Button";
+import {isAdminUser} from "../../../utils/auth";
+import Ingredient from "../ingredient/Ingredient";
+import MethodStep from "../methodstep/MethodStep";
+import Note from "../note/Note";
+import Button from "../../button/Button";
 
 function renderListItem(type, index, item) {
     return <>
@@ -38,7 +38,7 @@ const DraggableList = (props) => {
             <Reorder.Group axis="y" values={items} onReorder={setItems}>
                 {items.map((item, index) => (
                     <Reorder.Item key={item.id} value={item}>
-                        <div className={classes.draggable_list_item} onMouseUp={() => {
+                        <div className={classes['draggable-list-item']} onMouseUp={() => {
                             props.onReorder(items);
                         }}>
                             {renderListItem(type, index, item)}
@@ -56,7 +56,7 @@ const DraggableList = (props) => {
             <ul>
                 {items.map((item, index) => (
                     <li key={item.description}>
-                        <div className={classes.draggable_list_item}>
+                        <div className={classes['draggable-list-item']}>
                             {renderListItem(type, index, item)}
                         </div>
                     </li>

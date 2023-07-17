@@ -1,9 +1,9 @@
 import {screen} from "@testing-library/react";
 import Search from "./Search";
-import {renderWithProviders} from "../utils/test-utils";
+import {renderWithProviders} from "../../utils/test-utils";
 import userEvent from "@testing-library/user-event";
 import {act} from "react-dom/test-utils";
-import {useGetRecipesByTagQuery, useGetTagsQuery} from "../store/api";
+import {useGetRecipesByTagQuery, useGetTagsQuery} from "../../store/api";
 
 const TAGS = [
     {id: 1, name: 'Tag Number One'},
@@ -22,7 +22,7 @@ const prepareGetRecipesByTagMock = (tags = []) => {
     });
 }
 
-jest.mock('../store/api');
+jest.mock('../../store/api');
 
 describe('Search page', () => {
     test('renders the Tags as buttons', () => {

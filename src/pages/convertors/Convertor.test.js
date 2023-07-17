@@ -1,6 +1,6 @@
 import {fireEvent, screen} from "@testing-library/react";
 import Convertor from "./Convertor";
-import {renderWithProviders} from "../utils/test-utils";
+import {renderWithProviders} from "../../utils/test-utils";
 
 describe('Convertors page', () => {
     test('renders main <h1>', () => {

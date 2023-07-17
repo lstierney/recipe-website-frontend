@@ -1,9 +1,9 @@
-import {renderWithProviders} from "../../utils/test-utils";
+import {renderWithProviders} from "../../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import DraggableList from './DraggableList';
-import {useGetUnitsQuery} from "../../store/api";
+import {useGetUnitsQuery} from "../../../store/api";
 
-jest.mock('../../store/api');
+jest.mock('../../../store/api');
 
 const ITEMS = [
     {

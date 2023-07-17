@@ -1,0 +1,39 @@
+.nav_list {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.nav_list a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav_list a:hover,
+.nav_list a.active {
+    text-decoration: underline;
+}
+
+.small {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+}
+
+/* Phone */
+@media screen and (max-width: 480px) {
+    .nav_list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 0.90rem;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .nav_list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        font-size: 0.90rem;
+    }
+}

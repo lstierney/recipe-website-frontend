@@ -1,16 +1,14 @@
-import RecipesList from "../components/recipe/RecipesList";
+import RecipesList from "../../components/recipe/recipeslist/RecipesList";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import classes from '../main.module.css';
-import {useGetRecipesByTagQuery, useGetTagsQuery} from "../store/api";
-import Button from "../components/button/Button";
+import classes from './Search.module.css';
+import {useGetRecipesByTagQuery, useGetTagsQuery} from "../../store/api";
+import Button from "../../components/button/Button";
 import _ from 'lodash';
 
 const Search = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const tagName = searchParams.get('tag');
-    alert(tagName);
-
     const {data: tags = []} = useGetTagsQuery();
     const {data: recipesByTag = []} = useGetRecipesByTagQuery(tagName, {skip: _.isEmpty(tagName)});
 

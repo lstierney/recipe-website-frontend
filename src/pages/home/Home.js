@@ -1,7 +1,10 @@
-import classes from '../main.module.css';
-import LatestRecipe from "../components/LatestRecipe";
+import classes from '../../main.module.css';
+import {useGetLatestRecipesQuery} from "../../store/api";
+import RecipesList from "../../components/recipe/recipeslist/RecipesList";
 
 const HomePage = () => {
+    const {data: latestRecipe} = useGetLatestRecipesQuery();
+
     return (
         <>
             <h1>{process.env.REACT_APP_PAGE_TITLE}</h1>
@@ -14,7 +17,8 @@ const HomePage = () => {
                     Using my ingredients.<br/>
                     The way I like them<br/>
                 </p>
-                <LatestRecipe/>
+                <h2>Latest</h2>
+                <RecipesList recipes={latestRecipe ? [latestRecipe] : []}/>
             </section>
         </>
     );
