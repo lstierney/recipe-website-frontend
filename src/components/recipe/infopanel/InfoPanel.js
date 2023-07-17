@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import classes from '../../main.module.css';
-import RecipeImage from "./RecipeImage";
-import clockImage from "../../assets/images/clock.png";
+import mainClasses from '../../../main.module.css';
+import classes from './InfoPanel.module.css';
+import RecipeImage from "../RecipeImage";
+import clockImage from "../../../assets/images/clock.png";
 import _ from "lodash";
-import {isAdminUser} from "../../utils/auth";
+import {isAdminUser} from "../../../utils/auth";
 
 const InfoPanel = (props) => {
     const recipe = props.recipe;
@@ -51,8 +52,8 @@ const InfoPanel = (props) => {
 
     return (
         <>
-            <section className={classes.information}>
-                <div className={classes.recipe_panel}>
+            <section className={mainClasses.information}>
+                <div className={classes['info-panel']}>
                     {!showFilePicker &&
                         <RecipeImage imageFileName={imageFileName} alt={name} onClick={handleImageClick}/>
                     }
@@ -67,7 +68,7 @@ const InfoPanel = (props) => {
                         {!isAdmin &&
                             <>
                                 <h1>{name}</h1>
-                                <p className={classes.description}>{description}</p>
+                                <p className={mainClasses.description}>{description}</p>
                             </>
                         }
                         {isAdmin &&
@@ -82,7 +83,7 @@ const InfoPanel = (props) => {
                         }
                     </div>
                 </div>
-                <div className={classes.cooking_time}>
+                <div className={classes['cooking-time']}>
                     {!isAdmin &&
                         <>
                             <img src={clockImage} alt="Clock"/>

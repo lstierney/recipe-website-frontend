@@ -1,4 +1,4 @@
-import RecipesList from "../components/recipe/RecipesList";
+import RecipesList from "../components/recipe/recipeslist/RecipesList";
 import {useGetRecipeTitlesAndIdsQuery} from "../store/api";
 
 const Recipes = () => {

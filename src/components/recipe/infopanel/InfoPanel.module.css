@@ -1,0 +1,37 @@
+.info-panel {
+    display: flex;
+    align-items: center;
+}
+
+.info-panel img {
+    margin: 10px;
+}
+
+.info-panel h1 {
+    font-size: 2rem;
+}
+
+.cooking-time {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+/* Phone */
+@media screen and (max-width: 480px) {
+    .info-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/*!* Tablet *!*/
+@media screen and (max-width: 850px) {
+    .info-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+

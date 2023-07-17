@@ -2,7 +2,7 @@ import React from 'react';
 import classes from "../../main.module.css";
 import {isAdminUser} from "../../utils/auth";
 import NoteInput from "../admin/NoteInput";
-import DraggableList from "./DraggableList";
+import DraggableList from "./draggablelist/DraggableList";
 
 const Notes = (props) => {
     const isAdmin = isAdminUser();

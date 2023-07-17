@@ -6,7 +6,7 @@ import Method from "../components/recipe/Method";
 import Ingredients from "../components/recipe/Ingredients";
 import Tags from "../components/recipe/Tags";
 import _ from "lodash";
-import InfoPanel from "../components/recipe/InfoPanel";
+import InfoPanel from "../components/recipe/infopanel/InfoPanel";
 import {isAdminUser} from "../utils/auth";
 import Notes from "../components/recipe/Notes";
 import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../store/api";

@@ -1,15 +1,15 @@
 import RootLayout from "../pages/RootLayout";
 import ErrorPage from "../pages/ErrorPage";
-import HomePage from "../pages/Home";
+import HomePage from "../pages/home/Home";
 import Recipes from "../pages/Recipes";
 import Recipe from "../pages/Recipe";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import ManageTags from "../pages/admin/ManageTags";
-import Search from "../pages/Search";
+import Search from "../pages/search/Search";
 import {checkAuthLoader, tokenLoader} from '../utils/auth';
 import {action as logoutAction} from '../pages/Logout';
 import Login, {action as loginAction} from '../pages/Login';
-import Convertor from "../pages/Convertor";
+import Convertor from "../pages/convertors/Convertor";
 
 export const routes = [
     {
