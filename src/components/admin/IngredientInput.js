@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useGetUnitsQuery} from "../../store/api";
 import {toastUtils} from "../../utils/toast-utils";
+import Button from "../button/Button";
 
 const toast = toastUtils();
 
@@ -41,7 +42,7 @@ const IngredientInput = (props) => {
                 )}
             </select>
             <input type="text" name="description" value={description} onChange={e => setDescription(e.target.value)}/>
-            <button type="button" onClick={handleAddIngredient}>Add</button>
+            <Button type="button" onClick={handleAddIngredient}>Add</Button>
         </div>
     );
 };

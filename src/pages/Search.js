@@ -2,6 +2,7 @@ import RecipesList from "../components/recipe/RecipesList";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import classes from '../main.module.css';
 import {useGetRecipesByTagQuery, useGetTagsQuery} from "../store/api";
+import Button from "../components/button/Button";
 
 const Search = () => {
     const navigate = useNavigate();
@@ -21,8 +22,8 @@ const Search = () => {
             <section className={classes['tagList-search']}>
                 {!tags.length > 0 && <h2>No tags found</h2>}
                 {tags.map(tag =>
-                    <button type="button" onClick={() => performSearchHandler(tag.name)}
-                            key={tag.id}>{tag.name}</button>
+                    <Button type="button" onClick={() => performSearchHandler(tag.name)}
+                            key={tag.id}>{tag.name}</Button>
                 )}
             </section>
             {tagName &&

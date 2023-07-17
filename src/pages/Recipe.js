@@ -10,6 +10,7 @@ import InfoPanel from "../components/recipe/InfoPanel";
 import {isAdminUser} from "../utils/auth";
 import Notes from "../components/recipe/Notes";
 import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../store/api";
+import Button from "../components/button/Button";
 
 const Recipe = () => {
         const [ingredients, setIngredients] = useState([]);
@@ -192,7 +193,7 @@ const Recipe = () => {
                         onRemove={onRemoveMethodStepHandler}
                     />
                     {isAdmin &&
-                        <button type="submit" onClick={addRecipeHandler}>Submit</button>}
+                        <Button type="submit" onClick={addRecipeHandler}>Submit</Button>}
                 </form>
             </div>
         );

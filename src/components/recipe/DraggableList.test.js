@@ -57,7 +57,6 @@ describe('DraggableList component', () => {
         // ... nothing
 
         // Assert
-        screen.get
         const message = screen.getByText('None found', {exact: true});
         expect(message).toBeInTheDocument();
     });
