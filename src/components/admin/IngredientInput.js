@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useGetUnitsQuery} from "../../store/api";
 import {toastUtils} from "../../utils/toast-utils";
 import Button from "../button/Button";
@@ -7,6 +7,7 @@ const toast = toastUtils();
 
 const IngredientInput = (props) => {
     const {data: units = [], isError} = useGetUnitsQuery();
+    const numberInputRef = useRef(null);
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [unitId, setUnitId] = useState(0);
@@ -30,10 +31,12 @@ const IngredientInput = (props) => {
         setQuantity(0);
 
         props.onAdd(ingredient);
+
+        numberInputRef.current.focus();
     }
     return (
         <div>
-            <input type="number" name="quantity" step="0.25" value={quantity}
+            <input type="number" ref={numberInputRef} name="quantity" step="0.25" value={quantity}
                    onChange={e => setQuantity(+e.target.value)}/>
             <select name="unit_id" onChange={e => setUnitId(+e.target.value)} value={unitId}>
                 <option key="0" value="0"></option>
