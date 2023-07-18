@@ -1,9 +1,10 @@
 import classes from '../../main.module.css';
-import {useGetLatestRecipesQuery} from "../../store/api";
+import {useGetLatestRecipesQuery, useGetRandomRecipesQuery} from "../../store/api";
 import RecipesList from "../../components/recipe/recipeslist/RecipesList";
 
 const HomePage = () => {
     const {data: latestRecipe} = useGetLatestRecipesQuery();
+    const {data: randomRecipe} = useGetRandomRecipesQuery();
 
     return (
         <>
@@ -19,6 +20,8 @@ const HomePage = () => {
                 </p>
                 <h2>Latest</h2>
                 <RecipesList recipes={latestRecipe ? [latestRecipe] : []}/>
+                <h2>Random</h2>
+                <RecipesList recipes={randomRecipe ? [randomRecipe] : []}/>
             </section>
         </>
     );
