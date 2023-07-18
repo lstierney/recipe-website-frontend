@@ -1,7 +1,10 @@
 .recipes-list {
-    padding: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+}
+
+.recipes-list ul {
+    width: 100%;
 }
