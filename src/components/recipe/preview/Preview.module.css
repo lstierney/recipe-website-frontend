@@ -1,0 +1,24 @@
+.preview {
+    display: flex;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin: 0.5rem 0
+}
+
+.preview:hover {
+    cursor: pointer;
+}
+
+.preview-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.preview-name {
+
+}
+
+.preview-description {
+
+}
