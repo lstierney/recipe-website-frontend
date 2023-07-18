@@ -63,6 +63,13 @@ const api = createApi({
                 await handleQueryLifeCycle(queryFulfilled, "Loading Latest Recipes", "get Latest Recipes");
             }
         }),
+        getRandomRecipes: builder.query({
+            query: () => '/recipes/random',
+
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Random Recipe", "get Random Recipe");
+            }
+        }),
 
         getRecipeTitlesAndIds: builder.query({
             query: () => '/recipes/list',
@@ -172,6 +179,7 @@ export const {
     useGetRecipeQuery,
     useAddRecipeMutation,
     useGetLatestRecipesQuery,
+    useGetRandomRecipesQuery,
     useGetUnitsQuery,
     useGetTagsQuery,
     useAddTagMutation,
