@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
 }
 
 .preview-name {
@@ -25,4 +26,10 @@
 
 .preview img {
     border-radius: 10px;
+}
+
+@media screen and (max-width: 480px) {
+    .preview-description {
+        display: none
+    }
 }
