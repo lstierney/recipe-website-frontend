@@ -1,29 +1,39 @@
 import Home from "./Home";
 import {screen} from "@testing-library/react";
 import {renderWithProviders} from "../../utils/test-utils";
-import {useGetLatestRecipesQuery, useGetRandomRecipesQuery} from "../../store/api";
+import {useGetLatestRecipesQuery, useGetRecipeTitlesAndIdsQuery} from "../../store/api";
 
 jest.mock('../../store/api');
 
-const LATEST_RECIPE = {
-    id: 1,
-    name: 'Latest Recipe Name',
-    description: 'Latest Recipe Description'
-};
-const RANDOM_RECIPE = {
+const LATEST_RECIPES = [
+    {
+        id: 1,
+        name: 'Latest Recipe One',
+        description: 'Latest Recipe One Description'
+    },
+    {
+        id: 2,
+        name: 'Latest Recipe Two',
+        description: 'Latest Recipe Two Description'
+    }
+];
+
+const RECIPES_LIST = [{
     id: 2,
-    name: 'Random Recipe Name',
-    description: 'Random Recipe Description'
-};
+    name: 'Recipe List Name',
+    description: 'Recipe List Description',
+    imageFileName: 'recipe2.jpg'
+}];
 
 describe('Home page', () => {
     beforeEach(() => {
         useGetLatestRecipesQuery.mockReturnValue({
-            data: LATEST_RECIPE,
+            data: LATEST_RECIPES,
         });
-        useGetRandomRecipesQuery.mockReturnValue({
-            data: RANDOM_RECIPE,
+        useGetRecipeTitlesAndIdsQuery.mockReturnValue({
+            data: RECIPES_LIST,
         });
+
     });
 
     test('renders main title (using config)', () => {
@@ -45,18 +55,9 @@ describe('Home page', () => {
         // ...nothing
 
         // Assert
-        expect(screen.getByText("Latest Recipe Name", {exact: true})).toBeInTheDocument();
-        expect(screen.getByText("Latest Recipe Description", {exact: true})).toBeInTheDocument();
-    });
-    test('renders Random recipe', () => {
-        // Arrange
-        renderWithProviders(<Home/>);
-
-        // Act
-        // ...nothing
-
-        // Assert
-        expect(screen.getByText("Random Recipe Name", {exact: true})).toBeInTheDocument();
-        expect(screen.getByText("Random Recipe Description", {exact: true})).toBeInTheDocument();
+        expect(screen.getByText("Latest Recipe One", {exact: true})).toBeInTheDocument();
+        expect(screen.getByText("Latest Recipe One Description", {exact: true})).toBeInTheDocument();
+        expect(screen.getByText("Latest Recipe Two", {exact: true})).toBeInTheDocument();
+        expect(screen.getByText("Latest Recipe Two Description", {exact: true})).toBeInTheDocument();
     });
 });

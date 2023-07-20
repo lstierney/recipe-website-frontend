@@ -1,7 +1,6 @@
 .preview {
     display: flex;
     padding: 0.5rem;
-    border-radius: 10px;
     margin: 0.5rem 0
 }
 
@@ -22,4 +21,8 @@
 .preview-description {
     font-size: 1rem;
     padding-top: 0.75rem;
+}
+
+.preview img {
+    border-radius: 10px;
 }

@@ -1,27 +1,23 @@
-import classes from '../../main.module.css';
-import {useGetLatestRecipesQuery, useGetRandomRecipesQuery} from "../../store/api";
+import {useGetLatestRecipesQuery, useGetRecipeTitlesAndIdsQuery} from "../../store/api";
 import RecipesList from "../../components/recipe/recipeslist/RecipesList";
+import ImageRotator from "../../components/imagerotator/ImageRotator";
+import classes from './Home.module.css';
+
 
 const HomePage = () => {
-    const {data: latestRecipe} = useGetLatestRecipesQuery();
-    const {data: randomRecipe} = useGetRandomRecipesQuery();
+    const {data: latestRecipes} = useGetLatestRecipesQuery();
+    const {data: images} = useGetRecipeTitlesAndIdsQuery();
 
     return (
         <>
             <h1>{process.env.REACT_APP_PAGE_TITLE}</h1>
             <h2>An opinionated recipe website</h2>
             <section>
-                <p className={`${classes.description} ${classes.information} ${classes.curly_text}`}>
-                    My recipes.<br/>
-                    Cooked my way.<br/>
-                    Using my measurements.<br/>
-                    Using my ingredients.<br/>
-                    The way I like them<br/>
-                </p>
-                <h2>Latest</h2>
-                <RecipesList recipes={latestRecipe ? [latestRecipe] : []}/>
-                <h2>Random</h2>
-                <RecipesList recipes={randomRecipe ? [randomRecipe] : []}/>
+                <div>
+                    <ImageRotator images={images ? images : []}/>
+                </div>
+                <h2 className={classes['left-align']}>Latest</h2>
+                <RecipesList recipes={latestRecipes ? latestRecipes : []}/>
             </section>
         </>
     );
