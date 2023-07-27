@@ -11,13 +11,23 @@ import Button from "../../button/Button";
 function renderListItem(type, index, item) {
     return <>
         {type === 'methodSteps' && (
-            <MethodStep number={index + 1} methodStep={item}/>
+            <>
+                <hr/>
+                <MethodStep number={index + 1} methodStep={item}/>
+            </>
         )}
         {type === 'ingredients' && (
-            <Ingredient ingredient={item}/>
+            <>
+                <hr/>
+                <Ingredient ingredient={item}/>
+
+            </>
         )}
         {type === 'notes' && (
-            <Note note={item}/>
+            <>
+                <hr/>
+                <Note note={item}/>
+            </>
         )}
     </>;
 }
@@ -53,15 +63,13 @@ const DraggableList = (props) => {
         );
     } else {
         return (
-            <ul>
+            <>
                 {items.map((item, index) => (
-                    <li key={item.description}>
-                        <div className={classes['draggable-list-item']}>
-                            {renderListItem(type, index, item)}
-                        </div>
-                    </li>
+                    <div key={item.description} className={classes['draggable-list-item']}>
+                        {renderListItem(type, index, item)}
+                    </div>
                 ))}
-            </ul>
+            </>
         );
     }
 };
