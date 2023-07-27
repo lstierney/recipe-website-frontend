@@ -48,9 +48,15 @@ const DraggableList = (props) => {
             <Reorder.Group axis="y" values={items} onReorder={setItems}>
                 {items.map((item, index) => (
                     <Reorder.Item key={item.id} value={item}>
-                        <div className={classes['draggable-list-item']} onMouseUp={() => {
-                            props.onReorder(items);
-                        }}>
+                        <div
+                            className={classes['draggable-list-item']}
+                            onMouseUp={() => {
+                                props.onReorder(items)
+                            }}
+                            onTouchEnd={() => {
+                                props.onReorder(items)
+                            }}
+                        >
                             {renderListItem(type, index, item)}
                             <Button type="button" onClick={() => {
                                 props.onRemove(item.description);
