@@ -8,13 +8,12 @@ jest.mock('../../store/api');
 const LATEST_RECIPES = [
     {
         id: 1,
-        name: 'Latest Recipe One',
-        description: 'Latest Recipe One Description'
+        name: 'Latest Recipe One'
+
     },
     {
         id: 2,
-        name: 'Latest Recipe Two',
-        description: 'Latest Recipe Two Description'
+        name: 'Latest Recipe Two'
     }
 ];
 
@@ -56,8 +55,6 @@ describe('Home page', () => {
 
         // Assert
         expect(screen.getByText("Latest Recipe One", {exact: true})).toBeInTheDocument();
-        expect(screen.getByText("Latest Recipe One Description", {exact: true})).toBeInTheDocument();
         expect(screen.getByText("Latest Recipe Two", {exact: true})).toBeInTheDocument();
-        expect(screen.getByText("Latest Recipe Two Description", {exact: true})).toBeInTheDocument();
     });
 });

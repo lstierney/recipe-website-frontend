@@ -1,10 +1,8 @@
 .recipes-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: flex-start; /* Align items to the top */
     text-align: center;
-}
-
-.recipes-list ul {
-    width: 100%;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
 }
