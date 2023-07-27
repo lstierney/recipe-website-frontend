@@ -3,3 +3,9 @@
     line-height: 1.5rem;
     padding: 0.25rem;
 }
+
+.draggable-list-item hr {
+    border-top: 1px solid #e6e6e6;
+    margin-bottom: 0.5rem;
+    height: 1px;
+}

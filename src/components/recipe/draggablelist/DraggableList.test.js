@@ -34,7 +34,7 @@ describe('DraggableList component', () => {
         // ... nothing
 
         // Assert
-        expect(screen.getAllByRole('listitem')).toHaveLength(2);
+        expect(screen.getAllByRole('separator')).toHaveLength(2);
         expect(screen.getByText('Description One')).toBeInTheDocument();
         expect(screen.getByText('Description Two')).toBeInTheDocument();
     });

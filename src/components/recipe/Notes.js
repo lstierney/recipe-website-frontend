@@ -11,7 +11,6 @@ const Notes = (props) => {
         <section>
             <br/>
             <h2 className={classes.left_align}>Notes</h2>
-            <hr/>
             <DraggableList onReorder={props.onReorder} onRemove={props.onRemove} items={props.notes} type={'notes'}/>
             {isAdmin && <NoteInput onAdd={props.onAdd}/>}
         </section>

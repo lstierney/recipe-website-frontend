@@ -11,7 +11,6 @@ const Method = (props) => {
         <section>
             <br/>
             <h2 className={classes.left_align}>Method</h2>
-            <hr/>
             <DraggableList onReorder={props.onReorder} onRemove={props.onRemove} items={props.items}
                            type={'methodSteps'}/>
             {isAdmin && <MethodStepInput onAdd={props.onAdd}/>}
