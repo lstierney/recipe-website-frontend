@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import mainClasses from '../../../main.module.css';
 import classes from './InfoPanel.module.css';
 import RecipeImage from "../RecipeImage";
-import clockImage from "../../../assets/images/clock.png";
+import clockImage from "../../../assets/images/clock.svg";
+import bulbImage from "../../../assets/images/light-bulb.svg";
 import _ from "lodash";
 import {isAdminUser} from "../../../utils/auth";
 
-const InfoPanel = (props) => {
+const InfoPanel = props => {
     const recipe = props.recipe;
     const isAdmin = isAdminUser();
     const [showFilePicker, setShowFilePicker] = useState(false);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
+    const [basedOn, setBasedOn] = useState('');
     const [imageFileName, setImageFileName] = useState('');
 
     const handleImageClick = () => {
@@ -20,7 +22,6 @@ const InfoPanel = (props) => {
             setShowFilePicker(true);
         }
     }
-
     const handleNameChange = value => {
         props.setName(value);
         setName(value);
@@ -33,22 +34,20 @@ const InfoPanel = (props) => {
         props.setCookingTime(value);
         setCookingTime(value);
     }
+    const handleBasedOnChange = value => {
+        props.setBasedOn(value);
+        setBasedOn(value);
+    }
 
-
-    if (!_.isEmpty(recipe)) {
-        if (name === '') {
+    useEffect(() => {
+        if (!_.isEmpty(recipe)) {
             setName(recipe.name);
-        }
-        if (description === '') {
             setDescription(recipe.description);
-        }
-        if (cookingTime === 0) {
             setCookingTime(recipe.cookingTime);
-        }
-        if (imageFileName === '') {
+            setBasedOn(recipe.basedOn);
             setImageFileName(recipe.imageFileName);
         }
-    }
+    }, [recipe]);
 
     return (
         <>
@@ -74,27 +73,41 @@ const InfoPanel = (props) => {
                         {isAdmin &&
                             <>
                                 <label htmlFor="name">Name:</label>
-                                <input type="text" name="name" value={name}
+                                <input type="text" aria-label="name" name="name" value={name}
                                        onChange={e => handleNameChange(e.target.value)}/><br/>
                                 <label htmlFor="description">Description:</label><br/>
-                                <textarea name="description" rows="10" cols="60" value={description}
+                                <textarea name="description" aria-label="description" rows="10" cols="60"
+                                          value={description}
                                           onChange={e => handleDescriptionChange(e.target.value)}/>
                             </>
                         }
                     </div>
                 </div>
-                <div className={classes['cooking-time']}>
-                    {!isAdmin &&
+                <div className={classes['icon-strip']}>
+                    {!isAdmin && (
                         <>
-                            <img src={clockImage} alt="Clock"/>
-                            <p>Cook: {cookingTime} mins</p>
+                            <div className={classes['icon-text-pair']}>
+                                <img className={classes.icon} src={clockImage} alt="Clock"/>
+                                <p>Cook: {cookingTime} mins</p>
+                            </div>
+                            {basedOn && (
+                                <div className={classes['icon-text-pair']}>
+                                    <img className={classes.icon} src={bulbImage} alt="Light Bulb"/>
+                                    <p><a href={basedOn} target="_blank" rel="noreferrer">Inspired By</a></p>
+                                </div>
+                            )}
                         </>
-                    }
+                    )}
+
                     {isAdmin &&
                         <>
                             <label htmlFor="cookingTime">Cooking Time:</label>
-                            <input type="number" name="cookingTime" value={cookingTime}
+                            <input type="number" aria-label="cookingTime" name="cookingTime" value={cookingTime}
                                    onChange={e => handleCookingTimeChange(+e.target.value)}/>
+
+                            <label htmlFor="basedOn">Based On:</label>
+                            <input type="text" aria-label="basedOn" name="basedOn" value={basedOn}
+                                   onChange={e => handleBasedOnChange(e.target.value)}/>
                         </>
                     }
                 </div>

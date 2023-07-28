@@ -22,6 +22,7 @@ const Recipe = () => {
         const [name, setName] = useState('');
         const [description, setDescription] = useState('');
         const [cookingTime, setCookingTime] = useState(0);
+    const [basedOn, setBasedOn] = useState('');
         const [selectedTags, setSelectedTags] = useState([]);
         const [availableTags, setAvailableTags] = useState([]);
         const [image, setImage] = useState(null);
@@ -46,6 +47,7 @@ const Recipe = () => {
                 setName(recipe.name);
                 setDescription(recipe.description);
                 setCookingTime(recipe.cookingTime);
+                setBasedOn(recipe.basedOn)
                 setIngredients(recipe.ingredients);
                 setMethodSteps(recipe.methodSteps);
                 setNotes(recipe.notes);
@@ -75,6 +77,7 @@ const Recipe = () => {
                 name: name.length !== 0 ? name : undefined,
                 description: description.length !== 0 ? description : undefined,
                 cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
+                basedOn: basedOn.length !== 0 ? basedOn : undefined,
                 ingredients: ingredients,
                 methodSteps: methodSteps,
                 notes: notes,
@@ -166,6 +169,7 @@ const Recipe = () => {
                         setDescription={setDescription}
                         setName={setName}
                         setImage={setImage}
+                        setBasedOn={setBasedOn}
                     />
                     <Tags
                         onAdd={onAddTagHandler}
