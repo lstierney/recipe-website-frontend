@@ -7,11 +7,30 @@
     margin: 10px;
 }
 
+.icon {
+    height: 24px;
+    width: auto;
+    margin-right: 0.5rem;
+}
+
 .info-panel h1 {
     font-size: 2rem;
 }
 
-.cooking-time {
+.icon-strip {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    gap: 1rem;
+
+}
+
+.icon-text-pair {
+    display: flex;
+    align-items: center;
+}
+
+.based-on {
     display: flex;
     align-items: center;
     padding-left: 0.5rem;
