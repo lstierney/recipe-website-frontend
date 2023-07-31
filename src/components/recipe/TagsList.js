@@ -8,7 +8,7 @@ const TagsList = (props) => {
         <div className={classes.tagList}>
             {_.isEmpty(props.tags) && 'No tags available'}
             {!_.isEmpty(props.tags) && props.tags.map(
-                tag => <Button type="button"
+                tag => <Button key={tag.name} type="button"
                                onClick={() => props.onClickHandler(tag.id)}>{tag.name}</Button>
             )}
         </div>

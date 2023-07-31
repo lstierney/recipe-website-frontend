@@ -77,7 +77,7 @@ const Recipe = () => {
                 name: name.length !== 0 ? name : undefined,
                 description: description.length !== 0 ? description : undefined,
                 cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
-                basedOn: basedOn.length !== 0 ? basedOn : undefined,
+                basedOn: !_.isEmpty(basedOn) ? basedOn : '',
                 ingredients: ingredients,
                 methodSteps: methodSteps,
                 notes: notes,
