@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Form} from "react-router-dom";
-import classes from './LoginForm.module.css';
-import Button from "./button/Button";
+import classes from '../LoginForm.module.css';
+import Button from "../button/Button";
 
 const LoginForm = () => {
+    const userNameInputRef = useRef();
+
+    useEffect(() => {
+        userNameInputRef.current.focus();
+    }, [userNameInputRef]);
+
     return (
         <section>
             <h1>Login</h1>
@@ -13,6 +19,7 @@ const LoginForm = () => {
                 </div>
                 <div>
                     <input
+                        ref={userNameInputRef}
                         type="text"
                         name="username"
                         required/>

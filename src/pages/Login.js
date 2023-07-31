@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/loginform/LoginForm";
 import {toastUtils} from "../utils/toast-utils";
 import {redirect} from "react-router-dom";
 import {handleLogin} from "../utils/auth";
