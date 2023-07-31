@@ -6,6 +6,7 @@ import clockImage from "../../../assets/images/clock.svg";
 import bulbImage from "../../../assets/images/light-bulb.svg";
 import _ from "lodash";
 import {isAdminUser} from "../../../utils/auth";
+import FullScreenImageModal from "../fullscreenimagemodal/FullScreenImageModal";
 
 const InfoPanel = props => {
     const recipe = props.recipe;
@@ -16,12 +17,19 @@ const InfoPanel = props => {
     const [cookingTime, setCookingTime] = useState(0);
     const [basedOn, setBasedOn] = useState('');
     const [imageFileName, setImageFileName] = useState('');
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [imgSrc, setImgSrc] = useState('');
 
     const handleImageClick = () => {
         if (isAdmin) {
             setShowFilePicker(true);
+        } else {
+            setModalIsOpen(true)
         }
     }
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
     const handleNameChange = value => {
         props.setName(value);
         setName(value);
@@ -46,12 +54,14 @@ const InfoPanel = props => {
             setCookingTime(recipe.cookingTime);
             setBasedOn(recipe.basedOn);
             setImageFileName(recipe.imageFileName);
+            setImgSrc(process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName);
         }
-    }, [recipe]);
+    }, [recipe, props.imageFileName]);
 
     return (
         <>
             <section className={mainClasses.information}>
+                <FullScreenImageModal imageUrl={imgSrc} isOpen={modalIsOpen} closeModal={closeModal}/>
                 <div className={classes['info-panel']}>
                     {!showFilePicker &&
                         <RecipeImage imageFileName={imageFileName} alt={name} onClick={handleImageClick}/>
