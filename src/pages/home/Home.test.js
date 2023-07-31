@@ -35,7 +35,7 @@ describe('Home page', () => {
 
     });
 
-    test('renders main title (using config)', () => {
+    test('renders main title', () => {
         // Arrange
         renderWithProviders(<Home/>);
 
@@ -43,7 +43,7 @@ describe('Home page', () => {
         // ...nothing
 
         // Assert
-        const mainTitle = screen.getByText("My Veggie Recipes", {exact: true});
+        const mainTitle = screen.getByText("An opinionated recipe website", {exact: true});
         expect(mainTitle).toBeInTheDocument();
     });
     test('renders Latest recipe', () => {

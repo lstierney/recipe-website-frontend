@@ -1,16 +1,23 @@
 import React from 'react';
-import {NavLink, useSubmit} from "react-router-dom";
+import {NavLink, useNavigate, useSubmit} from "react-router-dom";
 import mainClasses from '../../main.module.css';
 import classes from './Header.module.css';
 import {getSubject, isAdminUser} from "../../utils/auth";
+import logoImage from "../../assets/images/logo.svg";
+
 
 const Header = () => {
     const isAdmin = isAdminUser();
     const submit = useSubmit();
     const subject = getSubject();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         submit(null, {action: '/logout', method: 'post'});
+    }
+
+    const handleLogoClick = () => {
+        navigate('/');
     }
 
     return (
@@ -72,6 +79,9 @@ const Header = () => {
                     }
                 </ul>
             </nav>
+            <div className={mainClasses.logo}>
+                <img className={classes['logo-image']} src={logoImage} alt="Logo" onClick={handleLogoClick}/>
+            </div>
 
         </>
     );
