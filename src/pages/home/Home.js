@@ -10,7 +10,6 @@ const HomePage = () => {
 
     return (
         <>
-            <h1>{process.env.REACT_APP_PAGE_TITLE}</h1>
             <h2>An opinionated recipe website</h2>
             <section>
                 <div>

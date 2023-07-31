@@ -6,8 +6,8 @@ import {act} from "react-dom/test-utils";
 import {useGetRecipesByTagQuery, useGetTagsQuery} from "../../store/api";
 
 const TAGS = [
-    {id: 1, name: 'Tag Number One'},
-    {id: 2, name: 'Tag Number Two'}
+    {id: 1, name: 'Tag-One'},
+    {id: 2, name: 'Tag-Two'}
 ];
 
 const prepareGetTagsMock = (tags = []) => {
@@ -58,17 +58,20 @@ describe('Search page', () => {
         // Arrange
         prepareGetTagsMock(TAGS);
         prepareGetRecipesByTagMock();
-        renderWithProviders(<Search/>);
+        renderWithProviders(<Search/>, [{
+            path: '/search',
+            element: <Search/>
+        }]);
 
         // Act
-        const button = screen.getByText('Tag Number One');
+        const button = screen.getByText('Tag-One');
 
         act(() => {
             userEvent.click(button);
         });
 
         // Assert
-        let message = screen.getByText('Recipes for Tag "Tag Number One"', {exact: true});
+        let message = screen.getByText('Recipes for Tag "Tag-One"', {exact: true});
         expect(message).toBeInTheDocument();
 
         message = screen.getByText('No recipes found', {exact: true});
