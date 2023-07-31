@@ -58,18 +58,23 @@ const InfoPanel = props => {
         }
     }, [recipe, props.imageFileName]);
 
+    useEffect(() => {
+        setShowFilePicker(isAdmin && _.isEmpty(imageFileName))
+    }, [isAdmin, imageFileName]);
+
     return (
         <>
             <section className={mainClasses.information}>
                 <FullScreenImageModal imageUrl={imgSrc} isOpen={modalIsOpen} closeModal={closeModal}/>
+
                 <div className={classes['info-panel']}>
-                    {!showFilePicker &&
+                    {!showFilePicker && !_.isEmpty(imageFileName) &&
                         <RecipeImage imageFileName={imageFileName} alt={name} onClick={handleImageClick}/>
                     }
                     {showFilePicker &&
                         <>
                             <label htmlFor="image">Choose an image:</label>
-                            <input type="file" id="image" name="image"
+                            <input type="file" id="image" name="image" aria-label="Image Chooser Input"
                                    onChange={e => props.setImage(e.target.files[0])}/>
                         </>
                     }

@@ -1,5 +1,5 @@
 import InfoPanel from './InfoPanel';
-import {screen} from "@testing-library/react";
+import {fireEvent, screen} from "@testing-library/react";
 import {renderWithProviders} from "../../../utils/test-utils";
 import {isAdminUser} from "../../../utils/auth";
 
@@ -159,5 +159,72 @@ describe('InfoPanel', () => {
         const basedOnInput = screen.getByRole('textbox', {name: 'basedOn'})
         expect(basedOnInput).toBeInTheDocument();
         expect(basedOnInput.value).toBe('http://somerecipe.com');
+    });
+    test('renders image when recipe.imageFileName is present and user is not admin', () => {
+        // Arrange
+        isAdminUser.mockReturnValue(false);
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const recipeImage = screen.getByRole('img', {name: 'Latest Recipe One'})
+        expect(recipeImage).toBeInTheDocument();
+
+    });
+    test('renders image when recipe.imageFileName is present and user is admin', () => {
+        // Arrange
+        isAdminUser.mockReturnValue(true);
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const recipeImage = screen.getByRole('img', {name: 'Latest Recipe One'})
+        expect(recipeImage).toBeInTheDocument();
+    });
+    test('renders filepicker when recipe.imageFileName is not present and user is admin', () => {
+        // Arrange
+        isAdminUser.mockReturnValue(true);
+        RECIPE.imageFileName = undefined;
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const fileInputButton = screen.getByLabelText('Choose an image:', {exact: true});
+        expect(fileInputButton).toBeInTheDocument();
+    });
+    test('does not render image when recipe.imageFileName is not present and user is admin', () => {
+        // Arrange
+        isAdminUser.mockReturnValue(true);
+        RECIPE.imageFileName = undefined;
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const recipeImage = screen.queryByRole('img', {name: 'Latest Recipe One'})
+        expect(recipeImage).not.toBeInTheDocument();
+    });
+    test('renders filepicker when recipe.imageFileName is present, user is admin and user clicks image', () => {
+        // Arrange
+        isAdminUser.mockReturnValue(true);
+        RECIPE.imageFileName = 'test.jpg'
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        fireEvent.click(screen.getByRole('img', {name: 'Latest Recipe One'}));
+
+        // Assert
+        const fileInputButton = screen.getByLabelText('Choose an image:', {exact: true});
+        expect(fileInputButton).toBeInTheDocument();
+
+        const recipeImage = screen.queryByRole('img', {name: 'Latest Recipe One'})
+        expect(recipeImage).not.toBeInTheDocument();
     });
 });
