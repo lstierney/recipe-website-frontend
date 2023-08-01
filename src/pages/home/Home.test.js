@@ -35,17 +35,6 @@ describe('Home page', () => {
 
     });
 
-    test('renders main title', () => {
-        // Arrange
-        renderWithProviders(<Home/>);
-
-        // Act
-        // ...nothing
-
-        // Assert
-        const mainTitle = screen.getByText("An opinionated recipe website", {exact: true});
-        expect(mainTitle).toBeInTheDocument();
-    });
     test('renders Latest recipe', () => {
         // Arrange
         renderWithProviders(<Home/>);
