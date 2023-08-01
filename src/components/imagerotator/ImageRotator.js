@@ -30,10 +30,10 @@ const ImageRotator = ({images}) => {
                         alt={image.name}
                         style={{
                             display:
-                                index === currentImageIndex || index === (currentImageIndex + 1) % images.length
+                                index === currentImageIndex
                                     ? 'block'
                                     : 'none',
-                            width: '50%',
+                            width: '100%',
                         }}
                     />
                 );
