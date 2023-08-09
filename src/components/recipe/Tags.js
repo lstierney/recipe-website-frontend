@@ -1,5 +1,5 @@
 import React from 'react';
-import TagsList from "./TagsList";
+import TagsList from "./tagslist/TagsList";
 import classes from '../../main.module.css';
 import {isAdminUser} from "../../utils/auth";
 

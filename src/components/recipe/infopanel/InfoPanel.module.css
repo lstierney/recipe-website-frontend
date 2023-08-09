@@ -1,12 +1,6 @@
 .info-panel {
     display: flex;
-    align-items: center;
 }
-
-.info-panel img {
-    margin: 10px;
-}
-
 .icon {
     height: 24px;
     width: auto;
@@ -17,13 +11,26 @@
     font-size: 2rem;
 }
 
+.info-panel-right {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.name {
+
+}
+
+.description {
+    flex: 1;
+}
 .icon-strip {
     display: flex;
     align-items: center;
-    padding-left: 0.5rem;
+    padding: 1rem;
     gap: 1rem;
-
 }
+
 
 .icon-text-pair {
     display: flex;
@@ -45,7 +52,7 @@
     }
 }
 
-/*!* Tablet *!*/
+/* Tablet */
 @media screen and (max-width: 850px) {
     .info-panel {
         display: flex;

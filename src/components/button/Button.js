@@ -4,7 +4,7 @@ import './Button.module.css';
 
 const Button = props => {
     return (
-        <button onClick={props.onClick} type={props.type}>{props.children}</button>
+        <button onClick={props.onClick} aria-label={props.ariaLabel} type={props.type}>{props.children}</button>
     );
 };
 
