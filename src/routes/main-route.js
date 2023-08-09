@@ -1,11 +1,10 @@
 import RootLayout from "../pages/RootLayout";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/home/Home";
-import Recipes from "../pages/Recipes";
 import Recipe from "../pages/Recipe";
 import AdminHomePage from "../pages/admin/AdminHomePage";
 import ManageTags from "../pages/admin/ManageTags";
-import Search from "../pages/search/Search";
+import Recipes from "../pages/recipes/Recipes";
 import {checkAuthLoader, tokenLoader} from '../utils/auth';
 import {action as logoutAction} from '../pages/Logout';
 import Login, {action as loginAction} from '../pages/Login';
@@ -24,16 +23,12 @@ export const routes = [
                 element: <HomePage/>
             },
             {
-                path: 'recipes',
-                element: <Recipes/>
-            },
-            {
                 path: 'recipes/:recipeId',
                 element: <Recipe/>
             },
             {
-                path: 'search',
-                element: <Search/>
+                path: 'recipes',
+                element: <Recipes/>
             },
             {
                 path: 'convertors',
