@@ -1,0 +1,17 @@
+.tagList-search {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.close {
+    height: 2rem;
+    width: auto;
+}
+
+.recipes-for {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
