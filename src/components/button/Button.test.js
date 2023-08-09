@@ -47,4 +47,15 @@ describe('Button component', () => {
         // Assert
         expect(screen.getByText('Button Text', {exact: true})).toHaveAttribute('type', 'button');
     });
+    test('has aria-label attribute', () => {
+        // Arrange
+
+        renderWithProviders(<Button ariaLabel="label for button">Button Text</Button>);
+
+        // Act
+        // nothing
+
+        // Assert
+        expect(screen.getByText('Button Text', {exact: true})).toHaveAttribute('aria-label', 'label for button');
+    });
 });

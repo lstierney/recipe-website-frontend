@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import mainClasses from '../../../main.module.css';
 import classes from './InfoPanel.module.css';
-import RecipeImage from "../RecipeImage";
+import RecipeImage from "../recipeimage/RecipeImage";
 import clockImage from "../../../assets/images/clock.svg";
 import bulbImage from "../../../assets/images/light-bulb.svg";
 import _ from "lodash";
@@ -78,11 +78,15 @@ const InfoPanel = props => {
                                    onChange={e => props.setImage(e.target.files[0])}/>
                         </>
                     }
-                    <div>
+                    <div className={classes['info-panel-right']}>
                         {!isAdmin &&
                             <>
-                                <h1>{name}</h1>
-                                <p className={mainClasses.description}>{description}</p>
+                                <div className={classes.name}>
+                                    <h1>{name}</h1>
+                                </div>
+                                <div className={classes.description}>
+                                    <p className={mainClasses.description}>{description}</p>
+                                </div>
                             </>
                         }
                         {isAdmin &&
@@ -96,35 +100,35 @@ const InfoPanel = props => {
                                           onChange={e => handleDescriptionChange(e.target.value)}/>
                             </>
                         }
-                    </div>
-                </div>
-                <div className={classes['icon-strip']}>
-                    {!isAdmin && (
-                        <>
-                            <div className={classes['icon-text-pair']}>
-                                <img className={classes.icon} src={clockImage} alt="Clock"/>
-                                <p>Cook: {cookingTime} mins</p>
-                            </div>
-                            {basedOn && (
-                                <div className={classes['icon-text-pair']}>
-                                    <img className={classes.icon} src={bulbImage} alt="Light Bulb"/>
-                                    <p><a href={basedOn} target="_blank" rel="noreferrer">Inspired By</a></p>
-                                </div>
+                        <div className={classes['icon-strip']}>
+                            {!isAdmin && (
+                                <>
+                                    <div className={classes['icon-text-pair']}>
+                                        <img className={classes.icon} src={clockImage} alt="Clock"/>
+                                        <p>Cook: {cookingTime} mins</p>
+                                    </div>
+                                    {basedOn && (
+                                        <div className={classes['icon-text-pair']}>
+                                            <img className={classes.icon} src={bulbImage} alt="Light Bulb"/>
+                                            <p><a href={basedOn} target="_blank" rel="noreferrer">Inspired By</a></p>
+                                        </div>
+                                    )}
+                                </>
                             )}
-                        </>
-                    )}
 
-                    {isAdmin &&
-                        <>
-                            <label htmlFor="cookingTime">Cooking Time:</label>
-                            <input type="number" aria-label="cookingTime" name="cookingTime" value={cookingTime}
-                                   onChange={e => handleCookingTimeChange(+e.target.value)}/>
+                            {isAdmin &&
+                                <>
+                                    <label htmlFor="cookingTime">Cooking Time:</label>
+                                    <input type="number" aria-label="cookingTime" name="cookingTime" value={cookingTime}
+                                           onChange={e => handleCookingTimeChange(+e.target.value)}/>
 
-                            <label htmlFor="basedOn">Based On:</label>
-                            <input type="text" aria-label="basedOn" name="basedOn" value={basedOn}
-                                   onChange={e => handleBasedOnChange(e.target.value)}/>
-                        </>
-                    }
+                                    <label htmlFor="basedOn">Based On:</label>
+                                    <input type="text" aria-label="basedOn" name="basedOn" value={basedOn}
+                                           onChange={e => handleBasedOnChange(e.target.value)}/>
+                                </>
+                            }
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

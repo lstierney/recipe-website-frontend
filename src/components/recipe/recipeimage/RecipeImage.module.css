@@ -1,0 +1,20 @@
+.image {
+    width: 300px;
+    height: 300px;
+}
+
+/* Phone */
+@media screen and (max-width: 480px) {
+    .image {
+        width: 100%;
+        height: auto;
+        margin: 0;
+    }
+}
+
+/* Tablet */
+@media screen and (max-width: 850px) {
+    .image {
+
+    }
+}
