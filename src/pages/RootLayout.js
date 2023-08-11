@@ -23,7 +23,7 @@ const RootLayout = () => {
         }, getTokenDuration());
     }, [token, submit]);
 
-    const klassName = location.pathname === '/' ? classes['home-content'] : classes.content;
+    const klassName = (location.pathname === '/' || location.pathname === '/logout') ? classes['home-content'] : classes.content;
 
     return (
         <>

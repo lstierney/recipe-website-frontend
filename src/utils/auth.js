@@ -1,10 +1,12 @@
 import {redirect} from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import _ from 'lodash';
 
 export const EXPIRED = 'EXPIRED';
 const TOKEN = 'token';
 const EXPIRATION = 'expiration';
 const SUB = 'sub';
+const IS_EDITING = 'isEditing';
 
 export const getTokenDuration = () => {
     const storedExpirationDate = localStorage.getItem(EXPIRATION);
@@ -59,9 +61,22 @@ export const handleLogout = () => {
     localStorage.removeItem(TOKEN);
     localStorage.removeItem(EXPIRATION);
     localStorage.removeItem(SUB);
+    leaveEditingMode();
 }
 
 export const getSubject = () => {
     return localStorage.getItem(SUB);
+}
+
+export const enterEditingMode = () => {
+    localStorage.setItem(IS_EDITING, 'true');
+}
+
+export const leaveEditingMode = () => {
+    localStorage.removeItem(IS_EDITING);
+}
+
+export const isInEditingMode = () => {
+    return !_.isEmpty(localStorage.getItem(IS_EDITING)) && isAdminUser();
 }
 

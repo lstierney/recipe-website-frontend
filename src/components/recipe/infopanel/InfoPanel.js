@@ -5,12 +5,12 @@ import RecipeImage from "../recipeimage/RecipeImage";
 import clockImage from "../../../assets/images/clock.svg";
 import bulbImage from "../../../assets/images/light-bulb.svg";
 import _ from "lodash";
-import {isAdminUser} from "../../../utils/auth";
+import {isInEditingMode} from "../../../utils/auth";
 import FullScreenImageModal from "../fullscreenimagemodal/FullScreenImageModal";
 
 const InfoPanel = props => {
     const recipe = props.recipe;
-    const isAdmin = isAdminUser();
+    const isEditMode = isInEditingMode();
     const [showFilePicker, setShowFilePicker] = useState(false);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -21,7 +21,7 @@ const InfoPanel = props => {
     const [imgSrc, setImgSrc] = useState('');
 
     const handleImageClick = () => {
-        if (isAdmin) {
+        if (isEditMode) {
             setShowFilePicker(true);
         } else {
             setModalIsOpen(true)
@@ -59,8 +59,8 @@ const InfoPanel = props => {
     }, [recipe, props.imageFileName]);
 
     useEffect(() => {
-        setShowFilePicker(isAdmin && _.isEmpty(imageFileName))
-    }, [isAdmin, imageFileName]);
+        setShowFilePicker(isEditMode && _.isEmpty(imageFileName))
+    }, [isEditMode, imageFileName]);
 
     return (
         <>
@@ -79,7 +79,7 @@ const InfoPanel = props => {
                         </>
                     }
                     <div className={classes['info-panel-right']}>
-                        {!isAdmin &&
+                        {!isEditMode &&
                             <>
                                 <div className={classes.name}>
                                     <h1>{name}</h1>
@@ -89,7 +89,7 @@ const InfoPanel = props => {
                                 </div>
                             </>
                         }
-                        {isAdmin &&
+                        {isEditMode &&
                             <>
                                 <label htmlFor="name">Name:</label>
                                 <input type="text" aria-label="name" name="name" value={name}
@@ -101,7 +101,7 @@ const InfoPanel = props => {
                             </>
                         }
                         <div className={classes['icon-strip']}>
-                            {!isAdmin && (
+                            {!isEditMode && (
                                 <>
                                     <div className={classes['icon-text-pair']}>
                                         <img className={classes.icon} src={clockImage} alt="Clock"/>
@@ -116,7 +116,7 @@ const InfoPanel = props => {
                                 </>
                             )}
 
-                            {isAdmin &&
+                            {isEditMode &&
                                 <>
                                     <label htmlFor="cookingTime">Cooking Time:</label>
                                     <input type="number" aria-label="cookingTime" name="cookingTime" value={cookingTime}
