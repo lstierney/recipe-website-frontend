@@ -1,15 +1,15 @@
 import React from 'react';
-import TagsList from "./tagslist/TagsList";
-import classes from '../../main.module.css';
-import {isAdminUser} from "../../utils/auth";
+import TagsList from "../tagslist/TagsList";
+import classes from '../../../main.module.css';
+import {isInEditingMode} from "../../../utils/auth";
 
 const Tags = (props) => {
-    const isAdmin = isAdminUser();
-    const onClickSelectedTag = isAdmin ? props.onRemove : props.onSearch;
+    const isEditMode = isInEditingMode();
+    const onClickSelectedTag = isEditMode ? props.onRemove : props.onSearch;
 
     return (
         <section>
-            {isAdmin && <>
+            {isEditMode && <>
                 <h2 className={classes.left_align}>Tags</h2>
                 <h3 className={classes.left_align}>Available</h3>
                 <TagsList tags={props.availableTags} onClickHandler={props.onAdd}/>

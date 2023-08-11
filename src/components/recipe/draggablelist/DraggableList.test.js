@@ -92,10 +92,12 @@ describe('DraggableList component', () => {
         expect(screen.queryByText('STEP 1', {})).not.toBeInTheDocument();
         expect(screen.queryByText('STEP 2', {})).not.toBeInTheDocument();
     });
-    test('should render "Delete" buttons when in admin mode', () => {
+    test('should render "Delete" buttons when in edit mode', () => {
         // Arrange
-        localStorage.setItem('token', 'This is the token');
+        localStorage.setItem('isEditing', 'true');
+        localStorage.setItem('token', 'fake token');
         localStorage.setItem('expiration', '' + (new Date().getTime() + 1000));
+
         renderWithProviders(<DraggableList items={ITEMS}/>);
 
         // Act
@@ -104,10 +106,9 @@ describe('DraggableList component', () => {
         // Assert
         expect(screen.queryAllByRole('button', {})).toHaveLength(2);
     });
-    test('should not render "Delete" buttons when not in admin mode', () => {
+    test('should not render "Delete" buttons when not in edit mode', () => {
         // Arrange
-        localStorage.removeItem('token');
-        localStorage.removeItem('expiration');
+        localStorage.removeItem('isEditing');
         renderWithProviders(<DraggableList items={ITEMS}/>);
 
         // Act

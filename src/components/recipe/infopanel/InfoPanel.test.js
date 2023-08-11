@@ -1,7 +1,7 @@
 import InfoPanel from './InfoPanel';
 import {fireEvent, screen} from "@testing-library/react";
 import {renderWithProviders} from "../../../utils/test-utils";
-import {isAdminUser} from "../../../utils/auth";
+import {isAdminUser, isInEditingMode} from "../../../utils/auth";
 
 jest.mock('../../../utils/auth');
 
@@ -107,9 +107,9 @@ describe('InfoPanel', () => {
         expect(bulbIcon).not.toBeInTheDocument();
     });
     // isAdmin tests
-    test('renders name input with correct value when user isAdmin', () => {
+    test('renders name input with correct value when in edit mode', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 
         // Act
@@ -120,9 +120,9 @@ describe('InfoPanel', () => {
         expect(nameInput).toBeInTheDocument();
         expect(nameInput.value).toBe('Latest Recipe One')
     });
-    test('renders description textarea with correct value when user isAdmin', () => {
+    test('renders description textarea with correct value when in editing mode', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 
         // Act
@@ -133,9 +133,9 @@ describe('InfoPanel', () => {
         expect(textArea).toBeInTheDocument();
         expect(textArea.value).toBe('This is the description for the recipe')
     });
-    test('renders cooking time input with correct value when user isAdmin', () => {
+    test('renders cooking time input with correct value when in edit mode', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 
         // Act
@@ -146,10 +146,10 @@ describe('InfoPanel', () => {
         expect(cookingTimeInput).toBeInTheDocument();
         expect(cookingTimeInput.value).toBe("30");
     });
-    test('renders "based on" input with correct value when user isAdmin', () => {
+    test('renders "based on" input with correct value when in edit mode', () => {
         // Arrange
         RECIPE.basedOn = 'http://somerecipe.com';
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 
         // Act
@@ -185,9 +185,9 @@ describe('InfoPanel', () => {
         const recipeImage = screen.getByRole('img', {name: 'Latest Recipe One'})
         expect(recipeImage).toBeInTheDocument();
     });
-    test('renders filepicker when recipe.imageFileName is not present and user is admin', () => {
+    test('renders filepicker when recipe.imageFileName is not present and in edit mode', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         RECIPE.imageFileName = undefined;
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 
@@ -198,9 +198,9 @@ describe('InfoPanel', () => {
         const fileInputButton = screen.getByLabelText('Choose an image:', {exact: true});
         expect(fileInputButton).toBeInTheDocument();
     });
-    test('does not render image when recipe.imageFileName is not present and user is admin', () => {
+    test('does not render image when recipe.imageFileName is not present and in edit mode', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         RECIPE.imageFileName = undefined;
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 
@@ -211,9 +211,9 @@ describe('InfoPanel', () => {
         const recipeImage = screen.queryByRole('img', {name: 'Latest Recipe One'})
         expect(recipeImage).not.toBeInTheDocument();
     });
-    test('renders filepicker when recipe.imageFileName is present, user is admin and user clicks image', () => {
+    test('renders filepicker when recipe.imageFileName is present, in edit mode and user clicks image', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
+        isInEditingMode.mockReturnValue(true);
         RECIPE.imageFileName = 'test.jpg'
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
 

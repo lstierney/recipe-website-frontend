@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import _ from 'lodash';
 import classes from './DraggableList.module.css';
 import {Reorder} from "framer-motion";
-import {isAdminUser} from "../../../utils/auth";
+import {isInEditingMode} from "../../../utils/auth";
 import Ingredient from "../ingredient/Ingredient";
 import MethodStep from "../methodstep/MethodStep";
 import Note from "../note/Note";
 import Button from "../../button/Button";
 
-function renderListItem(type, index, item) {
+const renderListItem = (type, index, item) => {
     return <>
         {type === 'methodSteps' && (
             <>
@@ -33,7 +33,7 @@ function renderListItem(type, index, item) {
 }
 
 const DraggableList = (props) => {
-    const isAdmin = isAdminUser();
+    const isEditMode = isInEditingMode();
     const [items, setItems] = useState(props.items);
     const type = props.type; // methodStep, notes, ingredient
 
@@ -43,7 +43,7 @@ const DraggableList = (props) => {
 
     if (_.isEmpty(items)) {
         return <p>None found</p>;
-    } else if (isAdmin) {
+    } else if (isEditMode) {
         return (
             <Reorder.Group axis="y" values={items} onReorder={setItems}>
                 {items.map((item, index) => (
