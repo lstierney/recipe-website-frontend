@@ -7,12 +7,13 @@ const Preview = props => {
     const imgSrc = process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName;
     const navigate = useNavigate();
 
-    const handleClick = id => {
-        navigate(`/recipes/${id}`)
+    const handleClick = name => {
+        name = name.replaceAll(' ', '-').toLowerCase();
+        navigate(`/recipes/${name}`);
     }
 
     return (
-        <div key={recipe.name} className={classes.preview} onClick={() => handleClick(recipe.id)}>
+        <div key={recipe.name} className={classes.preview} onClick={() => handleClick(recipe.name)}>
             <img alt={recipe.name} src={imgSrc}/>
             <span className={classes['preview-name']}>{recipe.name}</span>
         </div>

@@ -23,7 +23,7 @@ export const routes = [
                 element: <HomePage/>
             },
             {
-                path: 'recipes/:recipeId',
+                path: 'recipes/:recipeName',
                 element: <Recipe/>
             },
             {
