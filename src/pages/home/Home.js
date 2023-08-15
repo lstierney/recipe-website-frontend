@@ -13,8 +13,9 @@ const HomePage = () => {
     const imgHost = process.env.REACT_APP_API_HOST;
     const navigate = useNavigate()
 
-    const handleImageClick = id => {
-        navigate(`/recipes/${id}`);
+    const handleImageClick = name => {
+        name = name.replaceAll(' ', '-').toLowerCase();
+        navigate(`/recipes/${name}`);
     };
 
     useEffect(() => {
@@ -30,15 +31,15 @@ const HomePage = () => {
 
     return (
         <>
-            <div className={mainClasses['hero-image-container']}>
+            <div onClick={() => handleImageClick(randomRecipe.name)} className={mainClasses['hero-image-container']}>
                 {randomRecipe &&
                     <img className={mainClasses['hero-image']} src={imgHost + '/images/' + randomRecipe.imageFileName}
-                         alt={randomRecipe.name} onClick={() => handleImageClick(randomRecipe.id)}/>
+                         alt={randomRecipe.name}/>
                 }
             </div>
-            <div className={mainClasses['hero-card']}>
+            <div onClick={() => handleImageClick(randomRecipe.name)} className={mainClasses['hero-card']}>
                 {randomRecipe &&
-                    <div onClick={() => handleImageClick(randomRecipe.id)} className={mainClasses['hero-card-inner']}>
+                    <div className={mainClasses['hero-card-inner']}>
                         <div className={mainClasses['hero-card-name']}>{randomRecipe.name}</div>
                         <div className={mainClasses['hero-card-description']}>{randomRecipe.description}</div>
                     </div>

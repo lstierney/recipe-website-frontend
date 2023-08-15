@@ -13,6 +13,7 @@ import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecip
 import Button from "../components/button/Button";
 
 const Recipe = () => {
+    const [id, setId] = useState(undefined);
     const [ingredients, setIngredients] = useState([]);
     const [methodSteps, setMethodSteps] = useState([]);
     const [notes, setNotes] = useState([]);
@@ -31,12 +32,12 @@ const Recipe = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const recipeId = useParams().recipeId;
+    const recipeName = useParams().recipeName;
     const isAdmin = isAdminUser();
-    const isUpdate = recipeId !== undefined && isAdmin;
+    const isUpdate = recipeName !== undefined && isAdmin;
 
     const {data: metaTags = []} = useGetTagsQuery();
-    const {data: recipe} = useGetRecipeQuery(recipeId, {skip: recipeId === undefined});
+    const {data: recipe} = useGetRecipeQuery(recipeName, {skip: recipeName === undefined});
     const [addRecipe] = useAddRecipeMutation();
     const [updateRecipe] = useUpdateRecipeMutation();
 
@@ -59,6 +60,7 @@ const Recipe = () => {
 
     useEffect(() => {
         if (recipe !== undefined) {
+            setId(recipe.id);
             setName(recipe.name);
             setDescription(recipe.description);
             setCookingTime(recipe.cookingTime);
@@ -110,7 +112,7 @@ const Recipe = () => {
         };
 
         if (isUpdate) {
-            recipe.id = +recipeId;
+            recipe.id = id;
         }
 
         if (window.confirm(JSON.stringify(recipe, null, 2))) {

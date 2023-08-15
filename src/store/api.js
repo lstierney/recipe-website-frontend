@@ -47,11 +47,11 @@ const api = createApi({
             }
         }),
         getRecipe: builder.query({
-            query: id => `recipes/${id}`,
-            providesTags: (result, error, id) => [{type: 'Recipes', id}],
+            query: name => `recipes/${name}`,
+            providesTags: (result, error, name) => [{type: 'Recipes', name}],
 
-            async onQueryStarted(id, {queryFulfilled}) {
-                await handleQueryLifeCycle(queryFulfilled, "Loading Recipe: " + id, "get Recipe: " + id);
+            async onQueryStarted(name, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipe: " + name, "get Recipe: " + name);
             },
 
         }),
@@ -112,7 +112,7 @@ const api = createApi({
             //  invalidatesTags: (result, error, arg) => [{type: 'Tags', id: arg.id}],
             invalidatesTags: (result, error, recipe) => [{type: 'Recipes', id: 'LATEST'}, {
                 type: 'Recipes',
-                id: recipe.id
+                id: recipe.name
             }],
 
             async onQueryStarted(arg, {queryFulfilled}) {
