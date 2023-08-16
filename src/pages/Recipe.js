@@ -24,6 +24,8 @@ const Recipe = () => {
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
     const [basedOn, setBasedOn] = useState('');
+    const [crockery, setCrockery] = useState(0);
+    const [heated, setHeated] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
     const [availableTags, setAvailableTags] = useState([]);
     const [image, setImage] = useState(null);
@@ -81,6 +83,10 @@ const Recipe = () => {
             if (!_.isEmpty(recipe.notes)) {
                 setNoteOrderingId(getHighestOrdering(recipe.notes));
             }
+            if (!_.isEmpty(recipe.servedOn)) {
+                setCrockery(recipe.servedOn.crockery.id);
+                setHeated(recipe.servedOn.heated);
+            }
         } else {
             setAvailableTags(metaTags);
         }
@@ -110,6 +116,15 @@ const Recipe = () => {
             imageFileName: imageFileName,
             tags: selectedTags
         };
+
+        if (!_.isEmpty(crockery)) {
+            recipe.servedOn = {
+                crockery: {
+                    id: crockery
+                },
+                heated: heated
+            };
+        }
 
         if (isUpdate) {
             recipe.id = id;
@@ -203,6 +218,8 @@ const Recipe = () => {
                     setName={setName}
                     setImage={setImage}
                     setBasedOn={setBasedOn}
+                    setCrockery={setCrockery}
+                    setHeated={setHeated}
                 />
                 <Tags
                     onAdd={onAddTagHandler}

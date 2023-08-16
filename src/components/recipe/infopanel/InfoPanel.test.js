@@ -2,8 +2,10 @@ import InfoPanel from './InfoPanel';
 import {fireEvent, screen} from "@testing-library/react";
 import {renderWithProviders} from "../../../utils/test-utils";
 import {isAdminUser, isInEditingMode} from "../../../utils/auth";
+import {useGetCrockeryQuery} from "../../../store/api";
 
 jest.mock('../../../utils/auth');
+jest.mock('../../../store/api');
 
 const RECIPE = {
     id: 1,
@@ -14,7 +16,23 @@ const RECIPE = {
     imageFileName: 'test.jpg'
 };
 
+const CROCKERY_LIST = [
+    {
+        id: 1,
+        description: 'White Plates'
+    },
+    {
+        id: 2,
+        description: 'Green Bowls'
+    }
+];
+
 describe('InfoPanel', () => {
+    beforeEach(() => {
+        useGetCrockeryQuery.mockReturnValue({
+            data: CROCKERY_LIST,
+        });
+    });
     test('renders Recipe name', () => {
         // Arrange
         renderWithProviders(<InfoPanel recipe={RECIPE}/>);
@@ -45,7 +63,7 @@ describe('InfoPanel', () => {
         // ...nothing
 
         // Assert
-        const cookingTime = screen.getByText('Cook: 30 mins', {exact: true});
+        const cookingTime = screen.getByText('30 mins', {exact: true});
         expect(cookingTime).toBeInTheDocument();
     });
     test('renders clock icon', () => {
@@ -67,7 +85,7 @@ describe('InfoPanel', () => {
         // ...nothing
 
         // Assert
-        const inspiredBy = screen.getByRole('link', {name: 'Inspired By'});
+        const inspiredBy = screen.getByRole('link', {name: 'Inspiration'});
         expect(inspiredBy).toBeInTheDocument();
         expect(inspiredBy).toHaveAttribute('href', 'http://somerecipe.com');
     });
@@ -91,7 +109,7 @@ describe('InfoPanel', () => {
         // ...nothing
 
         // Assert
-        const inspiredBy = screen.queryByRole('link', {name: 'Inspired By'});
+        const inspiredBy = screen.queryByRole('link', {name: 'Inspiration'});
         expect(inspiredBy).not.toBeInTheDocument();
     });
     test('does not render bulb icon when recipe.basedOn is not present', () => {
@@ -226,5 +244,77 @@ describe('InfoPanel', () => {
 
         const recipeImage = screen.queryByRole('img', {name: 'Latest Recipe One'})
         expect(recipeImage).not.toBeInTheDocument();
+    });
+    test('renders "served on" details when data is present and not in edit mode', () => {
+        // Arrange
+        RECIPE.servedOn = {
+            crockery: {
+                id: 1
+            },
+            heated: true
+        };
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // -- nothing
+
+        // Assert
+        const servingPlateImage = screen.getByRole('img', {name: 'Serving Plate'})
+        expect(servingPlateImage).toBeInTheDocument();
+
+        const servedOnString = screen.getByText('Heated White Plates', {exact: true});
+        expect(servedOnString).toBeInTheDocument();
+    });
+    test('does not render "served on" details when data is not present and not in edit mode', () => {
+        // Arrange
+        RECIPE.servedOn = undefined;
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // -- nothing
+
+        // Assert
+        const servingPlateImage = screen.queryByRole('img', {name: 'Serving Plate'})
+        expect(servingPlateImage).not.toBeInTheDocument();
+    });
+    test('renders select list for crockery when in edit mode', () => {
+        // Arrange
+        isInEditingMode.mockReturnValue(true);
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // -- nothing
+
+        // Assert
+        const selectList = screen.getByRole('combobox', {name: 'Crockery:'})
+        expect(selectList).toBeInTheDocument();
+
+        expect(screen.getAllByRole('option').length).toBe(3); // this includes "please select"
+    });
+    test('does not render select list for crockery when not in edit mode', () => {
+        // Arrange
+        isInEditingMode.mockReturnValue(false);
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // -- nothing
+
+        // Assert
+        const selectList = screen.queryByRole('combobox', {name: 'Crockery:'})
+        expect(selectList).not.toBeInTheDocument();
+
+        expect(screen.queryAllByRole('option').length).toBe(0);
+    });
+    test('renders radio for "heated" when in edit mode', () => {
+        // Arrange
+        isInEditingMode.mockReturnValue(true);
+        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+
+        // Act
+        // -- nothing
+
+        // Assert
+        const radios = screen.getAllByRole('radio', {name: 'Heated radio'})
+        expect(radios.length).toBe(2);
     });
 });
