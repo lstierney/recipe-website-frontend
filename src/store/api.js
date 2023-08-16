@@ -37,7 +37,7 @@ const api = createApi({
 
     }),
 
-    tagTypes: ['Tags', 'Units', 'Recipes'],
+    tagTypes: ['Tags', 'Units', 'Recipes', 'Crockery'],
 
     endpoints: (builder) => ({
         getRecipesByTag: builder.query({
@@ -48,7 +48,7 @@ const api = createApi({
         }),
         getRecipe: builder.query({
             query: name => `recipes/${name}`,
-            providesTags: (result, error, name) => [{type: 'Recipes', name}],
+            providesTags: (result, error, name) => [{type: 'Recipes', id: name}],
 
             async onQueryStarted(name, {queryFulfilled}) {
                 await handleQueryLifeCycle(queryFulfilled, "Loading Recipe: " + name, "get Recipe: " + name);
@@ -110,10 +110,11 @@ const api = createApi({
                 };
             },
             //  invalidatesTags: (result, error, arg) => [{type: 'Tags', id: arg.id}],
-            invalidatesTags: (result, error, recipe) => [{type: 'Recipes', id: 'LATEST'}, {
-                type: 'Recipes',
-                id: recipe.name
-            }],
+            invalidatesTags: (result, error, recipe) =>
+                [{type: 'Recipes', id: 'LATEST'}, {
+                    type: 'Recipes',
+                    id: recipe.name.replaceAll(' ', '-').toLowerCase()
+                }],
 
             async onQueryStarted(arg, {queryFulfilled}) {
                 await handleMutationLifeCycle(queryFulfilled, "Updating Recipe", "Updated Recipe", "update recipe");
@@ -124,6 +125,13 @@ const api = createApi({
             providesTags: [{type: 'Units', id: 'LIST'}],
             async onQueryStarted(arg, {queryFulfilled}) {
                 await handleQueryLifeCycle(queryFulfilled, "Loading Units", "load Units");
+            }
+        }),
+        getCrockery: builder.query({
+            query: () => '/crockery',
+            providesTags: [{type: 'Crockery', id: 'LIST'}],
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Crockery", "load Crockery");
             }
         }),
         getTags: builder.query({
@@ -181,6 +189,7 @@ export const {
     useGetLatestRecipesQuery,
     useGetRandomRecipesQuery,
     useGetUnitsQuery,
+    useGetCrockeryQuery,
     useGetTagsQuery,
     useAddTagMutation,
     useUpdateTagMutation,
