@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import differenceBy from 'lodash/differenceBy'
-import Method from "../components/recipe/method/Method";
-import Ingredients from "../components/recipe/ingredients/Ingredients";
-import Tags from "../components/recipe/tags/Tags";
+import Method from "../../components/recipe/method/Method";
+import Ingredients from "../../components/recipe/ingredients/Ingredients";
+import Tags from "../../components/recipe/tags/Tags";
 import _ from "lodash";
-import InfoPanel from "../components/recipe/infopanel/InfoPanel";
-import {enterEditingMode, isAdminUser, isInEditingMode, leaveEditingMode} from "../utils/auth";
-import Notes from "../components/recipe/notes/Notes";
-import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../store/api";
-import Button from "../components/button/Button";
+import InfoPanel from "../../components/recipe/infopanel/InfoPanel";
+import {enterEditingMode, isAdminUser, isInEditingMode, leaveEditingMode} from "../../utils/auth";
+import Notes from "../../components/recipe/notes/Notes";
+import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../../store/api";
+import Button from "../../components/button/Button";
 
 const Recipe = () => {
     const [id, setId] = useState(undefined);
@@ -62,6 +62,7 @@ const Recipe = () => {
 
     useEffect(() => {
         if (recipe !== undefined) {
+            //alert(JSON.stringify(recipe, null, 2));
             setId(recipe.id);
             setName(recipe.name);
             setDescription(recipe.description);
@@ -117,7 +118,7 @@ const Recipe = () => {
             tags: selectedTags
         };
 
-        if (!_.isEmpty(crockery)) {
+        if (!_.isNil(crockery)) {
             recipe.servedOn = {
                 crockery: {
                     id: crockery
