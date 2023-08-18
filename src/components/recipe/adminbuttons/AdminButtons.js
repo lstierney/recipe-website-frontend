@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {isAdminUser} from '../../../utils/auth';
+import React, {useCallback, useEffect, useState} from 'react';
+import {isAdminUser, isInEditingMode} from '../../../utils/auth';
 import Button from "../../button/Button";
 import {useLocation} from "react-router-dom";
 
@@ -7,33 +7,35 @@ const AdminButtons = props => {
     const [isEditMode, setIsEditMode] = useState(false);
     const isAdmin = isAdminUser();
     const location = useLocation();
+    const onEditModeChange = props.onEditModeChange;
+
+    const enterEditMode = useCallback(() => {
+        setIsEditMode(true);
+        onEditModeChange(true);
+    }, [onEditModeChange]);
+
+    const leaveEditMode = useCallback(() => {
+        setIsEditMode(false);
+        onEditModeChange(false);
+    }, [onEditModeChange]);
 
     useEffect(() => {
         if (location.pathname === '/admin/addRecipe' && isAdmin) {
-            handleEnterEditMode();
+            enterEditMode();
         }
-        return () => {
-            handleLeaveEditMode();
+        if (isInEditingMode()) {
+            setIsEditMode(true);
         }
-    }, [isAdmin, location.pathname]);
-
-    const handleEnterEditMode = () => {
-        setIsEditMode(true);
-        props.onEditModeChange(true);
-    }
-    const handleLeaveEditMode = () => {
-        setIsEditMode(false);
-        props.onEditModeChange(false);
-    }
+    }, [isAdmin, location.pathname, enterEditMode]);
 
     const buttonContent = () => {
         return (
             <div>
                 {isAdmin ? (
                     isEditMode ? (
-                        <Button type="button" onClick={handleLeaveEditMode}>Read Only Mode</Button>
+                        <Button type="button" onClick={leaveEditMode}>Read Only Mode</Button>
                     ) : (
-                        <Button type="button" onClick={handleEnterEditMode}>Edit Mode</Button>
+                        <Button type="button" onClick={enterEditMode}>Edit Mode</Button>
                     )
                 ) : null}
                 {isEditMode &&

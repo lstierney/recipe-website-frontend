@@ -79,6 +79,12 @@ const Recipe = () => {
         }
     }, [recipe, metaTags]);
 
+    useEffect(() => {
+        return () => {
+            leaveEditingMode();
+        }
+    }, []);
+
     const addRecipeHandler = async e => {
         e.preventDefault();
 
