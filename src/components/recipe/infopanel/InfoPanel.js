@@ -163,7 +163,7 @@ const InfoPanel = props => {
                                         <label htmlFor="crockery">Crockery:</label>
                                         <select id="crockery" defaultValue={crockery} name="crockery"
                                                 onChange={e => handleCrockeryChange(e.target.value)}>
-                                            <option key={'pleaseChoose'}>Please Choose</option>
+                                            <option key={'pleaseChoose'} value={0}>Please Choose</option>
                                             {crockeryList.map(item => <option key={item.id}
                                                                               value={item.id}>{item.description}</option>)}
                                         </select>

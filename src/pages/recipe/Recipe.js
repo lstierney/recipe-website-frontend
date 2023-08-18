@@ -24,7 +24,7 @@ const Recipe = () => {
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
     const [basedOn, setBasedOn] = useState('');
-    const [crockery, setCrockery] = useState(undefined);
+    const [crockery, setCrockery] = useState(0);
     const [heated, setHeated] = useState(false);
     const [selectedTags, setSelectedTags] = useState([]);
     const [availableTags, setAvailableTags] = useState([]);
@@ -118,7 +118,7 @@ const Recipe = () => {
             tags: selectedTags
         };
 
-        if (!_.isNil(crockery)) {
+        if (crockery > 0) {
             recipe.servedOn = {
                 crockery: {
                     id: crockery
