@@ -1,21 +1,22 @@
 import React, {useEffect, useState} from 'react';
 
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import differenceBy from 'lodash/differenceBy'
 import Method from "../../components/recipe/method/Method";
 import Ingredients from "../../components/recipe/ingredients/Ingredients";
 import Tags from "../../components/recipe/tags/Tags";
 import _ from "lodash";
 import InfoPanel from "../../components/recipe/infopanel/InfoPanel";
-import {enterEditingMode, isAdminUser, isInEditingMode, leaveEditingMode} from "../../utils/auth";
+import {enterEditingMode, isAdminUser, leaveEditingMode} from "../../utils/auth";
 import Notes from "../../components/recipe/notes/Notes";
 import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../../store/api";
-import Button from "../../components/button/Button";
+import AdminButtons from "../../components/recipe/adminbuttons/AdminButtons";
 
 const Recipe = () => {
     const [id, setId] = useState(undefined);
     const [ingredients, setIngredients] = useState([]);
     const [methodSteps, setMethodSteps] = useState([]);
+    const [isRecipeInEditMode, setIsRecipeInEditMode] = useState(false);
     const [notes, setNotes] = useState([]);
     const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
     const [ingredientOrderingId, setIngredientOrderingId] = useState(1);
@@ -30,10 +31,7 @@ const Recipe = () => {
     const [availableTags, setAvailableTags] = useState([]);
     const [image, setImage] = useState(null);
     const [imageFileName, setImageFileName] = useState('');
-    const [isEditMode, setIsEditMode] = useState(false);
-
     const navigate = useNavigate();
-    const location = useLocation();
     const recipeName = useParams().recipeName;
     const isAdmin = isAdminUser();
     const isUpdate = recipeName !== undefined && isAdmin;
@@ -47,18 +45,6 @@ const Recipe = () => {
         return _.orderBy(items, ['ordering'], ['desc'])[0].ordering + 1
     }
 
-    useEffect(() => {
-        if (location.pathname === '/admin/addRecipe') {
-            if (isAdmin) {
-                setIsEditMode(true);
-                enterEditingMode();
-            }
-        }
-        return () => {
-            // This return function is the cleanup function.
-            leaveEditingMode();
-        };
-    }, [isAdmin, location.pathname]);
 
     useEffect(() => {
         if (recipe !== undefined) {
@@ -93,14 +79,11 @@ const Recipe = () => {
         }
     }, [recipe, metaTags]);
 
-    const handleEnterEditMode = () => {
-        enterEditingMode();
-        setIsEditMode(true);
-    }
-    const handleLeaveEditMode = () => {
-        leaveEditingMode();
-        setIsEditMode(false);
-    }
+    useEffect(() => {
+        return () => {
+            leaveEditingMode();
+        }
+    }, []);
 
     const addRecipeHandler = async e => {
         e.preventDefault();
@@ -136,6 +119,12 @@ const Recipe = () => {
             isUpdate ? await updateRecipe(recipe).unwrap() : await addRecipe(recipe).unwrap();
         }
     }
+
+    const handleEditModeChange = editMode => {
+        setIsRecipeInEditMode(editMode);
+        editMode ? enterEditingMode() : leaveEditingMode();
+        console.log(isRecipeInEditMode);
+    };
 
     const onAddIngredientHandler = ingredient => {
         const newIngredients = ingredients.slice();
@@ -205,13 +194,7 @@ const Recipe = () => {
     return (
         <div>
             <form>
-                {isAdmin ? (
-                    isInEditingMode() ? (
-                        <Button type="button" onClick={handleLeaveEditMode}>Read Only Mode</Button>
-                    ) : (
-                        <Button type="button" onClick={handleEnterEditMode}>Edit Mode</Button>
-                    )
-                ) : null}
+                <AdminButtons addRecipeHandler={addRecipeHandler} onEditModeChange={handleEditModeChange}>
                 <InfoPanel
                     recipe={recipe}
                     setCookingTime={setCookingTime}
@@ -247,8 +230,7 @@ const Recipe = () => {
                     onReorder={onReorderMethodStepHandler}
                     onRemove={onRemoveMethodStepHandler}
                 />
-                {isEditMode &&
-                    <Button type="submit" onClick={addRecipeHandler}>Submit</Button>}
+                </AdminButtons>
             </form>
         </div>
     );

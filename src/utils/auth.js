@@ -77,6 +77,6 @@ export const leaveEditingMode = () => {
 }
 
 export const isInEditingMode = () => {
-    return !_.isEmpty(localStorage.getItem(IS_EDITING)) && isAdminUser();
+    return !_.isNil(localStorage.getItem(IS_EDITING)) && isAdminUser();
 }
 
