@@ -2,12 +2,14 @@ import {renderWithProviders} from "../../utils/test-utils";
 import {fireEvent, screen} from "@testing-library/react";
 import Button from "./Button";
 
+const onClick = jest.fn();
+
 describe('Button component', () => {
 
 
     test('renders', () => {
         // Arrange
-        renderWithProviders(<Button></Button>);
+        renderWithProviders(<Button type="button" onClick={onClick}>Button Text</Button>);
 
         // Act
         // ... nothing
@@ -17,7 +19,7 @@ describe('Button component', () => {
     });
     test('renders children', () => {
         // Arrange
-        renderWithProviders(<Button>Button Text</Button>);
+        renderWithProviders(<Button type="button" onClick={onClick}>Button Text</Button>);
 
         // Act
         // ... nothing
@@ -28,7 +30,7 @@ describe('Button component', () => {
     test('has onClick attribute', () => {
         // Arrange
         const mockOnClick = jest.fn(); // Create a mock function
-        renderWithProviders(<Button onClick={mockOnClick}>Button Text</Button>);
+        renderWithProviders(<Button type="button" onClick={mockOnClick}>Button Text</Button>);
 
         // Act
         fireEvent.click(screen.getByRole('button'));
@@ -39,7 +41,7 @@ describe('Button component', () => {
     test('has type attribute', () => {
         // Arrange
 
-        renderWithProviders(<Button type="button">Button Text</Button>);
+        renderWithProviders(<Button type="button" onClick={onClick}>Button Text</Button>);
 
         // Act
         // nothing
@@ -50,7 +52,7 @@ describe('Button component', () => {
     test('has aria-label attribute', () => {
         // Arrange
 
-        renderWithProviders(<Button ariaLabel="label for button">Button Text</Button>);
+        renderWithProviders(<Button type="button" onClick={onClick} ariaLabel="label for button">Button Text</Button>);
 
         // Act
         // nothing

@@ -2,12 +2,18 @@ import React, {useRef, useState} from 'react';
 import {useGetUnitsQuery} from "../../store/api";
 import {toastUtils} from "../../utils/toast-utils";
 import Button from "../button/Button";
+import {Unit} from "../../types/unit";
+import {Ingredient} from "../../types/ingredient";
 
 const toast = toastUtils();
 
-const IngredientInput = (props) => {
-    const {data: units = [], isError} = useGetUnitsQuery();
-    const numberInputRef = useRef(null);
+type Props = {
+    onAdd(ingredient: Ingredient): void
+}
+
+const IngredientInput: React.FC<Props> = props => {
+    const {data: units = [], isError} = useGetUnitsQuery({});
+    const numberInputRef = useRef<HTMLInputElement>(null);
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [unitId, setUnitId] = useState(0);
@@ -17,7 +23,7 @@ const IngredientInput = (props) => {
     }
 
     const handleAddIngredient = () => {
-        const ingredient = {
+        const ingredient: Ingredient = {
             description: description,
             quantity: quantity
         };
@@ -31,8 +37,9 @@ const IngredientInput = (props) => {
         setQuantity(0);
 
         props.onAdd(ingredient);
-
-        numberInputRef.current.focus();
+        if (numberInputRef.current !== null) {
+            numberInputRef.current.focus();
+        }
     }
     return (
         <div>
@@ -40,7 +47,7 @@ const IngredientInput = (props) => {
                    onChange={e => setQuantity(+e.target.value)}/>
             <select name="unit_id" onChange={e => setUnitId(+e.target.value)} value={unitId}>
                 <option key="0" value="0"></option>
-                {units.map(unit =>
+                {units.map((unit: Unit) =>
                     <option key={unit.id} value={unit.id}>{unit.name}</option>
                 )}
             </select>

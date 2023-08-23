@@ -2,11 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {useAddTagMutation, useDeleteTagMutation, useUpdateTagMutation} from "../../../store/api";
 import {toastUtils} from "../../../utils/toast-utils";
 import Button from "../../button/Button";
+import {Tag} from "../../../types/tag";
 
+type Props = {
+    tag: Tag,
+    mode: 'add' | 'edit'
+}
 
-const AddTag = (props) => {
+const AddTag: React.FC<Props> = props => {
     const [name, setName] = useState("");
-    const [id, setId] = useState();
+    const [id, setId] = useState<number | undefined>(undefined);
     const [description, setDescription] = useState("");
     const [addTag] = useAddTagMutation();
     const [deleteTag] = useDeleteTagMutation();
