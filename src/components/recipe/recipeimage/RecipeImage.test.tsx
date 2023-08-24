@@ -5,7 +5,7 @@ import {fireEvent, render, screen} from "@testing-library/react";
 describe('RecipeImage', () => {
     test('renders image', () => {
         // Arrange
-        render(<RecipeImage alt='Alt Text' imageFileName='recipe.jpg'/>);
+        render(<RecipeImage onClick={jest.fn()} alt='Alt Text' imageFileName='recipe.jpg'/>);
 
         // Act
         // -- nothing

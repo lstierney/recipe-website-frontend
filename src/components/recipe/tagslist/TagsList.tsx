@@ -2,8 +2,14 @@ import React from 'react';
 import _ from 'lodash';
 import classes from './TagsList.module.css';
 import Button from "../../button/Button";
+import {TagType} from "../../../types/tagType";
 
-const TagsList = props => {
+type Props = {
+    tags: TagType[],
+    onClickHandler: (tagId: number) => void
+}
+
+const TagsList = (props: Props) => {
     return (
         <div className={classes['tags-list']}>
             {_.isEmpty(props.tags) && 'No tags available'}

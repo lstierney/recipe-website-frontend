@@ -1,14 +1,19 @@
 import React from 'react';
 import classes from './Preview.module.css';
 import {useNavigate} from "react-router-dom";
+import {RecipeType} from "../../../types/recipeType";
 
-const Preview = props => {
+type Props = {
+    recipe: RecipeType
+}
+
+const Preview = (props: Props) => {
     const {recipe} = props;
     const imgSrc = process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName;
     const navigate = useNavigate();
 
-    const handleClick = name => {
-        name = name.replaceAll(' ', '-').toLowerCase();
+    const handleClick = (name: string) => {
+        name = name.replace(/ /g, '-').toLowerCase();
         navigate(`/recipes/${name}`);
     }
 

@@ -2,8 +2,13 @@ import React from 'react';
 import classes from './RecipeList.module.css';
 import _ from 'lodash';
 import Preview from "../preview/Preview";
+import {RecipeType} from "../../../types/recipeType";
 
-const RecipesList = props => {
+type Props = {
+    recipes: RecipeType[]
+}
+
+const RecipesList = (props: Props) => {
     return (
         <div className={classes['recipes-list']}>
             {!_.isEmpty(props.recipes) && props.recipes.map(recipe =>

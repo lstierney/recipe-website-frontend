@@ -2,8 +2,17 @@ import React from 'react';
 import TagsList from "../tagslist/TagsList";
 import classes from '../../../main.module.css';
 import {isInEditingMode} from "../../../utils/auth";
+import {TagType} from "../../../types/tagType";
 
-const Tags = (props) => {
+type Props = {
+    availableTags: TagType[],
+    selectedTags: TagType[],
+    onAdd: (id: number) => void,
+    onRemove: (id: number) => void,
+    onSearch: (id: number) => void
+}
+
+const Tags = (props: Props) => {
     const isEditMode = isInEditingMode();
     const onClickSelectedTag = isEditMode ? props.onRemove : props.onSearch;
 

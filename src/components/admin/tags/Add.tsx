@@ -9,7 +9,7 @@ type Props = {
     mode: 'add' | 'edit'
 }
 
-const AddTag: React.FC<Props> = props => {
+const AddTag = (props: Props) => {
     const [name, setName] = useState("");
     const [id, setId] = useState<number | undefined>(undefined);
     const [description, setDescription] = useState("");

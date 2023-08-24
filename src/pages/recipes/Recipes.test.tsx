@@ -4,13 +4,27 @@ import {renderWithProviders} from "../../utils/test-utils";
 import userEvent from "@testing-library/user-event";
 import {act} from "react-dom/test-utils";
 import {useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery} from "../../store/api";
+import {TagType} from "../../types/tagType";
+import {RecipeType} from "../../types/recipeType";
 
-const TAGS = [
-    {id: 1, name: 'Tag-One'},
-    {id: 2, name: 'Tag-Two'}
+const mockGetRecipesByTagQuery = useGetRecipesByTagQuery as jest.MockedFunction<typeof useGetRecipesByTagQuery>;
+const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
+const mockGetTagsQuery = useGetTagsQuery as jest.MockedFunction<typeof useGetTagsQuery>;
+
+const TAGS: TagType[] = [
+    {
+        id: 1,
+        name: 'Tag-One',
+        description: 'Desc for tag 1'
+    },
+    {
+        id: 2,
+        name: 'Tag-Two',
+        description: 'Desc for tag 2'
+    }
 ];
 
-const ALL_RECIPES = [
+const ALL_RECIPES: RecipeType[] = [
     {
         id: 1,
         name: 'Recipe One',
@@ -24,7 +38,7 @@ const ALL_RECIPES = [
         imageFileName: 'recipe2.jpg'
     }
 ];
-const RECIPES_FOR_TAG = [
+const RECIPES_FOR_TAG: RecipeType[] = [
     {
         id: 3,
         name: 'Recipe Three',
@@ -39,27 +53,30 @@ const RECIPES_FOR_TAG = [
     }
 ];
 
-const prepareGetTagsMock = (tags = []) => {
-    useGetTagsQuery.mockReturnValue({
-        data: tags
+const prepareGetTagsMock = (tags: TagType[]) => {
+    mockGetTagsQuery.mockReturnValue({
+        data: tags,
+        refetch: jest.fn()
     });
 }
 
-const prepareGetRecipeTitlesAndIdsQueryMock = (recipes = []) => {
-    useGetRecipeTitlesAndIdsQuery.mockReturnValue({
-        data: recipes
+const prepareGetRecipeTitlesAndIdsQueryMock = (recipes: RecipeType[]) => {
+    mockGetRecipeTitlesAndIdsQuery.mockReturnValue({
+        data: recipes,
+        refetch: jest.fn()
     });
 }
 
-const prepareGetRecipesByTagMock = (recipes = []) => {
-    useGetRecipesByTagQuery.mockReturnValue({
-        data: recipes
+const prepareGetRecipesByTagMock = (recipes: RecipeType[]) => {
+    mockGetRecipesByTagQuery.mockReturnValue({
+        data: recipes,
+        refetch: jest.fn()
     });
 }
 
 jest.mock('../../store/api');
 
-function assertInitialRecipePreviewsHaveRendered() {
+const assertInitialRecipePreviewsHaveRendered = () => {
     let name = screen.getByText('Recipe One', {exact: true});
     expect(name).toBeInTheDocument();
 
@@ -106,7 +123,7 @@ describe('Search page', () => {
     });
     test('displays message when no Tags found', () => {
         // Arrange
-        prepareGetTagsMock();
+        prepareGetTagsMock([]);
         renderWithProviders(<Recipes/>);
 
         // Act
@@ -121,7 +138,7 @@ describe('Search page', () => {
     });
     test('displays a message when no Recipes are found for a Tag', () => {
         // Arrange
-        prepareGetRecipesByTagMock();
+        prepareGetRecipesByTagMock([]);
         renderWithProviders(<Recipes/>, [{
             path: '/recipes',
             element: <Recipes/>
@@ -156,7 +173,7 @@ describe('Search page', () => {
         });
 
         // Assert
-        let message = screen.getByText('Recipes for Tag "Tag-One"', {exact: true});
+        let message: (HTMLElement | null) = screen.getByText('Recipes for Tag "Tag-One"', {exact: true});
         expect(message).toBeInTheDocument();
 
         message = screen.queryByText('No recipes found', {exact: true});

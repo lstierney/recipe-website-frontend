@@ -1,21 +1,24 @@
 import TagsList from "./TagsList";
 import {render, screen} from "@testing-library/react";
+import {TagType} from "../../../types/tagType";
 
-const TAGS = [
+const TAGS: TagType[] = [
     {
         id: 1,
-        name: 'tag-one'
+        name: 'tag-one',
+        description: 'description one'
     },
     {
         id: 2,
-        name: 'tag-two'
+        name: 'tag-two',
+        description: 'description two'
     }
 ];
 
 describe('TagList', () => {
     test('renders "No tags available" when no tags', () => {
         // Arrange
-        render(<TagsList/>);
+        render(<TagsList tags={[]} onClickHandler={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -26,7 +29,7 @@ describe('TagList', () => {
     });
     test('renders tags as buttons', () => {
         // Arrange
-        render(<TagsList tags={TAGS}/>);
+        render(<TagsList onClickHandler={jest.fn} tags={TAGS}/>);
 
         // Act
         // -- nothing

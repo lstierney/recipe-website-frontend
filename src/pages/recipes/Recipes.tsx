@@ -7,16 +7,17 @@ import _ from 'lodash';
 import closeImage from "../../assets/images/close-circle.svg";
 
 import React from "react";
+import {TagType} from "../../types/tagType";
 
 const Recipes = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const tagName = searchParams.get('tag');
-    const {data: tags = []} = useGetTagsQuery();
+    const {data: tags = []} = useGetTagsQuery({});
     const {data: recipes = []} = useGetRecipesByTagQuery(tagName, {skip: _.isEmpty(tagName)});
     const {data: allRecipes} = useGetRecipeTitlesAndIdsQuery({skip: !_.isEmpty(tagName)});
 
-    const performSearchHandler = tagName => {
+    const performSearchHandler = (tagName: string) => {
         navigate("/recipes?tag=" + tagName);
     };
     const clearSearchParams = () => {
@@ -26,8 +27,8 @@ const Recipes = () => {
     return (
         <>
             <section className={classes['tagList-search']}>
-                {!tags.length > 0 && <h2>No tags found</h2>}
-                {tags.map(tag =>
+                {tags.length <= 0 && <h2>No tags found</h2>}
+                {tags.map((tag: TagType) =>
                     <Button type="button" onClick={() => performSearchHandler(tag.name)}
                             key={tag.id}>{tag.name}</Button>
                 )}

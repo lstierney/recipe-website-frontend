@@ -1,8 +1,9 @@
 import {renderWithProviders} from "../../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import Note from "./Note";
+import {NoteType} from "../../../types/noteType";
 
-const NOTE =
+const NOTE: NoteType =
     {
         id: 1,
         description: 'Note Desc',

@@ -3,8 +3,16 @@ import classes from "../../../main.module.css";
 import {isInEditingMode} from "../../../utils/auth";
 import NoteInput from "../../admin/NoteInput";
 import DraggableList from "../draggablelist/DraggableList";
+import {NoteType} from "../../../types/noteType";
 
-const Notes = props => {
+type Props = {
+    notes: NoteType[],
+    onReorder: (notes: NoteType[]) => void,
+    onAdd: (noteDescription: string) => void,
+    onRemove: (noteDescription: string) => void
+}
+
+const Notes = (props: Props) => {
     const isEditMode = isInEditingMode();
 
     return (
