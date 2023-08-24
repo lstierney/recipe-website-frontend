@@ -16,13 +16,11 @@ type Props = {
     recipe: RecipeType,
     setName: (name: string) => void,
     setDescription: (description: string) => void,
-    imageFileName: string,
     setCookingTime: (cookingTime: number) => void,
     setCrockery: (crockery: number) => void,
     setBasedOn: (basedOn: string) => void,
     setHeated: (isHeated: boolean) => void,
-    setImage: (imageFile: File | null) => void
-
+    setImage: (imageFile: File | undefined) => void
 }
 
 const InfoPanel = (props: Props) => {
@@ -95,7 +93,7 @@ const InfoPanel = (props: Props) => {
             setImageFileName(recipe.imageFileName);
             setImgSrc(process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName);
         }
-    }, [recipe, props.imageFileName]);
+    }, [recipe]);
 
     useEffect(() => {
         const show: boolean = isEditMode && _.isEmpty(imageFileName);
@@ -116,7 +114,7 @@ const InfoPanel = (props: Props) => {
                             <label htmlFor="image">Choose an image:</label>
                             <input type="file" id="image" name="image" aria-label="Image Chooser Input"
                                    onChange={e => {
-                                       const uploadedFile = e.target.files ? e.target.files[0] : null;
+                                       const uploadedFile = e.target.files ? e.target.files[0] : undefined;
                                        props.setImage(uploadedFile);
                                    }}
                             />

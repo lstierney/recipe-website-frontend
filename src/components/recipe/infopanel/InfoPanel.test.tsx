@@ -35,7 +35,6 @@ const CROCKERY_LIST = [
 
 const renderInfoPanel = () => {
     renderWithProviders(<InfoPanel
-        imageFileName={''}
         setName={jest.fn()}
         setImage={jest.fn()}
         setBasedOn={jest.fn()}

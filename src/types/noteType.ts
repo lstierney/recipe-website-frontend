@@ -1,5 +1,6 @@
-export interface NoteType {
-    id: number,
-    description: string,
-    ordering: number
+import {OrderableType} from "./orderableType";
+
+export interface NoteType extends OrderableType {
+    id?: number,
+    description: string
 }

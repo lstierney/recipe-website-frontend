@@ -1,5 +1,7 @@
-export interface MethodStepType {
-    id: number,
+import {OrderableType} from "./orderableType";
+
+export interface MethodStepType extends OrderableType {
+    id?: number,
     description: string,
-    number: number
+    number?: number
 }

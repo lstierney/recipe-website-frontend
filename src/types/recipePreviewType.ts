@@ -1,5 +1,5 @@
 export interface RecipePreviewType {
-    id: number,
+    id?: number,
     name: string,
     description: string,
     imageFileName: string

@@ -2,10 +2,10 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {isAdminUser, isInEditingMode} from '../../../utils/auth';
 import Button from "../../button/Button";
 import {useLocation} from "react-router-dom";
-
+// TS2322: Type '(e: any) => Promise<void>' is not assignable to type '() => void'.
 type Props = {
     onEditModeChange(isEditMode: boolean): void,
-    addRecipeHandler(): void,
+    addRecipeHandler(e: any): Promise<void>,
     children: React.ReactNode
 }
 

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 import {useNavigate, useParams} from "react-router-dom";
-import differenceBy from 'lodash/differenceBy'
 import Method from "../../components/recipe/method/Method";
 import Ingredients from "../../components/recipe/ingredients/Ingredients";
 import Tags from "../../components/recipe/tags/Tags";
@@ -11,13 +10,19 @@ import {enterEditingMode, isAdminUser, leaveEditingMode} from "../../utils/auth"
 import Notes from "../../components/recipe/notes/Notes";
 import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../../store/api";
 import AdminButtons from "../../components/recipe/adminbuttons/AdminButtons";
+import {IngredientType} from "../../types/ingredientType";
+import {NoteType} from "../../types/noteType";
+import {MethodStepType} from "../../types/methodStepType";
+import {RecipeType} from "../../types/recipeType";
+import {TagType} from "../../types/tagType";
+import {OrderableType} from "../../types/orderableType";
 
 const Recipe = () => {
     const [id, setId] = useState(undefined);
-    const [ingredients, setIngredients] = useState([]);
-    const [methodSteps, setMethodSteps] = useState([]);
+    const [ingredients, setIngredients] = useState<IngredientType[]>([]);
+    const [methodSteps, setMethodSteps] = useState<MethodStepType[]>([]);
     const [isRecipeInEditMode, setIsRecipeInEditMode] = useState(false);
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState<NoteType[]>([]);
     const [methodStepOrderingId, setMethodStepOrderingId] = useState(1);
     const [ingredientOrderingId, setIngredientOrderingId] = useState(1);
     const [noteOrderingId, setNoteOrderingId] = useState(1);
@@ -27,22 +32,24 @@ const Recipe = () => {
     const [basedOn, setBasedOn] = useState('');
     const [crockery, setCrockery] = useState(0);
     const [heated, setHeated] = useState(false);
-    const [selectedTags, setSelectedTags] = useState([]);
-    const [availableTags, setAvailableTags] = useState([]);
-    const [image, setImage] = useState(null);
+    const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
+    const [availableTags, setAvailableTags] = useState<TagType[]>([]);
+    const [image, setImage] = useState<File | undefined>(undefined);
     const [imageFileName, setImageFileName] = useState('');
     const navigate = useNavigate();
     const recipeName = useParams().recipeName;
     const isAdmin = isAdminUser();
     const isUpdate = recipeName !== undefined && isAdmin;
 
-    const {data: metaTags = []} = useGetTagsQuery();
+    const {data: metaTags = []} = useGetTagsQuery({});
     const {data: recipe} = useGetRecipeQuery(recipeName, {skip: recipeName === undefined});
     const [addRecipe] = useAddRecipeMutation();
     const [updateRecipe] = useUpdateRecipeMutation();
 
-    const getHighestOrdering = items => {
-        return _.orderBy(items, ['ordering'], ['desc'])[0].ordering + 1
+    const getHighestOrdering = (items: OrderableType[]): number => {
+        const ordered: OrderableType[] = _.orderBy(items, ['ordering'], ['desc']);
+
+        return ordered[0].ordering !== undefined ? ordered[0].ordering + 1 : 1;
     }
 
 
@@ -58,7 +65,7 @@ const Recipe = () => {
             setMethodSteps(recipe.methodSteps);
             setNotes(recipe.notes);
             setSelectedTags(recipe.tags);
-            setAvailableTags(differenceBy(metaTags, recipe.tags, 'id'));
+            setAvailableTags(_.difference(metaTags, recipe.tags));
             setImageFileName(recipe.imageFileName);
 
             if (!_.isEmpty(recipe.methodSteps)) {
@@ -85,14 +92,14 @@ const Recipe = () => {
         }
     }, []);
 
-    const addRecipeHandler = async e => {
+    const addRecipeHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
-        const recipe = {
+        const recipe: RecipeType = {
             // Set to undef so that the backend will fail "NOT NULL" checks
-            name: name.length !== 0 ? name : undefined,
-            description: description.length !== 0 ? description : undefined,
-            cookingTime: +cookingTime > 0 ? +cookingTime : undefined,
+            name: name,
+            description: description,
+            cookingTime: +cookingTime,
             basedOn: !_.isEmpty(basedOn) ? basedOn : '',
             ingredients: ingredients,
             methodSteps: methodSteps,
@@ -110,7 +117,7 @@ const Recipe = () => {
             };
         }
 
-        if (isUpdate) {
+        if (isUpdate && id !== undefined) {
             recipe.id = id;
         }
 
@@ -120,55 +127,55 @@ const Recipe = () => {
         }
     }
 
-    const handleEditModeChange = editMode => {
+    const handleEditModeChange = (editMode: boolean) => {
         setIsRecipeInEditMode(editMode);
         editMode ? enterEditingMode() : leaveEditingMode();
         console.log(isRecipeInEditMode);
     };
 
-    const onAddIngredientHandler = ingredient => {
+    const onAddIngredientHandler = (ingredient: IngredientType) => {
         const newIngredients = ingredients.slice();
         newIngredients.push({...ingredient, ordering: ingredientOrderingId});
         setIngredients(newIngredients);
         setIngredientOrderingId(ingredientOrderingId + 1);
     }
-    const onRemoveIngredientHandler = description => {
+    const onRemoveIngredientHandler = (description: string) => {
         const filteredIngredients = ingredients.filter(ingredient => ingredient.description !== description);
         setIngredients(filteredIngredients)
     }
-    const onReorderIngredientsHandler = ingredients => {
-        const updatedIngredients = ingredients.map((ingredient, index) => ({...ingredient, ordering: index + 1}));
+    const onReorderIngredientsHandler = (ingredients: IngredientType[]) => {
+        const updatedIngredients = ingredients.map((ingredient: IngredientType, index: number) => ({...ingredient, ordering: index + 1}));
         setIngredients(updatedIngredients);
     }
-    const onAddMethodStepHandler = description => {
+    const onAddMethodStepHandler = (description: string) => {
         const newMethodSteps = methodSteps.slice();
         newMethodSteps.push({description, ordering: methodStepOrderingId});
         setMethodSteps(newMethodSteps);
         setMethodStepOrderingId(methodStepOrderingId + 1);
     }
-    const onRemoveMethodStepHandler = description => {
+    const onRemoveMethodStepHandler = (description: string) => {
         const filteredMethodSteps = methodSteps.filter(methodStep => methodStep.description !== description);
         setMethodSteps(filteredMethodSteps)
     }
-    const onReorderMethodStepHandler = methodSteps => {
+    const onReorderMethodStepHandler = (methodSteps: MethodStepType[]) => {
         const updatedSteps = methodSteps.map((step, index) => ({...step, ordering: index + 1}));
         setMethodSteps(updatedSteps);
     }
-    const onAddNoteHandler = description => {
+    const onAddNoteHandler = (description: string) => {
         const newNotes = notes.slice();
         newNotes.push({description, ordering: noteOrderingId});
         setNotes(newNotes);
         setNoteOrderingId(noteOrderingId + 1);
     }
-    const onRemoveNoteHandler = description => {
-        const filteredNotes = notes.filter(note => note.description !== description);
+    const onRemoveNoteHandler = (description: string) => {
+        const filteredNotes: NoteType[] = notes.filter((note: NoteType) => note.description !== description);
         setNotes(filteredNotes)
     }
-    const onReorderNoteHandler = notes => {
+    const onReorderNoteHandler = (notes: NoteType[]) => {
         const updatedNotes = notes.map((step, index) => ({...step, ordering: index + 1}));
         setNotes(updatedNotes);
     }
-    const onAddTagHandler = id => {
+    const onAddTagHandler = (id: number) => {
         // Remove tag from available list
         const selectedTag = availableTags.filter(tag => tag.id === id)[0];
         setAvailableTags(availableTags.filter(tag => tag.id !== id));
@@ -177,7 +184,7 @@ const Recipe = () => {
         recipeList.push(selectedTag);
         setSelectedTags(recipeList);
     }
-    const onRemoveTagHandler = id => {
+    const onRemoveTagHandler = (id: number) => {
         // Remove tag from available list
         const selectedTag = selectedTags.filter(tag => tag.id === id)[0];
         setSelectedTags(selectedTags.filter(tag => tag.id !== id));
@@ -186,8 +193,8 @@ const Recipe = () => {
         availableList.push(selectedTag);
         setAvailableTags(availableList);
     }
-    const onSearchTagHandler = tagId => {
-        const tag = metaTags.find(tag => tag.id === tagId);
+    const onSearchTagHandler = (tagId: number) => {
+        const tag = metaTags.find((tag: TagType) => tag.id === tagId);
         navigate('/recipes?tag=' + tag.name);
     }
 
