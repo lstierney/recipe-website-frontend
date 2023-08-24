@@ -47,7 +47,7 @@ describe('Convertors page', () => {
 
 });
 
-const testPortions = (quantity, servings, newServings, newQuantity) => {
+const testPortions = (quantity: number, servings: number, newServings: number, newQuantity: number) => {
     // Arrange
     renderWithProviders(<Convertor/>);
 

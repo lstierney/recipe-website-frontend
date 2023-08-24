@@ -5,6 +5,9 @@ import {getSubject, isAdminUser} from "../../utils/auth";
 
 jest.mock('../../utils/auth');
 
+const mockIsAdminUser = isAdminUser as jest.MockedFunction<typeof isAdminUser>;
+const mockGetSubject = getSubject as jest.MockedFunction<typeof getSubject>;
+
 describe('Header', () => {
     test('renders Logo', () => {
         // Arrange
@@ -52,7 +55,7 @@ describe('Header', () => {
     });
     test('renders Login link when not admin', () => {
         // Arrange
-        isAdminUser.mockReturnValue(false);
+        mockIsAdminUser.mockReturnValue(false);
         renderWithProviders(<Header/>);
 
         // Act
@@ -64,8 +67,8 @@ describe('Header', () => {
     });
     test('renders Logout link when admin', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
-        getSubject.mockReturnValue('lawrence')
+        mockIsAdminUser.mockReturnValue(true);
+        mockGetSubject.mockReturnValue('lawrence')
         renderWithProviders(<Header/>);
 
         // Act

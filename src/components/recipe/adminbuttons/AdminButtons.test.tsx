@@ -1,7 +1,7 @@
 import {fireEvent, screen} from "@testing-library/react";
 import AdminButtons from "./AdminButtons";
 import {renderWithProviders} from "../../../utils/test-utils";
-import {isAdminUser, isInEditingMode} from "../../../utils/auth";
+import {isAdminUser} from "../../../utils/auth";
 
 jest.mock('../../../utils/auth');
 
@@ -11,22 +11,18 @@ const SUBMIT = 'Submit';
 
 const onEditModeChange = jest.fn();
 const addRecipeHandler = jest.fn();
+const mockIsAdminUser = isAdminUser as jest.MockedFunction<typeof isAdminUser>;
 
-const setIsAdmin = isAdmin => {
-    isAdminUser.mockReturnValue(isAdmin);
-};
-const setIsEditMode = isEditMode => {
-    isInEditingMode.mockReturnValue(isEditMode);
-};
 
 describe('AdminButton component', () => {
     beforeEach(() => {
-        setIsAdmin(true)
+        mockIsAdminUser.mockReturnValue(true);
     });
     test('Doesnt render any buttons when not admin', () => {
         // Arrange
-        setIsAdmin(false);
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        mockIsAdminUser.mockReturnValue(false);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         // -- nothing
@@ -38,7 +34,8 @@ describe('AdminButton component', () => {
     });
     test('When admin but not edit mode "Edit Mode" buttons are rendered', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         // -- nothing
@@ -50,7 +47,8 @@ describe('AdminButton component', () => {
     });
     test('When admin but not edit mode "Read Only Mode" buttons are not rendered', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         // -- nothing
@@ -62,7 +60,8 @@ describe('AdminButton component', () => {
     });
     test('When admin but not edit mode "Submit" buttons are not rendered', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         // -- nothing
@@ -74,7 +73,8 @@ describe('AdminButton component', () => {
     });
     test('When admin and "Edit Mode" button is clicked "Read Only Mode" buttons are rendered', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         fireEvent.click(screen.getAllByRole('button', {name: EDIT_MODE})[0]);
@@ -86,7 +86,8 @@ describe('AdminButton component', () => {
     });
     test('When admin and "Edit Mode" button is clicked "Submit" buttons are rendered', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         fireEvent.click(screen.getAllByRole('button', {name: EDIT_MODE})[0]);
@@ -98,7 +99,8 @@ describe('AdminButton component', () => {
     });
     test('When admin and "Edit Mode" button is clicked "Edit Mode" button is removed', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         fireEvent.click(screen.getAllByRole('button', {name: EDIT_MODE})[0]);
@@ -113,7 +115,8 @@ describe('AdminButton component', () => {
     });
     test('Clicking "Edit Mode" causes "Read Only Mode" and "Submit" buttons to render', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         // -- nothing
@@ -129,7 +132,8 @@ describe('AdminButton component', () => {
 
     test('Clicking "Read Only Mode" causes "Edit Mode" button to render', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         // -- nothing
@@ -142,7 +146,8 @@ describe('AdminButton component', () => {
     });
     test('Clicking "Read Only Mode" causes "Read Only Mode" button to be removed', () => {
         // Arrange
-        renderWithProviders(<AdminButtons onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
+        renderWithProviders(<AdminButtons addRecipeHandler={addRecipeHandler}
+                                          onEditModeChange={onEditModeChange}>stuff</AdminButtons>);
 
         // Act
         fireEvent.click(screen.getAllByRole('button', {name: EDIT_MODE})[0]); // move to edit mode

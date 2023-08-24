@@ -8,11 +8,11 @@ const Convertor = () => {
     const [inputServings, setInputServings] = useState(0);
     const [newQuantity, setNewQuantity] = useState(0);
 
-    const handleGramsToOunces = grams => {
+    const handleGramsToOunces = (grams: number) => {
         setOutputOunces(Math.round(grams / gramsPerOunce * 2) / 2); // round to the nearest 0.5
     }
 
-    const handleServingsChanges = newServings => {
+    const handleServingsChanges = (newServings: number) => {
         setNewQuantity((inputQuantity / inputServings) * newServings);
     }
 

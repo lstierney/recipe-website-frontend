@@ -4,10 +4,12 @@ import classes from '../LoginForm.module.css';
 import Button from "../button/Button";
 
 const LoginForm = () => {
-    const userNameInputRef = useRef();
+    const userNameInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        userNameInputRef.current.focus();
+        if (userNameInputRef.current !== null) {
+            userNameInputRef.current.focus();
+        }
     }, [userNameInputRef]);
 
     return (
@@ -34,7 +36,7 @@ const LoginForm = () => {
                         required/>
                 </div>
                 <div>
-                    <Button>Login</Button>
+                    <Button type={'submit'}>Login</Button>
                 </div>
             </Form>
         </section>

@@ -3,7 +3,7 @@ import React, {MouseEventHandler} from 'react';
 import './Button.module.css';
 
 type ButtonProps = {
-    onClick: MouseEventHandler<HTMLButtonElement>,
+    onClick?: MouseEventHandler<HTMLButtonElement>,
     ariaLabel?: string,
     children: React.ReactNode,
     type: "button" | "submit" | "reset" | undefined

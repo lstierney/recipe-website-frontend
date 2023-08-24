@@ -3,7 +3,13 @@ import {isAdminUser, isInEditingMode} from '../../../utils/auth';
 import Button from "../../button/Button";
 import {useLocation} from "react-router-dom";
 
-const AdminButtons = props => {
+type Props = {
+    onEditModeChange(isEditMode: boolean): void,
+    addRecipeHandler(): void,
+    children: React.ReactNode
+}
+
+const AdminButtons: React.FC<Props> = props => {
     const [isEditMode, setIsEditMode] = useState(false);
     const isAdmin = isAdminUser();
     const location = useLocation();

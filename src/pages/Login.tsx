@@ -3,6 +3,7 @@ import LoginForm from "../components/loginform/LoginForm";
 import {toastUtils} from "../utils/toast-utils";
 import {redirect} from "react-router-dom";
 import {handleLogin} from "../utils/auth";
+import type {ActionFunction} from "react-router";
 
 const Login = () => {
     return (
@@ -12,7 +13,7 @@ const Login = () => {
 
 export default Login;
 
-export const action = async ({request}) => {
+export const action: ActionFunction = async ({request}) => {
     const data = await request.formData();
     const username = data.get('username');
     const password = data.get('password');
@@ -42,7 +43,7 @@ export const action = async ({request}) => {
         toast.success("Success");
 
         return redirect('/admin/');
-    } catch (error) {
+    } catch (error: any) {
         toast.error(error.message);
         return redirect('/login/');
     }
