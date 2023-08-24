@@ -3,8 +3,16 @@ import classes from "../../../main.module.css";
 import IngredientInput from "../../admin/IngredientInput";
 import {isInEditingMode} from "../../../utils/auth";
 import DraggableList from "../draggablelist/DraggableList";
+import {IngredientType} from "../../../types/ingredientType";
 
-const Ingredients = props => {
+type Props = {
+    ingredients: IngredientType[],
+    onRemove: (ingredientDescription: string) => void,
+    onReorder: (ingredients: IngredientType[]) => void,
+    onAdd: (ingredient: IngredientType) => void
+}
+
+const Ingredients = (props: Props) => {
     const isEditMode = isInEditingMode();
 
     return (

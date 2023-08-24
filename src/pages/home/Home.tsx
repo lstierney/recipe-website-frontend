@@ -4,17 +4,18 @@ import mainClasses from '../../main.module.css';
 import {useEffect, useState} from "react";
 import _ from 'lodash';
 import {useNavigate} from "react-router-dom";
+import {RecipeType} from "../../types/recipeType";
 
 
 const HomePage = () => {
-    const {data: latestRecipes} = useGetLatestRecipesQuery();
-    const {data: images, isSuccess} = useGetRecipeTitlesAndIdsQuery();
-    const [randomRecipe, setRandomRecipe] = useState(undefined);
+    const {data: latestRecipes} = useGetLatestRecipesQuery({});
+    const {data: images, isSuccess} = useGetRecipeTitlesAndIdsQuery({});
+    const [randomRecipe, setRandomRecipe] = useState<RecipeType | null>(null);
     const imgHost = process.env.REACT_APP_API_HOST;
     const navigate = useNavigate()
 
-    const handleImageClick = name => {
-        name = name.replaceAll(' ', '-').toLowerCase();
+    const handleImageClick = (name: string) => {
+        name = name.replace(/ /g, '-').toLowerCase();
         navigate(`/recipes/${name}`);
     };
 
@@ -31,20 +32,25 @@ const HomePage = () => {
 
     return (
         <>
-            <div onClick={() => handleImageClick(randomRecipe.name)} className={mainClasses['hero-image-container']}>
-                {randomRecipe &&
+            {randomRecipe &&
+                <div onClick={() => handleImageClick(randomRecipe.name)}
+                     className={mainClasses['hero-image-container']}>
+
                     <img className={mainClasses['hero-image']} src={imgHost + '/images/' + randomRecipe.imageFileName}
                          alt={randomRecipe.name}/>
-                }
-            </div>
-            <div onClick={() => handleImageClick(randomRecipe.name)} className={mainClasses['hero-card']}>
-                {randomRecipe &&
+
+                </div>
+            }
+            {randomRecipe &&
+                <div onClick={() => handleImageClick(randomRecipe.name)} className={mainClasses['hero-card']}>
+
                     <div className={mainClasses['hero-card-inner']}>
                         <div className={mainClasses['hero-card-name']}>{randomRecipe.name}</div>
                         <div className={mainClasses['hero-card-description']}>{randomRecipe.description}</div>
                     </div>
-                }
-            </div>
+
+                </div>
+            }
             <div className={mainClasses['home-previews']}>
                 <RecipesList recipes={latestRecipes ? latestRecipes : []}/>
             </div>

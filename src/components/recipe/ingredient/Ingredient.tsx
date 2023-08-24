@@ -2,18 +2,24 @@ import React from 'react';
 
 import {useGetUnitsQuery} from "../../../store/api";
 import _ from "lodash";
+import {IngredientType} from "../../../types/ingredientType";
+import {UnitType} from "../../../types/unitType";
 
-const Ingredient = props => {
-    const {data: units = []} = useGetUnitsQuery();
+type Props = {
+    ingredient: IngredientType
+}
+
+const Ingredient = (props: Props) => {
+    const {data: units = []} = useGetUnitsQuery({});
     const {ingredient} = props;
 
     // For a given Ingredient, returns the human-readable label for its Unit (if it has a Unit)
-    const getUnitDescriptionForIngredient = ingredient => {
+    const getUnitDescriptionForIngredient = (ingredient: IngredientType) => {
         if (!units) {
             return '';
         }
         const filteredUnits = units.filter(
-            unit =>
+            (unit: UnitType) =>
                 ingredient.unit &&
                 ingredient.unit.id &&
                 ingredient.unit.id === unit.id
@@ -29,7 +35,7 @@ const Ingredient = props => {
     };
 
     return (
-        <span>{ingredient.quantity > 0 ? ingredient.quantity : ''} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}</span>
+        <span>{(ingredient.quantity !== undefined && ingredient.quantity > 0) ? ingredient.quantity : ''} {getUnitDescriptionForIngredient(ingredient)} {ingredient.description}</span>
     );
 };
 

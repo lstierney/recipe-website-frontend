@@ -1,7 +1,13 @@
 import React from 'react';
 import classes from './MethodStep.module.css';
+import {MethodStepType} from "../../../types/methodStepType";
 
-const MethodStep = props => {
+type Props = {
+    methodStep: MethodStepType,
+    number: number
+}
+
+const MethodStep = (props: Props) => {
     const {methodStep} = props;
     return (
         <>

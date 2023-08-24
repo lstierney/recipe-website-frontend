@@ -2,13 +2,13 @@ import React, {useRef, useState} from 'react';
 import {useGetUnitsQuery} from "../../store/api";
 import {toastUtils} from "../../utils/toast-utils";
 import Button from "../button/Button";
-import {Unit} from "../../types/unit";
-import {Ingredient} from "../../types/ingredient";
+import {UnitType} from "../../types/unitType";
+import {IngredientType} from "../../types/ingredientType";
 
 const toast = toastUtils();
 
 type Props = {
-    onAdd(ingredient: Ingredient): void
+    onAdd(ingredient: IngredientType): void
 }
 
 const IngredientInput: React.FC<Props> = props => {
@@ -23,7 +23,7 @@ const IngredientInput: React.FC<Props> = props => {
     }
 
     const handleAddIngredient = () => {
-        const ingredient: Ingredient = {
+        const ingredient: IngredientType = {
             description: description,
             quantity: quantity
         };
@@ -47,7 +47,7 @@ const IngredientInput: React.FC<Props> = props => {
                    onChange={e => setQuantity(+e.target.value)}/>
             <select name="unit_id" onChange={e => setUnitId(+e.target.value)} value={unitId}>
                 <option key="0" value="0"></option>
-                {units.map((unit: Unit) =>
+                {units.map((unit: UnitType) =>
                     <option key={unit.id} value={unit.id}>{unit.name}</option>
                 )}
             </select>

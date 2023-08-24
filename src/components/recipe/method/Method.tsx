@@ -3,8 +3,16 @@ import classes from "../../../main.module.css";
 import MethodStepInput from "../../admin/MethodStepInput";
 import {isInEditingMode} from "../../../utils/auth";
 import DraggableList from "../draggablelist/DraggableList";
+import {MethodStepType} from "../../../types/methodStepType";
 
-const Method = (props) => {
+type Props = {
+    items: MethodStepType[],
+    onRemove: (methodStepDescription: string) => void,
+    onReorder: (methodSteps: MethodStepType[]) => void,
+    onAdd: (methodStepDescription: string) => void
+}
+
+const Method = (props: Props) => {
     const isEditMode = isInEditingMode();
 
     return (

@@ -6,9 +6,23 @@ import {useGetUnitsQuery} from '../../../store/api';
 jest.mock('../../../utils/auth');
 jest.mock('../../../store/api');
 
+const mockGetUnitsQuery = useGetUnitsQuery as jest.MockedFunction<typeof useGetUnitsQuery>;
+const mockIsInEditingMode = isInEditingMode as jest.MockedFunction<typeof isInEditingMode>;
+
+const INGREDIENTS = [
+    {
+        id: 1,
+        description: 'description 1'
+    },
+    {
+        id: 2,
+        description: 'description 2'
+    }
+];
+
 describe('Ingredients component', () => {
     beforeEach(() => {
-        useGetUnitsQuery.mockReturnValue({
+        mockGetUnitsQuery.mockReturnValue({
             data: [
                 {
                     id: 1,
@@ -18,12 +32,13 @@ describe('Ingredients component', () => {
                     id: 2,
                     name: 'Unit 2'
                 }
-            ]
+            ],
+            refetch: jest.fn()
         });
     })
     test('renders title', () => {
         // Arrange
-        render(<Ingredients/>);
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={[]}/>);
 
         // Act
         // -- nothing
@@ -34,7 +49,7 @@ describe('Ingredients component', () => {
     });
     test('renders "None found" when no ingredients are supplied', () => {
         // Arrange
-        render(<Ingredients/>);
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={[]}/>);
 
         // Act
         // -- nothing
@@ -45,17 +60,8 @@ describe('Ingredients component', () => {
     });
     test('renders draggablelist when items supplied', () => {
         // Arrange
-        const items = [
-            {
-                id: 1,
-                description: 'description 1'
-            },
-            {
-                id: 2,
-                description: 'description 2'
-            }
-        ];
-        render(<Ingredients ingredients={items}/>);
+
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={INGREDIENTS}/>);
 
         // Act
         // -- nothing
@@ -66,8 +72,8 @@ describe('Ingredients component', () => {
     });
     test('renders input component when in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        render(<Ingredients/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={INGREDIENTS}/>);
 
         // Act
         // -- nothing

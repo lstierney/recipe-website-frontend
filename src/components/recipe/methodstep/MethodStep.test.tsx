@@ -1,12 +1,13 @@
 import {renderWithProviders} from "../../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import MethodStep from "./MethodStep";
+import {MethodStepType} from "../../../types/methodStepType";
 
-const METHOD_STEP =
+const METHOD_STEP: MethodStepType =
     {
         id: 1,
         description: 'Method Step Desc',
-        ordering: 1
+        number: 1
     };
 
 describe('MethodStep component', () => {
@@ -14,7 +15,7 @@ describe('MethodStep component', () => {
 
     test('renders "STEP 1" and "Method Step Desc"', () => {
         // Arrange
-        renderWithProviders(<MethodStep methodStep={METHOD_STEP} number="1"/>);
+        renderWithProviders(<MethodStep methodStep={METHOD_STEP} number={1}/>);
 
         // Act
         // ... nothing

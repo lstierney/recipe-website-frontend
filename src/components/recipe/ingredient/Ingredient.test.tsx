@@ -2,10 +2,14 @@ import {useGetUnitsQuery} from "../../../store/api";
 import {renderWithProviders} from "../../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import Ingredient from "./Ingredient";
+import {IngredientType} from "../../../types/ingredientType";
+import {UnitType} from "../../../types/unitType";
 
 jest.mock('../../../store/api');
 
-const UNITS = [
+const mockGetUnitsQuery = useGetUnitsQuery as jest.MockedFunction<typeof useGetUnitsQuery>;
+
+const UNITS: UnitType[] = [
     {
         id: 1,
         abbreviation: 'tbsp',
@@ -13,18 +17,20 @@ const UNITS = [
     },
 ];
 
-const INGREDIENT =
+const INGREDIENT: IngredientType =
     {
         id: 1,
         description: 'IngredientDesc',
-        ordering: 1
+        ordering: 1,
+        quantity: 0
     };
 
 describe('Ingredient component', () => {
 
     beforeEach(() => {
-        useGetUnitsQuery.mockReturnValue({
-            data: UNITS
+        mockGetUnitsQuery.mockReturnValue({
+            data: UNITS,
+            refetch: jest.fn()
         });
     });
 

@@ -1,14 +1,16 @@
 import {render, screen} from "@testing-library/react";
 import Method from "./Method";
 import {isInEditingMode} from "../../../utils/auth";
-import {renderWithProviders} from "../../../utils/test-utils";
+import {MethodStepType} from "../../../types/methodStepType";
 
 jest.mock('../../../utils/auth');
+
+const mockIsInEditingMode = isInEditingMode as jest.MockedFunction<typeof isInEditingMode>;
 
 describe('Method component', () => {
     test('renders title', () => {
         // Arrange
-        render(<Method/>);
+        render(<Method items={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -19,7 +21,7 @@ describe('Method component', () => {
     });
     test('renders "None found" when no items are supplied', () => {
         // Arrange
-        render(<Method/>);
+        render(<Method items={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -30,17 +32,19 @@ describe('Method component', () => {
     });
     test('renders draggablelist when items supplied', () => {
         // Arrange
-        const items = [
+        const items: MethodStepType[] = [
             {
                 id: 1,
-                description: 'description 1'
+                description: 'description 1',
+                number: 1
             },
             {
                 id: 2,
-                description: 'description 2'
+                description: 'description 2',
+                number: 2
             }
         ];
-        renderWithProviders(<Method items={items}/>);
+        render(<Method items={items} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -51,8 +55,8 @@ describe('Method component', () => {
     });
     test('renders input component when in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        render(<Method/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        render(<Method items={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing

@@ -1,4 +1,4 @@
-export interface Unit {
+export interface UnitType {
     id: number,
     name?: string,
     abbreviation?: string

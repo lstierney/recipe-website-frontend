@@ -5,6 +5,9 @@ import {useGetLatestRecipesQuery, useGetRecipeTitlesAndIdsQuery} from "../../sto
 
 jest.mock('../../store/api');
 
+const mockGetLatestRecipesQuery = useGetLatestRecipesQuery as jest.MockedFunction<typeof useGetLatestRecipesQuery>;
+const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
+
 const LATEST_RECIPES = [
     {
         id: 1,
@@ -26,11 +29,13 @@ const RECIPES_LIST = [{
 
 describe('Home page', () => {
     beforeEach(() => {
-        useGetLatestRecipesQuery.mockReturnValue({
+        mockGetLatestRecipesQuery.mockReturnValue({
             data: LATEST_RECIPES,
+            refetch: jest.fn()
         });
-        useGetRecipeTitlesAndIdsQuery.mockReturnValue({
+        mockGetRecipeTitlesAndIdsQuery.mockReturnValue({
             data: RECIPES_LIST,
+            refetch: jest.fn()
         });
 
     });

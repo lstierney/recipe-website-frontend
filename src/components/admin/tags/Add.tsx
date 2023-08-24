@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {useAddTagMutation, useDeleteTagMutation, useUpdateTagMutation} from "../../../store/api";
 import {toastUtils} from "../../../utils/toast-utils";
 import Button from "../../button/Button";
-import {Tag} from "../../../types/tag";
+import {TagType} from "../../../types/tagType";
 
 type Props = {
-    tag: Tag,
+    tag: TagType,
     mode: 'add' | 'edit'
 }
 
