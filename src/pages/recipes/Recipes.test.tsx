@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import {act} from "react-dom/test-utils";
 import {useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery} from "../../store/api";
 import {TagType} from "../../types/tagType";
-import {RecipeType} from "../../types/recipeType";
+import {RecipePreviewType} from "../../types/recipePreviewType";
 
 const mockGetRecipesByTagQuery = useGetRecipesByTagQuery as jest.MockedFunction<typeof useGetRecipesByTagQuery>;
 const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
@@ -24,7 +24,7 @@ const TAGS: TagType[] = [
     }
 ];
 
-const ALL_RECIPES: RecipeType[] = [
+const ALL_RECIPES: RecipePreviewType[] = [
     {
         id: 1,
         name: 'Recipe One',
@@ -38,12 +38,13 @@ const ALL_RECIPES: RecipeType[] = [
         imageFileName: 'recipe2.jpg'
     }
 ];
-const RECIPES_FOR_TAG: RecipeType[] = [
+const RECIPES_FOR_TAG: RecipePreviewType[] = [
     {
         id: 3,
         name: 'Recipe Three',
         description: 'Recipe Three Description',
         imageFileName: 'recipe3.jpg'
+
     },
     {
         id: 4,
@@ -60,14 +61,14 @@ const prepareGetTagsMock = (tags: TagType[]) => {
     });
 }
 
-const prepareGetRecipeTitlesAndIdsQueryMock = (recipes: RecipeType[]) => {
+const prepareGetRecipeTitlesAndIdsQueryMock = (recipes: RecipePreviewType[]) => {
     mockGetRecipeTitlesAndIdsQuery.mockReturnValue({
         data: recipes,
         refetch: jest.fn()
     });
 }
 
-const prepareGetRecipesByTagMock = (recipes: RecipeType[]) => {
+const prepareGetRecipesByTagMock = (recipes: RecipePreviewType[]) => {
     mockGetRecipesByTagQuery.mockReturnValue({
         data: recipes,
         refetch: jest.fn()

@@ -2,10 +2,10 @@ import React from 'react';
 import classes from './RecipeList.module.css';
 import _ from 'lodash';
 import Preview from "../preview/Preview";
-import {RecipeType} from "../../../types/recipeType";
+import {RecipePreviewType} from "../../../types/recipePreviewType";
 
 type Props = {
-    recipes: RecipeType[]
+    recipes: RecipePreviewType[]
 }
 
 const RecipesList = (props: Props) => {

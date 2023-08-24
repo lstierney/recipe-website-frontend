@@ -9,18 +9,33 @@ import _ from "lodash";
 import {isInEditingMode} from "../../../utils/auth";
 import FullScreenImageModal from "../fullscreenimagemodal/FullScreenImageModal";
 import {useGetCrockeryQuery} from "../../../store/api";
+import {CrockeryType} from "../../../types/crockeryType";
+import {RecipeType} from "../../../types/recipeType";
 
-const InfoPanel = props => {
+type Props = {
+    recipe: RecipeType,
+    setName: (name: string) => void,
+    setDescription: (description: string) => void,
+    imageFileName: string,
+    setCookingTime: (cookingTime: number) => void,
+    setCrockery: (crockery: number) => void,
+    setBasedOn: (basedOn: string) => void,
+    setHeated: (isHeated: boolean) => void,
+    setImage: (imageFile: File | null) => void
+
+}
+
+const InfoPanel = (props: Props) => {
     const recipe = props.recipe;
-    const {data: crockeryList = []} = useGetCrockeryQuery();
+    const {data: crockeryList = []} = useGetCrockeryQuery({});
     const isEditMode = isInEditingMode();
     const [showFilePicker, setShowFilePicker] = useState(false);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
-    const [crockery, setCrockery] = useState(undefined);
+    const [crockery, setCrockery] = useState(0);
     const [heated, setHeated] = useState(false);
-    const [basedOn, setBasedOn] = useState('');
+    const [basedOn, setBasedOn] = useState<string | undefined>('');
     const [imageFileName, setImageFileName] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [imgSrc, setImgSrc] = useState('');
@@ -35,32 +50,32 @@ const InfoPanel = props => {
     const closeModal = () => {
         setModalIsOpen(false);
     };
-    const handleNameChange = value => {
+    const handleNameChange = (value: string) => {
         props.setName(value);
         setName(value);
     }
-    const handleDescriptionChange = value => {
+    const handleDescriptionChange = (value: string) => {
         props.setDescription(value);
         setDescription(value);
     }
-    const handleCookingTimeChange = value => {
+    const handleCookingTimeChange = (value: number) => {
         props.setCookingTime(value);
         setCookingTime(value);
     }
-    const handleBasedOnChange = value => {
+    const handleBasedOnChange = (value: string) => {
         props.setBasedOn(value);
         setBasedOn(value);
     }
-    const handleCrockeryChange = value => {
+    const handleCrockeryChange = (value: number) => {
         props.setCrockery(value);
         setCrockery(value);
     }
-    const handleHeatedChange = value => {
+    const handleHeatedChange = (value: boolean) => {
         props.setHeated(value);
         setHeated(value);
     }
     const getCrockeryName = () => {
-        const chosen = crockeryList.find(item => item.id === crockery);
+        const chosen = crockeryList.find((item: CrockeryType) => item.id === crockery);
         return chosen ? chosen.description : '';
     }
     const getHeatedString = () => {
@@ -83,7 +98,8 @@ const InfoPanel = props => {
     }, [recipe, props.imageFileName]);
 
     useEffect(() => {
-        setShowFilePicker(isEditMode && _.isEmpty(imageFileName))
+        const show: boolean = isEditMode && _.isEmpty(imageFileName);
+        setShowFilePicker(show);
     }, [isEditMode, imageFileName]);
 
     return (
@@ -95,13 +111,18 @@ const InfoPanel = props => {
                     {!showFilePicker && !_.isEmpty(imageFileName) &&
                         <RecipeImage imageFileName={imageFileName} alt={name} onClick={handleImageClick}/>
                     }
-                    {showFilePicker &&
+                    {showFilePicker && (
                         <>
                             <label htmlFor="image">Choose an image:</label>
                             <input type="file" id="image" name="image" aria-label="Image Chooser Input"
-                                   onChange={e => props.setImage(e.target.files[0])}/>
+                                   onChange={e => {
+                                       const uploadedFile = e.target.files ? e.target.files[0] : null;
+                                       props.setImage(uploadedFile);
+                                   }}
+                            />
                         </>
-                    }
+                    )}
+
                     <div className={classes['info-panel-right']}>
                         {!isEditMode &&
                             <>
@@ -119,7 +140,7 @@ const InfoPanel = props => {
                                 <input type="text" aria-label="name" name="name" value={name}
                                        onChange={e => handleNameChange(e.target.value)}/><br/>
                                 <label htmlFor="description">Description:</label><br/>
-                                <textarea name="description" aria-label="description" rows="10" cols="60"
+                                <textarea name="description" aria-label="description" rows={10} cols={60}
                                           value={description}
                                           onChange={e => handleDescriptionChange(e.target.value)}/>
                             </>
@@ -162,19 +183,19 @@ const InfoPanel = props => {
                                     <div>
                                         <label htmlFor="crockery">Crockery:</label>
                                         <select id="crockery" defaultValue={crockery} name="crockery"
-                                                onChange={e => handleCrockeryChange(e.target.value)}>
+                                                onChange={e => handleCrockeryChange(+e.target.value)}>
                                             <option key={'pleaseChoose'} value={0}>Please Choose</option>
-                                            {crockeryList.map(item => <option key={item.id}
+                                            {crockeryList.map((item: CrockeryType) => <option key={item.id}
                                                                               value={item.id}>{item.description}</option>)}
                                         </select>
                                         <label htmlFor="heated">Heated:</label>
 
                                         <input type="radio" aria-label="Heated radio" name="heated"
-                                               checked={heated === true} value={true}
+                                               checked={heated} value={1}
                                                onChange={e => handleHeatedChange(true)}/><label
                                         htmlFor="heated">Yes</label>
                                         <input type="radio" aria-label="Heated radio" name="heated"
-                                               checked={heated === false} value={false}
+                                               checked={heated} value={0}
                                                onChange={e => handleHeatedChange(false)}/><label
                                         htmlFor="heated">No</label>
 

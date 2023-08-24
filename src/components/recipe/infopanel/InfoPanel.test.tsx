@@ -3,17 +3,23 @@ import {fireEvent, screen} from "@testing-library/react";
 import {renderWithProviders} from "../../../utils/test-utils";
 import {isAdminUser, isInEditingMode} from "../../../utils/auth";
 import {useGetCrockeryQuery} from "../../../store/api";
+import {RecipeType} from "../../../types/recipeType";
 
 jest.mock('../../../utils/auth');
 jest.mock('../../../store/api');
 
-const RECIPE = {
+const mockGetCrockeryQuery = useGetCrockeryQuery as jest.MockedFunction<typeof useGetCrockeryQuery>;
+const mockIsAdminUser = isAdminUser as jest.MockedFunction<typeof isAdminUser>;
+const mockIsInEditingMode = isInEditingMode as jest.MockedFunction<typeof isInEditingMode>;
+
+const RECIPE: RecipeType = {
     id: 1,
     name: 'Latest Recipe One',
     cookingTime: 30,
     basedOn: 'http://somerecipe.com',
     description: 'This is the description for the recipe',
-    imageFileName: 'test.jpg'
+    imageFileName: 'test.jpg',
+    servedOn: undefined
 };
 
 const CROCKERY_LIST = [
@@ -27,15 +33,30 @@ const CROCKERY_LIST = [
     }
 ];
 
+const renderInfoPanel = () => {
+    renderWithProviders(<InfoPanel
+        imageFileName={''}
+        setName={jest.fn()}
+        setImage={jest.fn()}
+        setBasedOn={jest.fn()}
+        setCookingTime={jest.fn()}
+        setCrockery={jest.fn()}
+        setDescription={jest.fn()}
+        setHeated={jest.fn()}
+        recipe={RECIPE}/>
+    );
+}
+
 describe('InfoPanel', () => {
     beforeEach(() => {
-        useGetCrockeryQuery.mockReturnValue({
+        mockGetCrockeryQuery.mockReturnValue({
             data: CROCKERY_LIST,
+            refetch: jest.fn()
         });
     });
     test('renders Recipe name', () => {
         // Arrange
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -46,7 +67,7 @@ describe('InfoPanel', () => {
     });
     test('renders Recipe description', () => {
         // Arrange
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -57,7 +78,7 @@ describe('InfoPanel', () => {
     });
     test('renders Recipe cooking time', () => {
         // Arrange
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -68,7 +89,7 @@ describe('InfoPanel', () => {
     });
     test('renders clock icon', () => {
         // Arrange
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -79,7 +100,7 @@ describe('InfoPanel', () => {
     });
     test('renders "Inspired By" link when recipe.basedOn is present', () => {
         // Arrange
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -91,7 +112,7 @@ describe('InfoPanel', () => {
     });
     test('renders bulb icon when recipe.basedOn is present', () => {
         // Arrange
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -103,7 +124,7 @@ describe('InfoPanel', () => {
     test('does not render "Inspired By" link when recipe.basedOn is not present', () => {
         // Arrange
         RECIPE.basedOn = '';
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -115,7 +136,7 @@ describe('InfoPanel', () => {
     test('does not render bulb icon when recipe.basedOn is not present', () => {
         // Arrange
         RECIPE.basedOn = '';
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -127,61 +148,61 @@ describe('InfoPanel', () => {
     // isAdmin tests
     test('renders name input with correct value when in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // ...nothing
 
         // Assert
-        const nameInput = screen.getByRole('textbox', {name: 'name'})
+        const nameInput = screen.getByRole('textbox', {name: 'name'}) as HTMLInputElement;
         expect(nameInput).toBeInTheDocument();
         expect(nameInput.value).toBe('Latest Recipe One')
     });
     test('renders description textarea with correct value when in editing mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // ...nothing
 
         // Assert
-        const textArea = screen.getByRole('textbox', {name: 'description'})
+        const textArea = screen.getByRole('textbox', {name: 'description'}) as HTMLTextAreaElement;
         expect(textArea).toBeInTheDocument();
         expect(textArea.value).toBe('This is the description for the recipe')
     });
     test('renders cooking time input with correct value when in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // ...nothing
 
         // Assert
-        const cookingTimeInput = screen.getByRole('spinbutton', {name: 'cookingTime'})
+        const cookingTimeInput = screen.getByRole('spinbutton', {name: 'cookingTime'}) as HTMLInputElement;
         expect(cookingTimeInput).toBeInTheDocument();
         expect(cookingTimeInput.value).toBe("30");
     });
     test('renders "based on" input with correct value when in edit mode', () => {
         // Arrange
         RECIPE.basedOn = 'http://somerecipe.com';
-        isInEditingMode.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // ...nothing
 
         // Assert
-        const basedOnInput = screen.getByRole('textbox', {name: 'basedOn'})
+        const basedOnInput = screen.getByRole('textbox', {name: 'basedOn'}) as HTMLInputElement;
         expect(basedOnInput).toBeInTheDocument();
         expect(basedOnInput.value).toBe('http://somerecipe.com');
     });
     test('renders image when recipe.imageFileName is present and user is not admin', () => {
         // Arrange
-        isAdminUser.mockReturnValue(false);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsAdminUser.mockReturnValue(false);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -193,8 +214,8 @@ describe('InfoPanel', () => {
     });
     test('renders image when recipe.imageFileName is present and user is admin', () => {
         // Arrange
-        isAdminUser.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsAdminUser.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -205,9 +226,9 @@ describe('InfoPanel', () => {
     });
     test('renders filepicker when recipe.imageFileName is not present and in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        RECIPE.imageFileName = undefined;
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        RECIPE.imageFileName = '';
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -218,9 +239,9 @@ describe('InfoPanel', () => {
     });
     test('does not render image when recipe.imageFileName is not present and in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        RECIPE.imageFileName = undefined;
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        RECIPE.imageFileName = '';
+        renderInfoPanel();
 
         // Act
         // ...nothing
@@ -231,9 +252,9 @@ describe('InfoPanel', () => {
     });
     test('renders filepicker when recipe.imageFileName is present, in edit mode and user clicks image', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
+        mockIsInEditingMode.mockReturnValue(true);
         RECIPE.imageFileName = 'test.jpg'
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         fireEvent.click(screen.getByRole('img', {name: 'Latest Recipe One'}));
@@ -248,12 +269,14 @@ describe('InfoPanel', () => {
     test('renders "served on" details when data is present and not in edit mode', () => {
         // Arrange
         RECIPE.servedOn = {
+            id: 1,
             crockery: {
-                id: 1
+                id: 1,
+                description: 'White plate'
             },
             heated: true
         };
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // -- nothing
@@ -268,7 +291,7 @@ describe('InfoPanel', () => {
     test('does not render "served on" details when data is not present and not in edit mode', () => {
         // Arrange
         RECIPE.servedOn = undefined;
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        renderInfoPanel();
 
         // Act
         // -- nothing
@@ -279,8 +302,8 @@ describe('InfoPanel', () => {
     });
     test('renders select list for crockery when in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // -- nothing
@@ -293,8 +316,8 @@ describe('InfoPanel', () => {
     });
     test('does not render select list for crockery when not in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(false);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(false);
+        renderInfoPanel();
 
         // Act
         // -- nothing
@@ -307,8 +330,8 @@ describe('InfoPanel', () => {
     });
     test('renders radio for "heated" when in edit mode', () => {
         // Arrange
-        isInEditingMode.mockReturnValue(true);
-        renderWithProviders(<InfoPanel recipe={RECIPE}/>);
+        mockIsInEditingMode.mockReturnValue(true);
+        renderInfoPanel();
 
         // Act
         // -- nothing

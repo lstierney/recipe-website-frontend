@@ -1,13 +1,14 @@
 import {MethodStepType} from "./methodStepType";
 import {NoteType} from "./noteType";
 import {IngredientType} from "./ingredientType";
+import {ServedOnType} from "./servedOnType";
+import {RecipePreviewType} from "./recipePreviewType";
 
-export interface RecipeType {
-    id: number,
-    name: string,
-    description: string,
-    imageFileName: string,
+export interface RecipeType extends RecipePreviewType {
     ingredients?: IngredientType[],
     methodSteps?: MethodStepType[],
-    notes?: NoteType[]
+    notes?: NoteType[],
+    cookingTime: number,
+    basedOn?: string,
+    servedOn?: ServedOnType
 }

@@ -1,5 +1,5 @@
 import {redirect} from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import jwt_decode, {JwtPayload} from "jwt-decode";
 import _ from 'lodash';
 
 export const EXPIRED = 'EXPIRED';
@@ -10,9 +10,11 @@ const IS_EDITING = 'isEditing';
 
 export const getTokenDuration = () => {
     const storedExpirationDate = localStorage.getItem(EXPIRATION);
-    const expirationDate = new Date(storedExpirationDate);
-    const now = new Date();
-    return expirationDate.getTime() - now.getTime();
+    if (storedExpirationDate !== null) {
+        const expirationDate = new Date(storedExpirationDate);
+        const now = new Date();
+        return expirationDate.getTime() - now.getTime();
+    }
 }
 
 export const getAuthToken = () => {
@@ -24,15 +26,16 @@ export const getAuthToken = () => {
 
     const tokenDuration = getTokenDuration();
 
-    if (tokenDuration < 0) {
+    if (tokenDuration === undefined || tokenDuration < 0) {
         return EXPIRED;
     }
     return token;
 }
 
-export const isAdminUser = () => {
-    const token = getAuthToken();
-    return token && token !== EXPIRED;
+export const isAdminUser = (): boolean => {
+    const token: null | string = getAuthToken();
+
+    return !_.isNil(token) && token !== EXPIRED;
 }
 
 export const tokenLoader = () => {
@@ -48,13 +51,18 @@ export const checkAuthLoader = () => {
     return null;
 }
 
-export const handleLogin = (token) => {
-    const decoded = jwt_decode(token);
-    const expiration = new Date(decoded.exp * 1000);
+export const handleLogin = (token: string) => {
+    const decoded: JwtPayload = jwt_decode(token);
+    if (decoded.exp !== undefined) {
+        const expiration = new Date(decoded.exp * 1000);
 
-    localStorage.setItem(EXPIRATION, expiration.toISOString());
-    localStorage.setItem(SUB, decoded.sub);
-    localStorage.setItem(TOKEN, token);
+        localStorage.setItem(EXPIRATION, expiration.toISOString());
+
+        if (decoded.sub !== undefined) {
+            localStorage.setItem(SUB, decoded.sub);
+        }
+        localStorage.setItem(TOKEN, token);
+    }
 }
 
 export const handleLogout = () => {
@@ -76,7 +84,7 @@ export const leaveEditingMode = () => {
     localStorage.removeItem(IS_EDITING);
 }
 
-export const isInEditingMode = () => {
+export const isInEditingMode = (): boolean => {
     return !_.isNil(localStorage.getItem(IS_EDITING)) && isAdminUser();
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './Preview.module.css';
 import {useNavigate} from "react-router-dom";
-import {RecipeType} from "../../../types/recipeType";
+import {RecipePreviewType} from "../../../types/recipePreviewType";
 
 type Props = {
-    recipe: RecipeType
+    recipe: RecipePreviewType
 }
 
 const Preview = (props: Props) => {
