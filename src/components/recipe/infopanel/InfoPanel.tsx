@@ -156,12 +156,13 @@ const InfoPanel = (props: Props) => {
                                             <p><a href={basedOn} target="_blank" rel="noreferrer">Inspiration</a></p>
                                         </div>
                                     )}
-                                    {crockery && (
+                                    {crockery > 0 && (
                                         <div className={classes['icon-text-pair']}>
                                             <img className={classes.icon} src={plateImage} alt="Serving Plate"/>
                                             <p>{getHeatedString()} {getCrockeryName()}</p>
                                         </div>
                                     )}
+
                                 </>
                             )}
 

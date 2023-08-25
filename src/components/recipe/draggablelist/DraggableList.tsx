@@ -7,8 +7,9 @@ import Ingredient from "../ingredient/Ingredient";
 import MethodStep from "../methodstep/MethodStep";
 import Note from "../note/Note";
 import Button from "../../button/Button";
+import {OrderableType} from "../../../types/orderableType";
 
-const renderListItem = (type, index, item) => {
+const renderListItem = (type: string, index: number, item: OrderableType) => {
     return <>
         {type === 'methodSteps' && (
             <>
@@ -32,7 +33,14 @@ const renderListItem = (type, index, item) => {
     </>;
 }
 
-const DraggableList = (props) => {
+type Props = {
+    type: string,
+    items: OrderableType[],
+    onRemove: (itemDescription: string) => void,
+    onReorder: (items: OrderableType[]) => void
+}
+
+const DraggableList = (props: Props) => {
     const isEditMode = isInEditingMode();
     const [items, setItems] = useState(props.items);
     const type = props.type; // methodStep, notes, ingredient
@@ -46,7 +54,7 @@ const DraggableList = (props) => {
     } else if (isEditMode) {
         return (
             <Reorder.Group axis="y" values={items} onReorder={setItems}>
-                {items.map((item, index) => (
+                {items.map((item, index: number) => (
                     <Reorder.Item key={item.id} value={item}>
                         <div
                             className={classes['draggable-list-item']}
@@ -70,7 +78,7 @@ const DraggableList = (props) => {
     } else {
         return (
             <>
-                {items.map((item, index) => (
+                {items.map((item, index: number) => (
                     <div key={item.description} className={classes['draggable-list-item']}>
                         {renderListItem(type, index, item)}
                     </div>

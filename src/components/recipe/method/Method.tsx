@@ -4,9 +4,10 @@ import MethodStepInput from "../../admin/MethodStepInput";
 import {isInEditingMode} from "../../../utils/auth";
 import DraggableList from "../draggablelist/DraggableList";
 import {MethodStepType} from "../../../types/methodStepType";
+import {OrderableType} from "../../../types/orderableType";
 
 type Props = {
-    items: MethodStepType[],
+    items: OrderableType[],
     onRemove: (methodStepDescription: string) => void,
     onReorder: (methodSteps: MethodStepType[]) => void,
     onAdd: (methodStepDescription: string) => void

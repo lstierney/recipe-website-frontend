@@ -15,18 +15,26 @@ const customStyles = {
     },
 };
 
+type Props = {
+    isOpen: boolean,
+    imageUrl: string,
+    closeModal: () => void
+}
+
 // The modal component
-const FullScreenImageModal = ({isOpen, closeModal, imageUrl}) => {
+const FullScreenImageModal = (props: Props) => {
+    const root: HTMLElement | null = document.getElementById('root');
+    const appElement: HTMLElement | undefined = root ? root : undefined;
     return (
         <Modal
-            isOpen={isOpen}
-            onRequestClose={closeModal}
+            isOpen={props.isOpen}
+            onRequestClose={props.closeModal}
             style={customStyles}
             contentLabel="Fullscreen Image Modal"
-            appElement={document.getElementById('root')}
+            appElement={appElement}
             shouldCloseOnOverlayClick={true}
         >
-            <img src={imageUrl} alt="Fullscreen" style={{width: '100%', height: '100%'}}/>
+            <img src={props.imageUrl} alt="Fullscreen" style={{width: '100%', height: '100%'}}/>
         </Modal>
     );
 };

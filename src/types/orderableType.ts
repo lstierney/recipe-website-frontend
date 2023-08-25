@@ -1,3 +1,5 @@
 export interface OrderableType {
-    ordering?: number
+    id?: number,
+    ordering?: number,
+    description: string
 }

@@ -6,7 +6,11 @@ import FullScreenImageModal from './FullScreenImageModal';
 // Mock the 'Modal' component to prevent errors during testing
 jest.mock('react-modal', () => ({
     __esModule: true,
-    default: ({isOpen, onRequestClose, children}) => (
+    default: ({isOpen, onRequestClose, children}: {
+        isOpen: boolean;
+        onRequestClose: () => void;
+        children: React.ReactNode;
+    }) => (
         isOpen && (
             <div role="dialog">
                 <button data-testid="close-modal-button" onClick={onRequestClose}/>
@@ -15,6 +19,7 @@ jest.mock('react-modal', () => ({
         )
     ),
 }));
+
 
 describe('FullScreenImageModal', () => {
     test('should render the modal with the provided image URL', () => {
@@ -28,7 +33,7 @@ describe('FullScreenImageModal', () => {
         expect(modalContainer).toBeInTheDocument();
 
         // Check if the image with the provided URL is displayed
-        const imageElement = screen.getByAltText('Fullscreen');
+        const imageElement = screen.getByAltText('Fullscreen') as HTMLImageElement;
         expect(imageElement).toBeInTheDocument();
         expect(imageElement.src).toBe(imageUrl);
 

@@ -4,9 +4,10 @@ import {isInEditingMode} from "../../../utils/auth";
 import NoteInput from "../../admin/NoteInput";
 import DraggableList from "../draggablelist/DraggableList";
 import {NoteType} from "../../../types/noteType";
+import {OrderableType} from "../../../types/orderableType";
 
 type Props = {
-    notes: NoteType[],
+    notes: OrderableType[],
     onReorder: (notes: NoteType[]) => void,
     onAdd: (noteDescription: string) => void,
     onRemove: (noteDescription: string) => void

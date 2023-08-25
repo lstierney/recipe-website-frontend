@@ -2,8 +2,11 @@ import {renderWithProviders} from "../../../utils/test-utils";
 import {screen} from "@testing-library/react";
 import DraggableList from './DraggableList';
 import {useGetUnitsQuery} from "../../../store/api";
+import {OrderableType} from "../../../types/orderableType";
 
 jest.mock('../../../store/api');
+
+const mockGetUnitsQuery = useGetUnitsQuery as jest.MockedFunction<typeof useGetUnitsQuery>;
 
 const ITEMS = [
     {
@@ -18,17 +21,21 @@ const ITEMS = [
     }
 ];
 
+const renderDraggableList = (items: OrderableType[] = ITEMS, type: string = 'notes') => {
+    renderWithProviders(<DraggableList items={items} type={type} onRemove={jest.fn()} onReorder={jest.fn()}/>);
+}
 describe('DraggableList component', () => {
 
     beforeEach(() => {
-        useGetUnitsQuery.mockReturnValue({
-            data: []
+        mockGetUnitsQuery.mockReturnValue({
+            data: [],
+            refetch: jest.fn()
         });
     });
 
     test('renders list of Items', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={ITEMS} type={'notes'}/>);
+        renderDraggableList();
 
         // Act
         // ... nothing
@@ -40,7 +47,7 @@ describe('DraggableList component', () => {
     });
     test('does not display "None found" when Items are supplied', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={ITEMS}/>);
+        renderDraggableList();
 
         // Act
         // ... nothing
@@ -51,7 +58,7 @@ describe('DraggableList component', () => {
     });
     test('displays "None Found" when no Items are supplied', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={[]}/>);
+        renderDraggableList([]);
 
         // Act
         // ... nothing
@@ -62,7 +69,7 @@ describe('DraggableList component', () => {
     });
     test('does not render any Items when none are supplied', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={[]}/>);
+        renderDraggableList([]);
 
         // Act
         // ... nothing
@@ -72,7 +79,7 @@ describe('DraggableList component', () => {
     });
     test('renders "STEP X" when Items are of type "methodSteps"', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={ITEMS} type={'methodSteps'}/>);
+        renderDraggableList(undefined, 'methodSteps');
 
         // Act
         // ... nothing
@@ -83,7 +90,7 @@ describe('DraggableList component', () => {
     });
     test('does not render "STEP X" when Items are not of type "methodSteps"', () => {
         // Arrange
-        renderWithProviders(<DraggableList items={ITEMS} type={'ingredients'}/>);
+        renderDraggableList(ITEMS, 'ingredients');
 
         // Act
         // ... nothing
@@ -98,7 +105,7 @@ describe('DraggableList component', () => {
         localStorage.setItem('token', 'fake token');
         localStorage.setItem('expiration', '' + (new Date().getTime() + 1000));
 
-        renderWithProviders(<DraggableList items={ITEMS}/>);
+        renderDraggableList();
 
         // Act
         // ... nothing
@@ -109,7 +116,7 @@ describe('DraggableList component', () => {
     test('should not render "Delete" buttons when not in edit mode', () => {
         // Arrange
         localStorage.removeItem('isEditing');
-        renderWithProviders(<DraggableList items={ITEMS}/>);
+        renderDraggableList();
 
         // Act
         // ... nothing

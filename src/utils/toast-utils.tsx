@@ -1,11 +1,11 @@
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {Id} from "react-toastify/dist/types";
 
 export const toastUtils = () => {
-    let toastInstance;
+    let toastInstance: Id;
 
-
-    const error = message => {
+    const error = (message: string) => {
         if (toastInstance) {
             toast.update(toastInstance, {
                     isLoading: false,
@@ -20,11 +20,11 @@ export const toastUtils = () => {
         }
     }
 
-    const loading = message => {
+    const loading = (message: string) => {
         toastInstance = toast.loading(message, {});
     }
 
-    const success = message => {
+    const success = (message: string) => {
         if (toastInstance) {
             toast.update(toastInstance, {
                 isLoading: false,
