@@ -194,7 +194,7 @@ const InfoPanel = (props: Props) => {
                                                onChange={e => handleHeatedChange(true)}/><label
                                         htmlFor="heated">Yes</label>
                                         <input type="radio" aria-label="Heated radio" name="heated"
-                                               checked={heated} value={0}
+                                               checked={!heated} value={0}
                                                onChange={e => handleHeatedChange(false)}/><label
                                         htmlFor="heated">No</label>
 
