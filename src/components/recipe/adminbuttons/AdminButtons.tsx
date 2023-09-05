@@ -6,10 +6,11 @@ import {useLocation} from "react-router-dom";
 type Props = {
     onEditModeChange(isEditMode: boolean): void,
     addRecipeHandler(e: any): Promise<void>,
+    onMarkRecipeAsCooked: () => void,
     children: React.ReactNode
 }
 
-const AdminButtons: React.FC<Props> = props => {
+const AdminButtons = (props: Props) => {
     const [isEditMode, setIsEditMode] = useState(false);
     const isAdmin = isAdminUser();
     const location = useLocation();
@@ -39,13 +40,23 @@ const AdminButtons: React.FC<Props> = props => {
             <div>
                 {isAdmin ? (
                     isEditMode ? (
-                        <Button type="button" onClick={leaveEditMode}>Read Only Mode</Button>
+                        <>
+                            <Button type="button" onClick={leaveEditMode}>Read Only Mode</Button>
+                            <Button type="button" onClick={props.onMarkRecipeAsCooked}>Mark as Cooked</Button>
+                        </>
+
                     ) : (
-                        <Button type="button" onClick={enterEditMode}>Edit Mode</Button>
+                        <>
+                            <Button type="button" onClick={enterEditMode}>Edit Mode</Button>
+                            <Button type="button" onClick={props.onMarkRecipeAsCooked}>Mark as Cooked</Button>
+                        </>
                     )
                 ) : null}
-                {isEditMode &&
-                    <Button type="submit" onClick={props.addRecipeHandler}>Submit</Button>}
+                {isEditMode && (
+                    <>
+                        <Button type="submit" onClick={props.addRecipeHandler}>Submit</Button>
+                    </>
+                )}
             </div>
         );
     }

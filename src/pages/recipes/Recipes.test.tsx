@@ -29,13 +29,15 @@ const ALL_RECIPES: RecipePreviewType[] = [
         id: 1,
         name: 'Recipe One',
         description: 'Recipe One Description',
-        imageFileName: 'recipe1.jpg'
+        imageFileName: 'recipe1.jpg',
+        cooked: 1
     },
     {
         id: 2,
         name: 'Recipe Two',
         description: 'Recipe Two Description',
-        imageFileName: 'recipe2.jpg'
+        imageFileName: 'recipe2.jpg',
+        cooked: 2
     }
 ];
 const RECIPES_FOR_TAG: RecipePreviewType[] = [
@@ -43,14 +45,15 @@ const RECIPES_FOR_TAG: RecipePreviewType[] = [
         id: 3,
         name: 'Recipe Three',
         description: 'Recipe Three Description',
-        imageFileName: 'recipe3.jpg'
-
+        imageFileName: 'recipe3.jpg',
+        cooked: 3
     },
     {
         id: 4,
         name: 'Recipe Four',
         description: 'Recipe Four Description',
-        imageFileName: 'recipe4.jpg'
+        imageFileName: 'recipe4.jpg',
+        cooked: 4
     }
 ];
 

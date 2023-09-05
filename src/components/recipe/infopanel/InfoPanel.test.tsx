@@ -19,7 +19,8 @@ const RECIPE: RecipeType = {
     basedOn: 'http://somerecipe.com',
     description: 'This is the description for the recipe',
     imageFileName: 'test.jpg',
-    servedOn: undefined
+    servedOn: undefined,
+    cooked: 1
 };
 
 const CROCKERY_LIST = [
@@ -95,6 +96,28 @@ describe('InfoPanel', () => {
 
         // Assert
         const clockIcon = screen.getByAltText('Clock', {exact: true});
+        expect(clockIcon).toBeInTheDocument();
+    });
+    test('renders Recipe "cooked" amount', () => {
+        // Arrange
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const cooked = screen.getByText('x 1', {exact: true});
+        expect(cooked).toBeInTheDocument();
+    });
+    test('renders "cooked" icon', () => {
+        // Arrange
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const clockIcon = screen.getByAltText('Cooked', {exact: true});
         expect(clockIcon).toBeInTheDocument();
     });
     test('renders "Inspired By" link when recipe.basedOn is present', () => {

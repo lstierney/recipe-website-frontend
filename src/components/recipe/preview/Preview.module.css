@@ -3,13 +3,28 @@
     flex-direction: column;
     padding: 0.5rem;
     height: 92%;
-
     background-color: #f0f0f0;
     border-radius: 10px;
+    position: relative;
 }
 
 .preview:hover {
     cursor: pointer;
+}
+
+.image-container {
+    position: relative; /* Add relative positioning to the image container */
+}
+
+.overlay-digits {
+    position: absolute;
+    bottom: 9px; /* Adjust the bottom offset as needed */
+    right: 4px; /* Adjust the right offset as needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 4px 8px 2px 8px;
+    border-radius: 10px;
+    font-size: 1rem;
 }
 
 .preview-name {
@@ -20,10 +35,21 @@
     display: block;
 }
 
-.preview img {
+.icon {
+    height: 20px;
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.preview-img {
     border-radius: 10px;
     height: auto;
     width: 100%;
+}
+
+.cooked {
+    padding-left: 10px;
+    font-family: corporate-s, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 @media screen and (max-width: 480px) {

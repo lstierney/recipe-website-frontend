@@ -5,6 +5,7 @@ import RecipeImage from "../recipeimage/RecipeImage";
 import clockImage from "../../../assets/images/clock.svg";
 import plateImage from "../../../assets/images/plate.svg";
 import bulbImage from "../../../assets/images/light-bulb.svg";
+import cookedImage from "../../../assets/images/cooked.svg";
 import _ from "lodash";
 import {isInEditingMode} from "../../../utils/auth";
 import FullScreenImageModal from "../fullscreenimagemodal/FullScreenImageModal";
@@ -31,6 +32,7 @@ const InfoPanel = (props: Props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
+    const [cooked, setCooked] = useState(0);
     const [crockery, setCrockery] = useState(0);
     const [heated, setHeated] = useState(false);
     const [basedOn, setBasedOn] = useState<string | undefined>('');
@@ -85,6 +87,7 @@ const InfoPanel = (props: Props) => {
             setName(recipe.name);
             setDescription(recipe.description);
             setCookingTime(recipe.cookingTime);
+            setCooked(recipe.cooked);
             setBasedOn(recipe.basedOn);
             if (!_.isEmpty(recipe.servedOn)) {
                 setCrockery(recipe.servedOn.crockery.id);
@@ -149,6 +152,10 @@ const InfoPanel = (props: Props) => {
                                     <div className={classes['icon-text-pair']}>
                                         <img className={classes.icon} src={clockImage} alt="Clock"/>
                                         <p>{cookingTime} mins</p>
+                                    </div>
+                                    <div className={classes['icon-text-pair']}>
+                                        <img className={classes.icon} src={cookedImage} alt="Cooked"/>
+                                        <p>x {cooked}</p>
                                     </div>
                                     {basedOn && (
                                         <div className={classes['icon-text-pair']}>
