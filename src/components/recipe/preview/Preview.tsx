@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Preview.module.css';
 import {useNavigate} from "react-router-dom";
 import {RecipePreviewType} from "../../../types/recipePreviewType";
+import cookedImage from "../../../assets/images/cooked.svg";
 
 type Props = {
     recipe: RecipePreviewType
@@ -19,9 +20,16 @@ const Preview = (props: Props) => {
 
     return (
         <div key={recipe.name} className={classes.preview} onClick={() => handleClick(recipe.name)}>
-            <img alt={recipe.name} src={imgSrc}/>
+            <div className={classes['image-container']}>
+                <img className={classes['preview-img']} alt={recipe.name} src={imgSrc}/>
+                <span className={classes['overlay-digits']}>
+                    <img className={classes.icon} src={cookedImage} alt="Number of times cooked"/>
+                    {recipe.cooked}
+                </span>
+            </div>
             <span className={classes['preview-name']}>{recipe.name}</span>
         </div>
+
     );
 };
 

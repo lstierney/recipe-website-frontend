@@ -97,6 +97,18 @@ const api = createApi({
                 await handleMutationLifeCycle(queryFulfilled, "Adding Recipe", "Added Recipe", "add recipe");
             }
         }),
+        markRecipeAsCooked: builder.mutation({
+            query: recipe => ({
+                url: '/recipes/markascooked/' + recipe.id,
+                method: 'POST',
+                headers: {Authorization: 'Bearer ' + getAuthToken()}
+            }),
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Marking Recipe as cooked", "Marked Recipe as cooked", "mark Recipe as cooked");
+            },
+            invalidatesTags: (result, error, recipe) =>
+                [{type: 'Recipes', id: recipe.name.replaceAll(' ', '-').toLowerCase()}]
+        }),
         updateRecipe: builder.mutation({
             query: (recipe) => {
                 const formData = new FormData();
@@ -194,6 +206,7 @@ export const {
     useAddTagMutation,
     useUpdateTagMutation,
     useUpdateRecipeMutation,
+    useMarkRecipeAsCookedMutation,
     useDeleteTagMutation,
     useGetRecipesByTagQuery,
     useGetRecipeTitlesAndIdsQuery

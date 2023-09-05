@@ -8,7 +8,13 @@ import _ from "lodash";
 import InfoPanel from "../../components/recipe/infopanel/InfoPanel";
 import {enterEditingMode, isAdminUser, leaveEditingMode} from "../../utils/auth";
 import Notes from "../../components/recipe/notes/Notes";
-import {useAddRecipeMutation, useGetRecipeQuery, useGetTagsQuery, useUpdateRecipeMutation} from "../../store/api";
+import {
+    useAddRecipeMutation,
+    useGetRecipeQuery,
+    useGetTagsQuery,
+    useMarkRecipeAsCookedMutation,
+    useUpdateRecipeMutation
+} from "../../store/api";
 import AdminButtons from "../../components/recipe/adminbuttons/AdminButtons";
 import {IngredientType} from "../../types/ingredientType";
 import {NoteType} from "../../types/noteType";
@@ -29,6 +35,7 @@ const Recipe = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [cookingTime, setCookingTime] = useState(0);
+    const [cooked, setCooked] = useState(0);
     const [basedOn, setBasedOn] = useState('');
     const [crockery, setCrockery] = useState(0);
     const [heated, setHeated] = useState(false);
@@ -45,6 +52,7 @@ const Recipe = () => {
     const {data: recipe} = useGetRecipeQuery(recipeName, {skip: recipeName === undefined});
     const [addRecipe] = useAddRecipeMutation();
     const [updateRecipe] = useUpdateRecipeMutation();
+    const [markRecipeAsCooked] = useMarkRecipeAsCookedMutation();
 
     const getHighestOrdering = (items: OrderableType[]): number => {
         const ordered: OrderableType[] = _.orderBy(items, ['ordering'], ['desc']);
@@ -67,6 +75,7 @@ const Recipe = () => {
             setSelectedTags(recipe.tags);
             setAvailableTags(_.difference(metaTags, recipe.tags));
             setImageFileName(recipe.imageFileName);
+            setCooked(recipe.cooked);
 
             if (!_.isEmpty(recipe.methodSteps)) {
                 setMethodStepOrderingId(getHighestOrdering(recipe.methodSteps));
@@ -100,6 +109,7 @@ const Recipe = () => {
             name: name,
             description: description,
             cookingTime: +cookingTime,
+            cooked: cooked,
             basedOn: !_.isEmpty(basedOn) ? basedOn : '',
             ingredients: ingredients,
             methodSteps: methodSteps,
@@ -132,6 +142,10 @@ const Recipe = () => {
         editMode ? enterEditingMode() : leaveEditingMode();
         console.log(isRecipeInEditMode);
     };
+
+    const onMarkRecipeAsCookedHandler = async () => {
+        await markRecipeAsCooked(recipe).unwrap();
+    }
 
     const onAddIngredientHandler = (ingredient: IngredientType) => {
         const newIngredients = ingredients.slice();
@@ -201,7 +215,8 @@ const Recipe = () => {
     return (
         <div>
             <form>
-                <AdminButtons addRecipeHandler={addRecipeHandler} onEditModeChange={handleEditModeChange}>
+                <AdminButtons addRecipeHandler={addRecipeHandler} onEditModeChange={handleEditModeChange}
+                              onMarkRecipeAsCooked={onMarkRecipeAsCookedHandler}>
                 <InfoPanel
                     recipe={recipe}
                     setCookingTime={setCookingTime}
