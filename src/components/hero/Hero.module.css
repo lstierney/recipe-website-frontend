@@ -1,0 +1,96 @@
+
+.hero-image-container {
+    grid-area: 1 / 1 / 9 / 7;
+    overflow: hidden;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-image {
+
+}
+
+.hero-card {
+    background-color: rgba(255, 255, 255, 0.75);
+    grid-area: 6 / 3 / 8 / 5;
+    text-align: center;
+}
+
+.hero-card-inner {
+    border: 2px solid #0c5f5f;
+    margin: 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-card-name {
+    font-family: "Frank Ruhl Libre", Georgia, serif;
+    font-size: 2rem;
+    padding: 0.5rem 1rem 0 1rem;
+}
+
+.hero-card-description {
+    padding: 1rem;
+}
+
+/* Tablet */
+@media screen and (max-width: 850px) {
+    .hero-image-container {
+        grid-area: 1 / 1 / 9 / 7;
+        overflow: hidden;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-image {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .hero-card {
+        background-color: rgba(255, 255, 255, 0.75);
+        text-align: center;
+    }
+}
+
+/* Phone */
+@media screen and (max-width: 480px) {
+    .hero-image-container {
+        grid-area: 3 / 1 / 7 / 11;
+        overflow: hidden;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hero-image {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .hero-card {
+        grid-area: 2 / 2 / 10 / 10;
+        background-color: rgba(255, 255, 255, 0.75);
+        text-align: center;
+        margin: 10px;
+    }
+
+    .hero-card-name {
+        font-family: "Frank Ruhl Libre", Georgia, serif;
+        font-size: 1.4rem;
+        padding: 0.5rem 1rem 1rem 1rem;
+    }
+
+    .hero-card-description {
+        display: none;
+    }
+}
