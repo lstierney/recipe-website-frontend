@@ -159,6 +159,13 @@ hr {
         height: 100%;
         background-color: #0c5f5f;
     }
+
+    .content {
+        grid-area: 3 / 1 / 11 / 11;
+        height: 100%;
+        overflow: auto;
+        padding: 5px;
+    }
     .logo {
         grid-area: 1 / 3;
     }
@@ -171,17 +178,17 @@ hr {
         display: none;
     }
     .home-content {
-        grid-area: 1 / 1 / 11 / 11;
+        grid-area: 3 / 1 / 11 / 11;
 
         height: 100%;
 
         display: grid;
         grid-template-rows: subgrid;
         grid-template-columns: subgrid;
-        /*flex-direction: column;*/
+
     }
     .home-previews {
-        grid-area: 7 / 1 / 11 / 11;
+        grid-area: 6 / 1 / 11 / 11;
         overflow: hidden;
         height: 100%;
 
