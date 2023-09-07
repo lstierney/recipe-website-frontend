@@ -58,7 +58,7 @@ describe('Ingredient component', () => {
         expect(screen.getByText('1 IngredientDesc', {exact: true})).toBeInTheDocument();
         expect(screen.queryByText(/\s+1 IngredientDesc\s+/, {})).not.toBeInTheDocument();
     });
-    test('renders "1 tablespoon IngredientDesc" when Qty and Unit', () => {
+    test('renders "1 tablespoon of IngredientDesc" when Qty and Unit', () => {
         // Arrange
         INGREDIENT.quantity = 1;
         INGREDIENT.unit = UNITS[0];
@@ -69,7 +69,72 @@ describe('Ingredient component', () => {
         // ... nothing
 
         // Assert
-        expect(screen.getByText('1 tablespoon IngredientDesc', {exact: true})).toBeInTheDocument();
-        expect(screen.queryByText(/\s+1 tablespoon IngredientDesc\s+/, {})).not.toBeInTheDocument();
+        expect(screen.getByText('1 tablespoon of IngredientDesc', {exact: true})).toBeInTheDocument();
+        expect(screen.queryByText(/\s+1 tablespoon of IngredientDesc\s+/, {})).not.toBeInTheDocument();
+    });
+    test('renders "0.5" as  "1/2"', () => {
+        // Arrange
+        INGREDIENT.quantity = 0.5;
+        INGREDIENT.unit = UNITS[0];
+
+        renderWithProviders(<Ingredient ingredient={INGREDIENT}/>);
+
+        // Act
+        // ... nothing
+
+        // Assert
+        expect(screen.getByText('1/2 tablespoon of IngredientDesc', {exact: true})).toBeInTheDocument();
+    });
+    test('renders "0.25" as  "1/4"', () => {
+        // Arrange
+        INGREDIENT.quantity = 0.25;
+        INGREDIENT.unit = UNITS[0];
+
+        renderWithProviders(<Ingredient ingredient={INGREDIENT}/>);
+
+        // Act
+        // ... nothing
+
+        // Assert
+        expect(screen.getByText('1/4 tablespoon of IngredientDesc', {exact: true})).toBeInTheDocument();
+    });
+    test('renders "0.75" as  "3/4"', () => {
+        // Arrange
+        INGREDIENT.quantity = 0.75;
+        INGREDIENT.unit = UNITS[0];
+
+        renderWithProviders(<Ingredient ingredient={INGREDIENT}/>);
+
+        // Act
+        // ... nothing
+
+        // Assert
+        expect(screen.getByText('3/4 tablespoon of IngredientDesc', {exact: true})).toBeInTheDocument();
+    });
+    test('renders "2 tablespoons of IngredientDesc" when Qty and Unit', () => {
+        // Arrange
+        INGREDIENT.quantity = 2;
+        INGREDIENT.unit = UNITS[0];
+
+        renderWithProviders(<Ingredient ingredient={INGREDIENT}/>);
+
+        // Act
+        // ... nothing
+
+        // Assert
+        expect(screen.getByText('2 tablespoons of IngredientDesc', {exact: true})).toBeInTheDocument();
+    });
+    test('renders "2 1/2 tablespoons of IngredientDesc" when Qty and Unit', () => {
+        // Arrange
+        INGREDIENT.quantity = 2.5;
+        INGREDIENT.unit = UNITS[0];
+
+        renderWithProviders(<Ingredient ingredient={INGREDIENT}/>);
+
+        // Act
+        // ... nothing
+
+        // Assert
+        expect(screen.getByText('2 1/2 tablespoons of IngredientDesc', {exact: true})).toBeInTheDocument();
     });
 });
