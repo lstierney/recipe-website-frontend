@@ -4,6 +4,7 @@ import mainClasses from '../../main.module.css';
 import classes from './Header.module.css';
 import {getSubject, isAdminUser} from "../../utils/auth";
 import logoImage from "../../assets/images/logo.svg";
+import Hamburger from "./hamburger/Hamburger";
 
 
 const Header = () => {
@@ -75,6 +76,7 @@ const Header = () => {
             <div className={mainClasses.logo}>
                 <img className={classes['logo-image']} src={logoImage} alt="Logo" onClick={handleLogoClick}/>
             </div>
+            <Hamburger/>
 
         </>
     );

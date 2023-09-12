@@ -1,0 +1,45 @@
+.menu-item {
+    display: block;
+    margin: 2rem 4rem;
+    font-size: 1.8rem;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    text-decoration: underline;
+}
+
+.hamburger {
+    position: fixed;
+    z-index: 100;
+    top: 1rem;
+    left: 1rem;
+    background: white;
+    cursor: pointer;
+    width: 3rem;
+}
+
+.close-icon {
+    display: none;
+}
+
+.menu {
+    position: fixed;
+    transform: translateY(-100%);
+    transition: transform 0.2s;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: #0c5f5f;
+    color: white;
+    list-style: none;
+    padding-top: 4rem;
+    height: 50%;
+}
+
+.show-menu {
+    transform: translateY(0);
+}
