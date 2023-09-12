@@ -28,8 +28,11 @@ describe('Header', () => {
         // ...nothing
 
         // Assert
-        const link = screen.getByRole('link', {name: 'Home'});
-        expect(link).toHaveAttribute('href', '/');
+        const links = screen.getAllByRole('link', {name: 'Home'});
+        links.forEach(link => {
+            expect(link).toHaveAttribute('href', '/');
+        })
+
     });
     test('renders Recipes link', () => {
         // Arrange
@@ -39,8 +42,11 @@ describe('Header', () => {
         // ...nothing
 
         // Assert
-        const link = screen.getByRole('link', {name: 'Recipes'});
-        expect(link).toHaveAttribute('href', '/recipes');
+        const links = screen.getAllByRole('link', {name: 'Recipes'});
+
+        links.forEach(link => {
+            expect(link).toHaveAttribute('href', '/recipes');
+        })
     });
     test('renders Convertors link', () => {
         // Arrange
@@ -50,8 +56,11 @@ describe('Header', () => {
         // ...nothing
 
         // Assert
-        const link = screen.getByRole('link', {name: 'Convertors'});
-        expect(link).toHaveAttribute('href', '/convertors');
+        const links = screen.getAllByRole('link', {name: 'Convertors'});
+        links.forEach(link => {
+            expect(link).toHaveAttribute('href', '/convertors');
+        })
+
     });
     test('renders Login link when not admin', () => {
         // Arrange
@@ -62,8 +71,11 @@ describe('Header', () => {
         // ...nothing
 
         // Assert
-        const link = screen.getByRole('link', {name: 'Login'});
-        expect(link).toHaveAttribute('href', '/login');
+        const links = screen.getAllByRole('link', {name: 'Login'});
+        links.forEach(link => {
+            expect(link).toHaveAttribute('href', '/login');
+        })
+
     });
     test('renders Logout link when admin', () => {
         // Arrange

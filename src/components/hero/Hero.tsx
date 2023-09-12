@@ -28,7 +28,7 @@ const Hero = () => {
     }, [images, isSuccess]);
 
     return (
-        <>
+        <div className={classes['hero-container']}>
             {randomRecipe &&
                 <div data-testid={'hero-image-container'} onClick={() => handleImageClick(randomRecipe.name)}
                      className={classes['hero-image-container']}>
@@ -48,7 +48,7 @@ const Hero = () => {
 
                 </div>
             }
-        </>
+        </div>
     );
 };
 
