@@ -55,3 +55,15 @@
         width: 3rem;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .hamburger {
+        position: fixed;
+        z-index: 100;
+        top: 1.2rem;
+        left: 1rem;
+        background: white;
+        cursor: pointer;
+        width: 3rem;
+    }
+}

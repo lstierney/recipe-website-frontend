@@ -11,9 +11,11 @@ const Hero = () => {
     const imgHost = process.env.REACT_APP_API_HOST;
     const navigate = useNavigate();
 
-    const handleImageClick = (name: string) => {
-        name = name.replace(/ /g, '-').toLowerCase();
-        navigate(`/recipes/${name}`);
+    const handleHeroClick = () => {
+        if (randomRecipe !== null) {
+            const name = randomRecipe.name.replace(/ /g, '-').toLowerCase();
+            navigate(`/recipes/${name}`);
+        }
     };
 
     useEffect(() => {
@@ -28,24 +30,19 @@ const Hero = () => {
     }, [images, isSuccess]);
 
     return (
-        <div className={classes['hero-container']}>
+        <div className={classes['hero-container']} data-testid={'hero-container'} onClick={handleHeroClick}>
             {randomRecipe &&
-                <div data-testid={'hero-image-container'} onClick={() => handleImageClick(randomRecipe.name)}
-                     className={classes['hero-image-container']}>
-
+                <div className={classes['hero-image-container']}>
                     <img className={classes['hero-image']} src={imgHost + '/images/' + randomRecipe.imageFileName}
                          alt={randomRecipe.name}/>
-
                 </div>
             }
             {randomRecipe &&
-                <div onClick={() => handleImageClick(randomRecipe.name)} className={classes['hero-card']}>
-
+                <div className={classes['hero-card']}>
                     <div className={classes['hero-card-inner']}>
                         <div className={classes['hero-card-name']}>{randomRecipe.name}</div>
                         <div className={classes['hero-card-description']}>{randomRecipe.description}</div>
                     </div>
-
                 </div>
             }
         </div>

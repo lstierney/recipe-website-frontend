@@ -79,7 +79,7 @@ describe('Hero component page', () => {
         renderHero();
 
         // Act
-        const divElement = screen.getByTestId('hero-image-container');
+        const divElement = screen.getByTestId('hero-container');
         fireEvent.click(divElement);
 
         expect(mockNavigate).toHaveBeenCalled();
