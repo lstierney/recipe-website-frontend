@@ -43,3 +43,15 @@
 .show-menu {
     transform: translateY(0);
 }
+
+@media screen and (max-width: 850px) {
+    .hamburger {
+        position: fixed;
+        z-index: 100;
+        top: 1.5rem;
+        left: 1rem;
+        background: white;
+        cursor: pointer;
+        width: 3rem;
+    }
+}
