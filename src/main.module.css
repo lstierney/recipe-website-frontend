@@ -13,16 +13,19 @@
     grid-area: 1 / 1 / 2 / 11;
     height: 100%;
     background-color: #0c5f5f;
+    z-index: 1;
 }
 
 .navigation {
     grid-area: 1 / 4 / 2 / 8;
     height: 100%;
+    z-index: 2;
 }
 
 .logo {
     grid-area: 1 / 1 / 2 / 3;
     height: 100%;
+    z-index: 3;
 }
 
 .hamburger-container {
@@ -66,6 +69,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 /* END OF GRID LAYOUTS */

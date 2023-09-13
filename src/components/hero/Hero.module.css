@@ -1,8 +1,8 @@
 .hero-container {
     grid-area: 2 / 1 / 9 / 7;
     overflow: hidden;
-    z-index: -1;
     position: relative;
+    cursor: pointer;
 
 }
 .hero-image-container {
