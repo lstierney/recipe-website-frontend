@@ -1,5 +1,6 @@
 import React from 'react';
 import {NoteType} from "../../../types/noteType";
+import RecipeLinkParser from "../recipeLinkParser/RecipeLinkParser";
 
 type Props = {
     note: NoteType
@@ -8,7 +9,7 @@ type Props = {
 const Note = (props: Props) => {
     const {note} = props;
     return (
-        <span>{note.description}</span>
+        <span><RecipeLinkParser>{note.description}</RecipeLinkParser></span>
     );
 };
 

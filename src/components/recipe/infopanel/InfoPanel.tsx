@@ -12,6 +12,7 @@ import FullScreenImageModal from "../fullscreenimagemodal/FullScreenImageModal";
 import {useGetCrockeryQuery} from "../../../store/api";
 import {CrockeryType} from "../../../types/crockeryType";
 import {RecipeType} from "../../../types/recipeType";
+import RecipeLinkParser from "../recipeLinkParser/RecipeLinkParser";
 
 type Props = {
     recipe: RecipeType,
@@ -131,7 +132,8 @@ const InfoPanel = (props: Props) => {
                                     <h1>{name}</h1>
                                 </div>
                                 <div className={classes.description}>
-                                    <p className={mainClasses.description}>{description}</p>
+                                    <p className={mainClasses.description}>
+                                        <RecipeLinkParser>{description}</RecipeLinkParser></p>
                                 </div>
                             </>
                         }
