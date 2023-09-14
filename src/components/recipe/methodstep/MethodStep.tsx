@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './MethodStep.module.css';
 import {MethodStepType} from "../../../types/methodStepType";
+import RecipeLinkParser from "../recipeLinkParser/RecipeLinkParser";
 
 type Props = {
     methodStep: MethodStepType,
@@ -12,7 +13,7 @@ const MethodStep = (props: Props) => {
     return (
         <>
             <span className={classes['step-number']}>STEP {props.number}</span><br/>
-            <span>{methodStep.description}</span>
+            <span><RecipeLinkParser>{methodStep.description}</RecipeLinkParser></span>
         </>
     );
 };
