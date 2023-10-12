@@ -76,17 +76,6 @@ describe('InfoPanel', () => {
         const description = screen.getByText('This is the description for the recipe', {exact: true});
         expect(description).toBeInTheDocument();
     });
-    test('renders Recipe cooking time', () => {
-        // Arrange
-        renderInfoPanel();
-
-        // Act
-        // ...nothing
-
-        // Assert
-        const cookingTime = screen.getByText('30 mins', {exact: true});
-        expect(cookingTime).toBeInTheDocument();
-    });
     test('renders clock icon', () => {
         // Arrange
         renderInfoPanel();
@@ -361,5 +350,59 @@ describe('InfoPanel', () => {
         // Assert
         const radios = screen.getAllByRole('radio', {name: 'Heated radio'})
         expect(radios.length).toBe(2);
+    });
+    test('renders cooking time correct when cooking time < 1 hour', () =>{
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const cookingTime = screen.getByText('30 mins', {exact: true});
+        expect(cookingTime).toBeInTheDocument();
+    });
+    test('renders cooking time correct when cooking time == 1 hour', () =>{
+        RECIPE.cookingTime = 60;
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const cookingTime = screen.getByText('1 hr', {exact: true});
+        expect(cookingTime).toBeInTheDocument();
+    });
+    test('renders cooking time correct when cooking time > 1 hour', () =>{
+        RECIPE.cookingTime = 90;
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const cookingTime = screen.getByText('1 hr 30 mins', {exact: true});
+        expect(cookingTime).toBeInTheDocument();
+    });
+    test('renders cooking time correct when cooking time == 2 hours', () =>{
+        RECIPE.cookingTime = 120;
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const cookingTime = screen.getByText('2 hrs', {exact: true});
+        expect(cookingTime).toBeInTheDocument();
+    });
+    test('renders cooking time correct when cooking time > 2 hours', () =>{
+        RECIPE.cookingTime = 150;
+        renderInfoPanel();
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const cookingTime = screen.getByText('2 hrs 30 mins', {exact: true});
+        expect(cookingTime).toBeInTheDocument();
     });
 });

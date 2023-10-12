@@ -83,6 +83,22 @@ const InfoPanel = (props: Props) => {
         return heated ? 'Heated' : 'Unheated';
     }
 
+    const formatTime = (timeInMinutes: number): string => {
+        if (timeInMinutes < 60) {
+            return `${timeInMinutes} mins`;
+        } else {
+            const hours = Math.floor(timeInMinutes / 60);
+            const minutes = timeInMinutes % 60;
+
+            if (minutes === 0) {
+                return `${hours} hr${hours > 1 ? 's' : ''}`;
+            } else {
+                return `${hours} hr${hours > 1 ? 's' : ''} ${minutes} mins`;
+            }
+        }
+    };
+
+
     useEffect(() => {
         if (!_.isEmpty(recipe)) {
             setName(recipe.name);
@@ -153,7 +169,7 @@ const InfoPanel = (props: Props) => {
                                 <>
                                     <div className={classes['icon-text-pair']}>
                                         <img className={classes.icon} src={clockImage} alt="Clock"/>
-                                        <p>{cookingTime} mins</p>
+                                        <p>{formatTime(cookingTime)}</p>
                                     </div>
                                     <div className={classes['icon-text-pair']}>
                                         <img className={classes.icon} src={cookedImage} alt="Cooked"/>
