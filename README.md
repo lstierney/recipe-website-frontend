@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# Recipe Website Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React website written in, mostly TypeScript. It is used as the frontend for a Recipe website and expects a suitable backend to be in place. [See here for backend](https://github.com/lstierney/recipe-website-backend)
 
-## Available Scripts
+## Status
+|                |   |
+|----------------|---|
+| Build Status   |![example workflow](https://github.com/lstierney/recipe-website-frontend/actions/workflows/webpack.yml/badge.svg)   |
+| Last Commit    |![Latest Commit](https://img.shields.io/github/last-commit/lstierney/recipe-website-frontend)   |
+| Latest Version | ![Latest Version](https://img.shields.io/badge/latest-v2.0.0-brightgreen)  |
+| License        |[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)   |
 
-In the project directory, you can run:
 
-### `npm start`
+## Demo Link
+http://myveggierecipes.com
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Table of Contents
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running Locally](#running-locally)
+- [Run Tests](#run-tests)
+- [Building](#building)
+- [Deploying](#deploying)
+- [Technologies](#technologies)
+- [License](#license)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
+Check out the code from here: https://github.com/lstierney/recipe-website-frontend
 
-### `npm run build`
+And then
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```shell
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Configuration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Required configuration is controlled by two files `/.env.development` and `/.env.production` these should be updated to reflect the location of your backend.
 
-### `npm run eject`
+## Running Locally
+```shell
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Run Tests
+```shell
+npm run test
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Building
+Before the app can be run on a server it needs to be built:
+```shell
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Deploying
+Once you have build the app (see above) `/build` will be generated. You should copy the contents of this folder to your preferred web server.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Technologies
 
-## Learn More
+Primarily React/Typescript with a smattering of Javascript, CSS and HTML
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
