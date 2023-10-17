@@ -149,14 +149,14 @@ describe('Search page', () => {
         }]);
 
         // Act
-        const button = screen.getByText('Tag-One');
+        const button = screen.getByRole('button', {name: 'Tag-One'});
 
         act(() => {
             userEvent.click(button);
         });
 
         // Assert
-        let message = screen.getByText('Recipes for Tag "Tag-One"', {exact: true});
+        let message = screen.getByRole('heading', {name: 'Tag-One'});
         expect(message).toBeInTheDocument();
 
         message = screen.getByText('No recipes found', {exact: true});
@@ -170,14 +170,14 @@ describe('Search page', () => {
         }]);
 
         // Act
-        const button = screen.getByText('Tag-One');
+        const button = screen.getByRole('button', {name: 'Tag-One'});
 
         act(() => {
             userEvent.click(button);
         });
 
         // Assert
-        let message: (HTMLElement | null) = screen.getByText('Recipes for Tag "Tag-One"', {exact: true});
+        let message: (HTMLElement | null) = screen.getByRole('heading', {name: 'Tag-One'});
         expect(message).toBeInTheDocument();
 
         message = screen.queryByText('No recipes found', {exact: true});

@@ -1,53 +1,67 @@
-import RecipesList from "../../components/recipe/recipeslist/RecipesList";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import classes from './Recipes.module.css';
-import {useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery} from "../../store/api";
+import React, { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import classes from "./Recipes.module.css";
+import { useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery } from "../../store/api";
 import Button from "../../components/button/Button";
-import _ from 'lodash';
 import closeImage from "../../assets/images/close-circle.svg";
-
-import React from "react";
-import {TagType} from "../../types/tagType";
+import { TagType } from "../../types/tagType";
+import RecipesList from "../../components/recipe/recipeslist/RecipesList";
 
 const Recipes = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const tagName = searchParams.get('tag');
-    const {data: tags = []} = useGetTagsQuery({});
-    const {data: recipes = []} = useGetRecipesByTagQuery(tagName, {skip: _.isEmpty(tagName)});
-    const {data: allRecipes} = useGetRecipeTitlesAndIdsQuery({skip: !_.isEmpty(tagName)});
+    const tagsQueryParam = searchParams.get("tags");
+    const tagNames = tagsQueryParam ? tagsQueryParam.split(",") : [];
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const { data: tags = [] } = useGetTagsQuery({});
+    const { data: recipesForTags = [] } = useGetRecipesByTagQuery(tagNames);
+    const { data: allRecipes } = useGetRecipeTitlesAndIdsQuery({});
 
-    const performSearchHandler = (tagName: string) => {
-        navigate("/recipes?tag=" + tagName);
+    const handleAddTag = (tagName: string) => {
+        if (!selectedTags.includes(tagName)) {
+            const updatedTags = [...selectedTags, tagName];
+            setSelectedTags(updatedTags);
+            performSearch(updatedTags);
+        }
     };
-    const clearSearchParams = () => {
-        navigate("/recipes");
+
+    const removeSearchParam = (tagName: string) => {
+        const updatedTags = selectedTags.filter((tag) => tag !== tagName);
+        setSelectedTags(updatedTags);
+        performSearch(updatedTags);
+    };
+
+    const performSearch = (updatedTags: string[]) => {
+        const queryParams = updatedTags.length > 0 ? `?tags=${updatedTags.join(",")}` : "";
+        navigate(`/recipes${queryParams}`);
     };
 
     return (
         <>
-            <section className={classes['tagList-search']}>
+            <section className={classes["tagList-search"]}>
                 {tags.length <= 0 && <h2>No tags found</h2>}
-                {tags.map((tag: TagType) =>
-                    <Button type="button" onClick={() => performSearchHandler(tag.name)}
-                            key={tag.id}>{tag.name}</Button>
-                )}
+                {tags.map((tag: TagType) => (
+                    <Button type="button" onClick={() => handleAddTag(tag.name)} key={tag.id}>
+                        {tag.name}
+                    </Button>
+                ))}
             </section>
-            {tagName &&
+
+            {selectedTags.length > 0 && (
                 <>
-                    <div className={classes['recipes-for']}>
-                        <h2>Recipes for Tag "{tagName}"</h2>
-                        <img src={closeImage} className={classes.close} alt="Clear Filter" aria-label="Clear Filter"
-                             onClick={clearSearchParams}/>
+                    <div className={classes["recipes-for"]}>
+                        {selectedTags.map((tag) => (
+                            <div className={classes["selected-tags"]} key={tag}>
+                                <h2>{tag}</h2>
+                                <img src={closeImage} className={classes.close} alt="Clear Filter" aria-label="Clear Filter" onClick={() => removeSearchParam(tag)} />
+                            </div>
+                        ))}
                     </div>
-                    <RecipesList recipes={recipes}/>
+                    <RecipesList recipes={recipesForTags} />
                 </>
-            }
-            {!tagName &&
-                <>
-                    <RecipesList recipes={allRecipes}/>
-                </>
-            }
+            )}
+
+            {selectedTags.length === 0 && <RecipesList recipes={allRecipes} />}
         </>
     );
 };
