@@ -7,7 +7,7 @@ This is a React website written in, mostly TypeScript. It is used as the fronten
 |----------------|---|
 | Build Status   |![example workflow](https://github.com/lstierney/recipe-website-frontend/actions/workflows/webpack.yml/badge.svg)   |
 | Last Commit    |![Latest Commit](https://img.shields.io/github/last-commit/lstierney/recipe-website-frontend)   |
-| Latest Version | ![Latest Version](https://img.shields.io/badge/latest-v2.0.0-brightgreen)  |
+| Latest Version | ![Latest Version](https://img.shields.io/badge/latest-v2.1.0-brightgreen)  |
 | License        |[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)   |
 
 
