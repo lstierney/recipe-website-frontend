@@ -41,9 +41,9 @@ const api = createApi({
 
     endpoints: (builder) => ({
         getRecipesByTag: builder.query({
-            query: tagName => '/recipes?' + new URLSearchParams({tagName}),
-            async onQueryStarted(tagName, {queryFulfilled}) {
-                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes for Tag: " + tagName, "get Recipes for Tag: " + tagName);
+            query: tagNames => '/recipes?tagNames=' + tagNames.join(','),
+            async onQueryStarted(tagNames, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes for Tag: " + tagNames, "get Recipes for Tag: " + tagNames);
             }
         }),
         getRecipe: builder.query({
