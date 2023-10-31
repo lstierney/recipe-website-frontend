@@ -5,7 +5,7 @@ import Hero from "../../components/hero/Hero";
 
 
 const HomePage = () => {
-    const {data: randomRecipes, isSuccess} = useGetRandomRecipesQuery({});
+    const {data: randomRecipes} = useGetRandomRecipesQuery({});
 
     return (
         <>
