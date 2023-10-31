@@ -67,7 +67,7 @@ const api = createApi({
             query: () => '/recipes/random',
 
             async onQueryStarted(arg, {queryFulfilled}) {
-                await handleQueryLifeCycle(queryFulfilled, "Loading Random Recipe", "get Random Recipe");
+                await handleQueryLifeCycle(queryFulfilled, "Loading Random Recipes", "get Random Recipes");
             }
         }),
 

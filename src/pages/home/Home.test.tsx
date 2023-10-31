@@ -1,14 +1,14 @@
 import Home from "./Home";
 import {screen} from "@testing-library/react";
 import {renderWithProviders} from "../../utils/test-utils";
-import {useGetLatestRecipesQuery, useGetRecipeTitlesAndIdsQuery} from "../../store/api";
+import {useGetRandomRecipesQuery, useGetRecipeTitlesAndIdsQuery} from "../../store/api";
 
 jest.mock('../../store/api');
 
-const mockGetLatestRecipesQuery = useGetLatestRecipesQuery as jest.MockedFunction<typeof useGetLatestRecipesQuery>;
+const mockGetRandomRecipesQuery = useGetRandomRecipesQuery as jest.MockedFunction<typeof useGetRandomRecipesQuery>;
 const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
 
-const LATEST_RECIPES = [
+const RANDOM_RECIPES = [
     {
         id: 1,
         name: 'Latest Recipe One'
@@ -29,8 +29,8 @@ const RECIPES_LIST = [{
 
 describe('Home page', () => {
     beforeEach(() => {
-        mockGetLatestRecipesQuery.mockReturnValue({
-            data: LATEST_RECIPES,
+        mockGetRandomRecipesQuery.mockReturnValue({
+            data: RANDOM_RECIPES,
             refetch: jest.fn()
         });
         mockGetRecipeTitlesAndIdsQuery.mockReturnValue({
