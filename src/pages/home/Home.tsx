@@ -1,17 +1,17 @@
-import {useGetLatestRecipesQuery} from "../../store/api";
+import {useGetRandomRecipesQuery} from "../../store/api";
 import RecipesList from "../../components/recipe/recipeslist/RecipesList";
 import mainClasses from '../../main.module.css';
 import Hero from "../../components/hero/Hero";
 
 
 const HomePage = () => {
-    const {data: latestRecipes} = useGetLatestRecipesQuery({});
+    const {data: randomRecipes} = useGetRandomRecipesQuery({});
 
     return (
         <>
             <Hero/>
             <div className={mainClasses['home-previews']}>
-                <RecipesList recipes={latestRecipes ? latestRecipes : []}/>
+                <RecipesList recipes={randomRecipes ? randomRecipes : []}/>
             </div>
 
         </>
