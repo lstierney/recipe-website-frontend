@@ -3,5 +3,6 @@ export interface RecipePreviewType {
     name: string,
     description: string,
     imageFileName: string,
-    cooked: number
+    cooked: number,
+    lastCooked?: string
 }
