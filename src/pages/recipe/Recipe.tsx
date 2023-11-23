@@ -171,10 +171,41 @@ const Recipe = () => {
         const filteredMethodSteps = methodSteps.filter(methodStep => methodStep.description !== description);
         setMethodSteps(filteredMethodSteps)
     }
+    const onUpdateMethodStepHandler = (originalDescription: string, newDescription: string) => {
+        const newMethodSteps = methodSteps.map(step => {
+            if (step.description === originalDescription) {
+                step.description = newDescription;
+            }
+            return step;
+        });
+        setMethodSteps(newMethodSteps);
+    }
+    const onUpdateNotesHandler = (originalDescription: string, newDescription: string) => {
+        const newNotes = notes.map(note => {
+            if (note.description === originalDescription) {
+                note.description = newDescription;
+            }
+            return note;
+        });
+        setNotes(newNotes);
+    }
+    const onUpdateIngredientHandler = (originalIngredient: IngredientType, updatedIngredient: IngredientType) => {
+        alert("Original: " + JSON.stringify(originalIngredient) + " Updated: " + JSON.stringify(updatedIngredient));
+        const newIngredients = ingredients.map(ingredient => {
+            if (ingredient.description === originalIngredient.description) {
+                ingredient.description = updatedIngredient.description;
+                ingredient.quantity = updatedIngredient.quantity;
+                ingredient.unit = updatedIngredient.unit;
+            }
+            return ingredient;
+        });
+        setIngredients(newIngredients);
+    }
     const onReorderMethodStepHandler = (methodSteps: MethodStepType[]) => {
         const updatedSteps = methodSteps.map((step, index) => ({...step, ordering: index + 1}));
         setMethodSteps(updatedSteps);
     }
+
     const onAddNoteHandler = (description: string) => {
         const newNotes = notes.slice();
         newNotes.push({description, ordering: noteOrderingId});
@@ -235,22 +266,25 @@ const Recipe = () => {
                     onSearch={onSearchTagHandler}
                 />
                 <Notes
-                    notes={notes}
+                    items={notes}
                     onAdd={onAddNoteHandler}
                     onReorder={onReorderNoteHandler}
                     onRemove={onRemoveNoteHandler}
+                    onUpdate={onUpdateNotesHandler}
                 />
                 <Ingredients
                     ingredients={ingredients}
                     onAdd={onAddIngredientHandler}
                     onRemove={onRemoveIngredientHandler}
                     onReorder={onReorderIngredientsHandler}
+                    onUpdate={onUpdateIngredientHandler}
                 />
                 <Method
                     items={methodSteps}
                     onAdd={onAddMethodStepHandler}
                     onReorder={onReorderMethodStepHandler}
                     onRemove={onRemoveMethodStepHandler}
+                    onUpdate={onUpdateMethodStepHandler}
                 />
                 </AdminButtons>
             </form>

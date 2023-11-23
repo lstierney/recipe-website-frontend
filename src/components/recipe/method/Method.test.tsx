@@ -10,7 +10,7 @@ const mockIsInEditingMode = isInEditingMode as jest.MockedFunction<typeof isInEd
 describe('Method component', () => {
     test('renders title', () => {
         // Arrange
-        render(<Method items={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
+        render(<Method items={[]} onUpdate={jest.fn()} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -21,7 +21,7 @@ describe('Method component', () => {
     });
     test('renders "None found" when no items are supplied', () => {
         // Arrange
-        render(<Method items={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
+        render(<Method items={[]} onUpdate={jest.fn()} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -44,7 +44,8 @@ describe('Method component', () => {
                 number: 2
             }
         ];
-        render(<Method items={items} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
+        render(<Method items={items} onRemove={jest.fn()} onUpdate={jest.fn()} onAdd={jest.fn()}
+                       onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
@@ -56,7 +57,7 @@ describe('Method component', () => {
     test('renders input component when in edit mode', () => {
         // Arrange
         mockIsInEditingMode.mockReturnValue(true);
-        render(<Method items={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
+        render(<Method items={[]} onRemove={jest.fn()} onUpdate={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn()}/>);
 
         // Act
         // -- nothing
