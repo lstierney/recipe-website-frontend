@@ -10,7 +10,7 @@ const mockIsInEditingMode = isInEditingMode as jest.MockedFunction<typeof isInEd
 describe('Notes component', () => {
     test('renders title', () => {
         // Arrange
-        render(<Notes notes={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
+        render(<Notes items={[]} onUpdate={jest.fn()} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
 
         // Act
         // -- nothing
@@ -21,7 +21,7 @@ describe('Notes component', () => {
     });
     test('renders "None found" when no notes are supplied', () => {
         // Arrange
-        render(<Notes notes={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
+        render(<Notes items={[]} onUpdate={jest.fn()} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
 
         // Act
         // -- nothing
@@ -44,7 +44,7 @@ describe('Notes component', () => {
                 ordering: 2
             }
         ];
-        render(<Notes notes={notes} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
+        render(<Notes items={notes} onUpdate={jest.fn()} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
 
         // Act
         // -- nothing
@@ -56,7 +56,7 @@ describe('Notes component', () => {
     test('renders input component when in edit mode', () => {
         // Arrange
         mockIsInEditingMode.mockReturnValue(true);
-        render(<Notes notes={[]} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
+        render(<Notes items={[]} onUpdate={jest.fn()} onRemove={jest.fn()} onAdd={jest.fn()} onReorder={jest.fn}/>);
 
         // Act
         // -- nothing

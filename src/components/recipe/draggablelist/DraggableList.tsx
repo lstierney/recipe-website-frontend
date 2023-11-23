@@ -8,6 +8,18 @@ import MethodStep from "../methodstep/MethodStep";
 import Note from "../note/Note";
 import Button from "../../button/Button";
 import {OrderableType} from "../../../types/orderableType";
+import MethodStepAndNoteInput from "../../admin/inputs/MethodStepAndNoteInput";
+import IngredientInput from "../../admin/inputs/IngredientInput";
+import {IngredientType} from "../../../types/ingredientType";
+
+type Props = {
+    type: string,
+    items: OrderableType[],
+    onRemove: (itemDescription: string) => void,
+    onReorder: (items: OrderableType[]) => void,
+    onUpdate: (oldDescription: string, newDescription: string) => void,
+    onIngredientUpdate: (oldIngredient: IngredientType, newIngredient: IngredientType) => void
+}
 
 const renderListItem = (type: string, index: number, item: OrderableType) => {
     return <>
@@ -21,7 +33,6 @@ const renderListItem = (type: string, index: number, item: OrderableType) => {
             <>
                 <hr/>
                 <Ingredient ingredient={item}/>
-
             </>
         )}
         {type === 'notes' && (
@@ -32,18 +43,42 @@ const renderListItem = (type: string, index: number, item: OrderableType) => {
         )}
     </>;
 }
-
-type Props = {
+const renderEditInput = (
     type: string,
-    items: OrderableType[],
-    onRemove: (itemDescription: string) => void,
-    onReorder: (items: OrderableType[]) => void
+    item: OrderableType,
+    onUpdate: (oldDescription: string, newDescription: string) => void,
+    onIngredientUpdate: (oldIngredient: IngredientType, newIngredient: IngredientType) => void
+) => {
+    return <>
+        {type === 'methodSteps' && (
+            <>
+                <hr/>
+                <MethodStepAndNoteInput type={type} value={item.description} onUpdate={onUpdate} onAdd={() => {
+                }}/>
+            </>
+        )}
+        {type === 'ingredients' && (
+            <>
+                <hr/>
+                <IngredientInput ingredient={item} onAdd={() => {
+                }} onUpdate={onIngredientUpdate}/>
+            </>
+        )}
+        {type === 'notes' && (
+            <>
+                <hr/>
+                <MethodStepAndNoteInput type={type} value={item.description} onUpdate={onUpdate} onAdd={() => {
+                }}/>
+            </>
+        )}
+    </>;
 }
 
 const DraggableList = (props: Props) => {
     const isEditMode = isInEditingMode();
     const [items, setItems] = useState(props.items);
-    const type = props.type; // methodStep, notes, ingredient
+    const [editingItem, setEditingItem] = useState('');
+    const type = props.type; // "methodStep", "notes", "ingredient"
 
     useEffect(() => {
         setItems(props.items);
@@ -65,11 +100,20 @@ const DraggableList = (props: Props) => {
                                 props.onReorder(items)
                             }}
                         >
-                            {renderListItem(type, index, item)}
-                            <Button type="button" onClick={() => {
-                                props.onRemove(item.description);
-                            }}>Remove
-                            </Button>
+                            {editingItem !== item.description && (
+                                <>
+                                    {renderListItem(type, index, item)}
+                                    <Button type="button" onClick={() => {
+                                        props.onRemove(item.description);
+                                    }}>Remove
+                                    </Button>
+                                    <Button type="button" onClick={() => {
+                                        setEditingItem(item.description);
+                                    }}>Edit
+                                    </Button>
+                                </>
+                            )}
+                            {editingItem === item.description && renderEditInput(type, item, props.onUpdate, props.onIngredientUpdate)}
                         </div>
                     </Reorder.Item>
                 ))}

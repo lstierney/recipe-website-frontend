@@ -38,7 +38,8 @@ describe('Ingredients component', () => {
     })
     test('renders title', () => {
         // Arrange
-        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={[]}/>);
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onUpdate={jest.fn()} onRemove={jest.fn()}
+                            ingredients={[]}/>);
 
         // Act
         // -- nothing
@@ -49,7 +50,8 @@ describe('Ingredients component', () => {
     });
     test('renders "None found" when no ingredients are supplied', () => {
         // Arrange
-        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={[]}/>);
+        render(<Ingredients onAdd={jest.fn()} onUpdate={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()}
+                            ingredients={[]}/>);
 
         // Act
         // -- nothing
@@ -61,7 +63,8 @@ describe('Ingredients component', () => {
     test('renders draggablelist when items supplied', () => {
         // Arrange
 
-        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={INGREDIENTS}/>);
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onUpdate={jest.fn()} onRemove={jest.fn()}
+                            ingredients={INGREDIENTS}/>);
 
         // Act
         // -- nothing
@@ -73,7 +76,8 @@ describe('Ingredients component', () => {
     test('renders input component when in edit mode', () => {
         // Arrange
         mockIsInEditingMode.mockReturnValue(true);
-        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} ingredients={INGREDIENTS}/>);
+        render(<Ingredients onAdd={jest.fn()} onReorder={jest.fn()} onRemove={jest.fn()} onUpdate={jest.fn()}
+                            ingredients={INGREDIENTS}/>);
 
         // Act
         // -- nothing
