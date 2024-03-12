@@ -8,7 +8,8 @@ const recipePreview: RecipePreviewType = {
     name: 'Recipe Name',
     cooked: 69,
     description: 'Recipe Description',
-    imageFileName: 'recipe.jpg'
+    imageFileName: 'recipe.jpg',
+    lastCooked: '2024-01-21T17:41:04'
 }
 
 const renderRecipePreview = () => {
@@ -37,9 +38,9 @@ describe('Recipe Preview component', () => {
         // -- nothing
 
         // Assert
-        const images = screen.getAllByRole('img', {name: 'Number of times cooked'});
+        const images = screen.getAllByRole('img', {name: 'Last Cooked Date'});
         expect(images).toHaveLength(1);
-        expect(images[0]).toHaveAttribute('alt', 'Number of times cooked');
+        expect(images[0]).toHaveAttribute('alt', 'Last Cooked Date');
         expect(images[0]).toHaveAttribute('src', 'cooked.svg');
     });
     test('renders name', () => {
@@ -52,7 +53,7 @@ describe('Recipe Preview component', () => {
         // Assert
         expect(screen.getByText('Recipe Name', {exact: true})).toBeInTheDocument();
     });
-    test('renders cooked number', () => {
+    test('renders last cooked date by default', () => {
         // Arrange
         renderRecipePreview();
 
@@ -60,6 +61,6 @@ describe('Recipe Preview component', () => {
         // -- nothing
 
         // Assert
-        expect(screen.getByText('69', {exact: true})).toBeInTheDocument();
+        expect(screen.getByText('21/01/24', {exact: true})).toBeInTheDocument();
     });
 });

@@ -42,9 +42,9 @@ const Preview = (props: Props) => {
             <div className={classes['image-container']}>
                 <img className={classes['preview-img']} alt={recipe.name} src={imgSrc}/>
                 <span className={classes['overlay-digits']} onClick={(e) => handleCookedClick(e, recipe.lastCooked)}>
-                    <img className={classes.icon} src={cookedImage} alt="Number of times cooked"/>
-                    {!isCookedClicked && recipe.cooked}
-                    {isCookedClicked && formatLastCookedDate(recipe.lastCooked)}
+                    <img className={classes.icon} src={cookedImage} alt="Last Cooked Date"/>
+                    {!isCookedClicked && formatLastCookedDate(recipe.lastCooked)}
+                    {isCookedClicked && recipe.cooked}
                 </span>
             </div>
             <span className={classes['preview-name']}>{recipe.name}</span>
