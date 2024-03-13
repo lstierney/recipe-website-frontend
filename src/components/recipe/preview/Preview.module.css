@@ -54,7 +54,13 @@
 
 @media screen and (max-width: 480px) {
     .preview-name {
-        font-size: 1.1rem;
+        font-size: 1rem;
         padding: 0.5rem;
+    }
+    .icon {
+        display: none;
+    }
+    .overlay-digits {
+        font-size: 0.9rem;
     }
 }
