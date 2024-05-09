@@ -1,20 +1,20 @@
 import {renderWithProviders} from "../../utils/test-utils";
 import {fireEvent, screen} from "@testing-library/react";
-import {useGetRecipeTitlesAndIdsQuery} from "../../store/api";
+import {useGetRandomDinnerQuery} from "../../store/api";
 import {RecipePreviewType} from "../../types/recipePreviewType";
 import Hero from "./Hero";
 
 jest.mock('../../store/api');
 
-const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
+const mockGetRandomDinnerQuery = useGetRandomDinnerQuery as jest.MockedFunction<typeof useGetRandomDinnerQuery>;
 
-const RECIPES_LIST: RecipePreviewType[] = [{
+const RANDOM_DINNER: RecipePreviewType = {
     id: 2,
     name: 'Recipe Name',
     description: 'Recipe Description',
     imageFileName: 'recipe2.jpg',
     cooked: 420
-}];
+};
 
 const renderHero = () => {
     return renderWithProviders(<Hero/>);
@@ -31,8 +31,8 @@ jest.mock('react-router-dom', () => {
 
 describe('Hero component page', () => {
     beforeEach(() => {
-        mockGetRecipeTitlesAndIdsQuery.mockReturnValue({
-            data: RECIPES_LIST,
+        mockGetRandomDinnerQuery.mockReturnValue({
+            data: RANDOM_DINNER,
             isSuccess: true,
             refetch: jest.fn()
         });

@@ -63,11 +63,19 @@ const api = createApi({
                 await handleQueryLifeCycle(queryFulfilled, "Loading Latest Recipes", "get Latest Recipes");
             }
         }),
-        getRandomRecipes: builder.query({
-            query: () => '/recipes/random',
+        getRandomDinners: builder.query({
+            query: () => '/recipes/randomDinners',
 
             async onQueryStarted(arg, {queryFulfilled}) {
-                await handleQueryLifeCycle(queryFulfilled, "Loading Random Recipes", "get Random Recipes");
+                await handleQueryLifeCycle(queryFulfilled, "Loading Random Dinners", "get Random Dinners");
+            }
+        }),
+
+        getRandomDinner: builder.query({
+            query: () => '/recipes/randomDinner',
+
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Random Dinner", "get Random Dinner");
             }
         }),
 
@@ -199,7 +207,8 @@ export const {
     useGetRecipeQuery,
     useAddRecipeMutation,
     useGetLatestRecipesQuery,
-    useGetRandomRecipesQuery,
+    useGetRandomDinnersQuery,
+    useGetRandomDinnerQuery,
     useGetUnitsQuery,
     useGetCrockeryQuery,
     useGetTagsQuery,

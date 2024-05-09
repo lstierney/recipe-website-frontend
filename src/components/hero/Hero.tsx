@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Hero.module.css';
 import {useNavigate} from "react-router-dom";
-import _ from "lodash";
-import {useGetRecipeTitlesAndIdsQuery} from "../../store/api";
+import {useGetRandomDinnerQuery} from "../../store/api";
 import {RecipeType} from "../../types/recipeType";
 
 const Hero = () => {
-    const {data: images, isSuccess} = useGetRecipeTitlesAndIdsQuery({});
+    const getRandomDinnerQuery = useGetRandomDinnerQuery({});
     const [randomRecipe, setRandomRecipe] = useState<RecipeType | null>(null);
     const imgHost = process.env.REACT_APP_API_HOST;
     const navigate = useNavigate();
@@ -19,15 +18,14 @@ const Hero = () => {
     };
 
     useEffect(() => {
-        if (isSuccess) {
-            setRandomRecipe(_.sample(images))
+        if (getRandomDinnerQuery.isSuccess) {
+            setRandomRecipe(getRandomDinnerQuery.data);
         }
         const timer = setInterval(() => {
-            setRandomRecipe(_.sample(images));
-        }, 10000); // Change image every 10 seconds
-
-        return () => clearInterval(timer); // Clean up timer on unmount
-    }, [images, isSuccess]);
+            getRandomDinnerQuery.refetch();
+        }, 10000);
+        return () => clearInterval(timer);
+    }, [getRandomDinnerQuery]);
 
     return (
         <div className={classes['hero-container']} data-testid={'hero-container'} onClick={handleHeroClick}>
