@@ -28,7 +28,7 @@ const Notes = (props: Props) => {
                 }}
                 onRemove={props.onRemove}
                 items={props.items}
-                type={'methodSteps'}
+                type={'notes'}
             />
             {isEditMode && <MethodStepAndNoteInput type={'notes'} onAdd={props.onAdd} onUpdate={props.onUpdate}/>}
         </section>
