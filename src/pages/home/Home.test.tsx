@@ -1,46 +1,45 @@
 import Home from "./Home";
 import {screen} from "@testing-library/react";
 import {renderWithProviders} from "../../utils/test-utils";
-import {useGetRandomRecipesQuery, useGetRecipeTitlesAndIdsQuery} from "../../store/api";
+import {useGetRandomDinnerQuery, useGetRandomDinnersQuery} from "../../store/api";
 
 jest.mock('../../store/api');
 
-const mockGetRandomRecipesQuery = useGetRandomRecipesQuery as jest.MockedFunction<typeof useGetRandomRecipesQuery>;
-const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
+const mockGetRandomDinnersQuery = useGetRandomDinnersQuery as jest.MockedFunction<typeof useGetRandomDinnersQuery>;
+const mockGetRandomDinnerQuery = useGetRandomDinnerQuery as jest.MockedFunction<typeof useGetRandomDinnerQuery>;
 
-const RANDOM_RECIPES = [
+const RANDOM_DINNERS = [
     {
         id: 1,
-        name: 'Latest Recipe One'
+        name: 'Random Dinner One'
 
     },
     {
         id: 2,
-        name: 'Latest Recipe Two'
+        name: 'Random Dinner Two'
     }
 ];
+const RANDOM_DINNER = {
+    id: 3,
+    name: 'Random Dinner Three'
 
-const RECIPES_LIST = [{
-    id: 2,
-    name: 'Recipe List Name',
-    description: 'Recipe List Description',
-    imageFileName: 'recipe2.jpg'
-}];
+}
 
 describe('Home page', () => {
     beforeEach(() => {
-        mockGetRandomRecipesQuery.mockReturnValue({
-            data: RANDOM_RECIPES,
-            refetch: jest.fn()
+        mockGetRandomDinnersQuery.mockReturnValue({
+            data: RANDOM_DINNERS,
+            refetch: jest.fn(),
+            isSuccess: true
         });
-        mockGetRecipeTitlesAndIdsQuery.mockReturnValue({
-            data: RECIPES_LIST,
-            refetch: jest.fn()
+        mockGetRandomDinnerQuery.mockReturnValue({
+            data: RANDOM_DINNER,
+            refetch: jest.fn(),
+            isSuccess: true
         });
-
     });
 
-    test('renders Latest recipe', () => {
+    test('renders random dinner Recipes', () => {
         // Arrange
         renderWithProviders(<Home/>);
 
@@ -48,7 +47,11 @@ describe('Home page', () => {
         // ...nothing
 
         // Assert
-        expect(screen.getByText("Latest Recipe One", {exact: true})).toBeInTheDocument();
-        expect(screen.getByText("Latest Recipe Two", {exact: true})).toBeInTheDocument();
+        // The image previews on the RHS
+        expect(screen.getByText("Random Dinner One", {exact: true})).toBeInTheDocument();
+        expect(screen.getByText("Random Dinner Two", {exact: true})).toBeInTheDocument();
+
+        // The hero
+        expect(screen.getByText("Random Dinner Three", {exact: true})).toBeInTheDocument();
     });
 });
