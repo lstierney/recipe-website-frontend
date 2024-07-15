@@ -50,6 +50,7 @@ const Hamburger = () => {
                 <ul className={classes['menu-list']}>
                     <li><Link className={classes['menu-item']} to="/" onClick={toggleMenu}>Home</Link></li>
                     <li><Link className={classes['menu-item']} to="/recipes" onClick={toggleMenu}>Recipes</Link></li>
+                    <li><Link className={classes['menu-item']} to="/pinned" onClick={toggleMenu}>Pinned</Link></li>
                     <li><Link className={classes['menu-item']} to="/convertors" onClick={toggleMenu}>Convertors</Link>
                     </li>
                     <li><Link className={classes['menu-item']} to="/login" onClick={toggleMenu}>Login</Link></li>

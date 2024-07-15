@@ -48,6 +48,20 @@ describe('Header', () => {
             expect(link).toHaveAttribute('href', '/recipes');
         })
     });
+    test('renders Pinned link', () => {
+        // Arrange
+        renderWithProviders(<Header/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const links = screen.getAllByRole('link', {name: 'Pinned'});
+
+        links.forEach(link => {
+            expect(link).toHaveAttribute('href', '/pinned');
+        })
+    });
     test('renders Convertors link', () => {
         // Arrange
         renderWithProviders(<Header/>);

@@ -38,7 +38,8 @@ const Preview = (props: Props) => {
     }
 
     return (
-        <div key={recipe.name} className={classes.preview} onClick={() => handleClick(recipe.name)}>
+        <div key={recipe.name} data-testid="listitem" className={classes.preview}
+             onClick={() => handleClick(recipe.name)}>
             <div className={classes['image-container']}>
                 <img className={classes['preview-img']} alt={recipe.name} src={imgSrc}/>
                 <span className={classes['overlay-digits']} onClick={(e) => handleCookedClick(e, recipe.lastCooked)}>
