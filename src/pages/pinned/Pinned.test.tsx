@@ -1,7 +1,6 @@
 import React from 'react';
-import {act, screen} from '@testing-library/react';
+import {screen, within} from '@testing-library/react';
 import Pinned from './Pinned';
-import {within} from '@testing-library/dom';
 import {renderWithProviders} from "../../utils/test-utils";
 
 const mockRecipe = {
@@ -34,9 +33,7 @@ describe('Pinned Component', () => {
 
     test('renders Recipe Preview when Pinned Recipes found in local storage', async () => {
         // Arrange
-        await act(async () => {
-            renderWithProviders(<Pinned/>);
-        });
+        renderWithProviders(<Pinned/>);
 
         // Assert
         expect(screen.getByRole('heading', {name: /Pinned Recipes/i})).toBeInTheDocument();
@@ -52,9 +49,7 @@ describe('Pinned Component', () => {
     test('renders "No Recipes found" no Pinned Recipes found in local storage', async () => {
         // Arrange
         Storage.prototype.getItem = jest.fn(() => JSON.stringify([]));
-        await act(async () => {
-            renderWithProviders(<Pinned/>);
-        });
+        renderWithProviders(<Pinned/>);
 
         // Assert
         expect(screen.getByRole('heading', {name: /No recipes found/i})).toBeInTheDocument();

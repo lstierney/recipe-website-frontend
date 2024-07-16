@@ -35,7 +35,7 @@ const Pinned = () => {
             setRecipes(fetchedRecipes);
         }
         fetchPinnedRecipes();
-    }, []);
+    }, [baseUrl]);
 
     return (
         <div>
