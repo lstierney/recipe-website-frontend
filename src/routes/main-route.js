@@ -9,6 +9,7 @@ import {checkAuthLoader, tokenLoader} from '../utils/auth';
 import {action as logoutAction} from '../pages/Logout';
 import Login, {action as loginAction} from '../pages/Login';
 import Convertor from "../pages/convertors/Convertor";
+import Pinned from "../pages/pinned/Pinned";
 
 export const routes = [
     {
@@ -29,6 +30,10 @@ export const routes = [
             {
                 path: 'recipes',
                 element: <Recipes/>
+            },
+            {
+                path: 'pinned',
+                element: <Pinned/>
             },
             {
                 path: 'convertors',

@@ -50,6 +50,22 @@
     flex-direction: column;
 }
 
+.button-link {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #be2a77 !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    outline: none !important;
+}
+
+.button-link:hover, .button-link:focus {
+    color: #be2a77 !important;
+    background: none !important;
+    outline: none !important;
+}
+
 /* Phone */
 @media screen and (max-width: 480px) {
     .info-panel {

@@ -13,6 +13,7 @@ import {useGetCrockeryQuery} from "../../../store/api";
 import {CrockeryType} from "../../../types/crockeryType";
 import {RecipeType} from "../../../types/recipeType";
 import RecipeLinkParser from "../recipeLinkParser/RecipeLinkParser";
+import PinButton from "./pinbutton/PinButton";
 
 type Props = {
     recipe: RecipeType,
@@ -40,6 +41,7 @@ const InfoPanel = (props: Props) => {
     const [imageFileName, setImageFileName] = useState('');
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [imgSrc, setImgSrc] = useState('');
+
 
     const handleImageClick = () => {
         if (isEditMode) {
@@ -187,7 +189,7 @@ const InfoPanel = (props: Props) => {
                                             <p>{getHeatedString()} {getCrockeryName()}</p>
                                         </div>
                                     )}
-
+                                    <PinButton recipe={recipe}/>
                                 </>
                             )}
 
@@ -210,7 +212,7 @@ const InfoPanel = (props: Props) => {
                                                 onChange={e => handleCrockeryChange(+e.target.value)}>
                                             <option key={'pleaseChoose'} value={0}>Please Choose</option>
                                             {crockeryList.map((item: CrockeryType) => <option key={item.id}
-                                                                              value={item.id}>{item.description}</option>)}
+                                                                                              value={item.id}>{item.description}</option>)}
                                         </select>
                                         <label htmlFor="heated">Heated:</label>
 

@@ -41,6 +41,13 @@ const Header = () => {
                         Recipes
                     </NavLink>
                     </li>
+                    <li><NavLink to="/pinned" className={({isActive}) =>
+                        isActive ? classes.active : undefined
+                    }
+                    >
+                        Pinned
+                    </NavLink>
+                    </li>
                     <li><NavLink to="/convertors" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }
