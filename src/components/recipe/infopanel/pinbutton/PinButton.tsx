@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import pinImage from "../../../../assets/images/pin.svg";
 import unpinImage from "../../../../assets/images/unpin.svg";
 import classes from '../InfoPanel.module.css';
@@ -8,20 +8,20 @@ type Props = {
     recipe: RecipeType;
 }
 const PinButton = ({recipe}: Props) => {
-    const checkIsPinned = (): boolean => {
+    const checkIsPinned = useCallback((): boolean => {
         if (recipe && recipe.name) {
             const item = localStorage.getItem('pinnedRecipes');
             const recipes: string[] = item ? JSON.parse(item) : [];
             return recipes.includes(recipe.name);
         }
         return false;
-    }
+    }, [recipe]);
 
     const [isPinned, setIsPinned] = useState<boolean>(checkIsPinned());
 
     useEffect(() => {
         setIsPinned(checkIsPinned());
-    }, [recipe]);
+    }, [checkIsPinned, recipe]);
 
     const togglePinned = () => {
         if (isPinned) {
@@ -57,12 +57,14 @@ const PinButton = ({recipe}: Props) => {
                 alt={isPinned ? 'Unpin' : 'Pin'}
             />
             <p>
-                <a
-                    href="#"
+                <button
+                    type={"button"}
                     onClick={togglePinned}
-                    title={isPinned ? 'Unpin Recipe' : 'Pin Recipe'}>
+                    className={classes['button-link']}
+                    title={isPinned ? 'Unpin Recipe' : 'Pin Recipe'}
+                >
                     {isPinned ? 'Unpin' : 'Pin'}
-                </a>
+                </button>
             </p>
         </div>
     );
