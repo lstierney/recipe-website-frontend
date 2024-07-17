@@ -1,0 +1,47 @@
+.switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15px 15px 15px;
+}
+
+.switch input[type='radio'] {
+    display: none;
+}
+
+.switch label {
+    background-color: #ddd;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #666;
+    border-radius: 4px;
+    transition: 0.4s background-color;
+}
+
+.switch input[type='radio']:checked + label {
+    background-color: #be2a77;
+    color: white;
+}
+
+.switch label:not(:last-of-type) {
+    border-right: none;
+}
+
+.switch div:not(:last-of-type) label {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.switch div:last-of-type label {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Phone */
+@media screen and (max-width: 480px) {
+    .switch {
+        display: none;
+    }
+}
