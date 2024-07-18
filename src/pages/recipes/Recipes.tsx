@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, {useState} from "react";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import classes from "./Recipes.module.css";
-import { useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery } from "../../store/api";
+import {useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery} from "../../store/api";
 import Button from "../../components/button/Button";
 import closeImage from "../../assets/images/close-circle.svg";
-import { TagType } from "../../types/tagType";
+import {TagType} from "../../types/tagType";
 import RecipesList from "../../components/recipe/recipeslist/RecipesList";
 
 const Recipes = () => {
@@ -12,7 +12,7 @@ const Recipes = () => {
     const [searchParams] = useSearchParams();
     const tagsQueryParam = searchParams.get("tags");
     const tagNames = tagsQueryParam ? tagsQueryParam.split(",") : [];
-    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [selectedTags, setSelectedTags] = useState<string[]>(tagNames);
     const { data: tags = [] } = useGetTagsQuery({});
     const { data: recipesForTags = [] } = useGetRecipesByTagQuery(tagNames);
     const { data: allRecipes } = useGetRecipeTitlesAndIdsQuery({});
