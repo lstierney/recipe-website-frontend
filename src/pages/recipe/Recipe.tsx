@@ -240,7 +240,7 @@ const Recipe = () => {
     }
     const onSearchTagHandler = (tagId: number) => {
         const tag = metaTags.find((tag: TagType) => tag.id === tagId);
-        navigate('/recipes?tag=' + tag.name);
+        navigate('/recipes?tags=' + tag.name);
     }
 
     return (
