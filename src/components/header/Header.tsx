@@ -48,6 +48,13 @@ const Header = () => {
                         Pinned
                     </NavLink>
                     </li>
+                    {isAdmin && <li><NavLink to="/ideas" className={({isActive}) =>
+                        isActive ? classes.active : undefined
+                    }
+                    >
+                        Ideas
+                    </NavLink>
+                    </li>}
                     <li><NavLink to="/convertors" className={({isActive}) =>
                         isActive ? classes.active : undefined
                     }

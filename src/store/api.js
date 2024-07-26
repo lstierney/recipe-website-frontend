@@ -37,7 +37,7 @@ const api = createApi({
 
     }),
 
-    tagTypes: ['Tags', 'Units', 'Recipes', 'Crockery'],
+    tagTypes: ['Tags', 'Units', 'Recipes', 'Crockery', 'Ideas'],
 
     endpoints: (builder) => ({
         getRecipesByTag: builder.query({
@@ -82,7 +82,7 @@ const api = createApi({
         getRecipeTitlesAndIds: builder.query({
             query: () => '/recipes/list',
             async onQueryStarted(arg, {queryFulfilled}) {
-                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes List", "get Recipes List");
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes ManageTagsList", "get Recipes ManageTagsList");
             }
 
         }),
@@ -198,6 +198,51 @@ const api = createApi({
             async onQueryStarted(arg, {queryFulfilled}) {
                 await handleMutationLifeCycle(queryFulfilled, "Deleting Tag", "Deleting Tag", "delete Tag");
             }
+        }),
+        getIdeas: builder.query({
+            query: () => '/ideas',
+            providesTags: [{type: 'Ideas', id: 'LIST'}],
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Ideas", "load Tags");
+            }
+
+        }),
+        updateIdea: builder.mutation({
+            query: idea => ({
+                url: '/ideas',
+                method: 'PUT',
+                body: idea,
+                headers: {Authorization: 'Bearer ' + getAuthToken()}
+            }),
+            invalidatesTags: (result, error, idea) => [{type: 'Ideas', id: 'LIST'}],
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Updating Idea", "Updated Idea", "update Idea");
+            }
+        }),
+
+        addIdea: builder.mutation({
+            query: (idea) => ({
+                url: '/ideas',
+                method: 'POST',
+                body: idea,
+                headers: {Authorization: 'Bearer ' + getAuthToken()}
+            }),
+            invalidatesTags: [{type: 'Ideas', id: 'LIST'}],
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Adding Idea", "Added Idea", "add Idea");
+            }
+        }),
+
+        deleteIdea: builder.mutation({
+            query: id => ({
+                url: '/ideas/' + id,
+                method: 'DELETE',
+                headers: {Authorization: 'Bearer ' + getAuthToken()}
+            }),
+            invalidatesTags: (result, error, arg) => [{type: 'Ideas', id: arg}],
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Deleting Idea", "Deleted Idea", "delete Idea");
+            }
         })
 
     }),
@@ -214,11 +259,15 @@ export const {
     useGetTagsQuery,
     useAddTagMutation,
     useUpdateTagMutation,
+    useDeleteTagMutation,
     useUpdateRecipeMutation,
     useMarkRecipeAsCookedMutation,
-    useDeleteTagMutation,
     useGetRecipesByTagQuery,
-    useGetRecipeTitlesAndIdsQuery
+    useGetRecipeTitlesAndIdsQuery,
+    useGetIdeasQuery,
+    useAddIdeaMutation,
+    useUpdateIdeaMutation,
+    useDeleteIdeaMutation,
 } = api;
 
 export default api;

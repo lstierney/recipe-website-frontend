@@ -1,20 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Hamburger.module.css';
 import mainClasses from '../../../main.module.css';
-import {Link} from "react-router-dom";
+import {Link, useSubmit} from "react-router-dom";
 import hamburgerImage from '../../../assets/images/hamburger.svg';
 import hamburgerCloseImage from '../../../assets/images/hamburger-close.svg';
+import {isAdminUser} from "../../../utils/auth";
 
 const Hamburger = () => {
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const isAdmin = isAdminUser();
+    const submit = useSubmit();
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
     };
 
+    const handleLogout = () => {
+        submit(null, {action: '/logout', method: 'post'});
+        setIsMenuVisible(!isMenuVisible);
+    }
+
     const closeIconStyle = isMenuVisible ? {display: 'block'} : {display: 'none'};
     const menuIconStyle = isMenuVisible ? {display: 'none'} : {display: 'block'};
-
 
     useEffect(() => {
         // Add a click event listener to the document body
@@ -51,9 +58,19 @@ const Hamburger = () => {
                     <li><Link className={classes['menu-item']} to="/" onClick={toggleMenu}>Home</Link></li>
                     <li><Link className={classes['menu-item']} to="/recipes" onClick={toggleMenu}>Recipes</Link></li>
                     <li><Link className={classes['menu-item']} to="/pinned" onClick={toggleMenu}>Pinned</Link></li>
+                    {isAdmin &&
+                        <li><Link className={classes['menu-item']} to="/ideas" onClick={toggleMenu}>Ideas</Link></li>
+                    }
                     <li><Link className={classes['menu-item']} to="/convertors" onClick={toggleMenu}>Convertors</Link>
                     </li>
-                    <li><Link className={classes['menu-item']} to="/login" onClick={toggleMenu}>Login</Link></li>
+                    {
+                        isAdmin
+                            ?
+                            <li><Link className={classes['menu-item']} to="/logout" onClick={handleLogout}>Logout</Link>
+                            </li>
+                            : <li><Link className={classes['menu-item']} to="/login" onClick={toggleMenu}>Login</Link>
+                            </li>
+                    }
                 </ul>
             </div>
             {/*<div className={classes['hamburger']}>*/}

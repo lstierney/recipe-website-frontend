@@ -7,6 +7,7 @@ import {useGetRecipesByTagQuery, useGetRecipeTitlesAndIdsQuery, useGetTagsQuery}
 import {TagType} from "../../types/tagType";
 import {RecipePreviewType} from "../../types/recipePreviewType";
 
+jest.mock('../../store/api');
 const mockGetRecipesByTagQuery = useGetRecipesByTagQuery as jest.MockedFunction<typeof useGetRecipesByTagQuery>;
 const mockGetRecipeTitlesAndIdsQuery = useGetRecipeTitlesAndIdsQuery as jest.MockedFunction<typeof useGetRecipeTitlesAndIdsQuery>;
 const mockGetTagsQuery = useGetTagsQuery as jest.MockedFunction<typeof useGetTagsQuery>;
@@ -77,8 +78,6 @@ const prepareGetRecipesByTagMock = (recipes: RecipePreviewType[]) => {
         refetch: jest.fn()
     });
 }
-
-jest.mock('../../store/api');
 
 const assertInitialRecipePreviewsHaveRendered = () => {
     let name = screen.getByText('Recipe One', {exact: true});
