@@ -10,6 +10,8 @@ import {action as logoutAction} from '../pages/Logout';
 import Login, {action as loginAction} from '../pages/Login';
 import Convertor from "../pages/convertors/Convertor";
 import Pinned from "../pages/pinned/Pinned";
+import ManageIdeas from "../pages/admin/ManageIdeas";
+import Ideas from "../pages/ideas/Ideas";
 
 export const routes = [
     {
@@ -34,6 +36,11 @@ export const routes = [
             {
                 path: 'pinned',
                 element: <Pinned/>
+            },
+            {
+                path: 'ideas',
+                element: <Ideas/>,
+                loader: checkAuthLoader
             },
             {
                 path: 'convertors',
@@ -64,6 +71,10 @@ export const routes = [
                     {
                         path: 'manageTags',
                         element: <ManageTags/>
+                    },
+                    {
+                        path: 'manageIdeas',
+                        element: <ManageIdeas/>
                     }
                 ]
             }

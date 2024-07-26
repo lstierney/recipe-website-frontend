@@ -9,7 +9,7 @@ type Props = {
     mode: 'add' | 'edit'
 }
 
-const AddTag = (props: Props) => {
+const ManageTag = (props: Props) => {
     const [name, setName] = useState("");
     const [id, setId] = useState<number | undefined>(undefined);
     const [description, setDescription] = useState("");
@@ -77,4 +77,4 @@ const AddTag = (props: Props) => {
     );
 };
 
-export default AddTag;
+export default ManageTag;

@@ -8,6 +8,11 @@ jest.mock('../../utils/auth');
 const mockIsAdminUser = isAdminUser as jest.MockedFunction<typeof isAdminUser>;
 const mockGetSubject = getSubject as jest.MockedFunction<typeof getSubject>;
 
+// Mock out the Hamburger so we don't get duplicate links
+jest.mock('./hamburger/Hamburger', () => {
+    return () => <div/>
+});
+
 describe('Header', () => {
     test('renders Logo', () => {
         // Arrange
@@ -103,5 +108,28 @@ describe('Header', () => {
         // Assert
         const link = screen.getByRole('link', {name: 'Logout ( lawrence )'});
         expect(link).toHaveAttribute('href', '/logout');
+    });
+    test('renders "Ideas" link when admin', () => {
+        // Arrange
+        mockIsAdminUser.mockReturnValue(true);
+        mockGetSubject.mockReturnValue('lawrence')
+        renderWithProviders(<Header/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        const link = screen.getByRole('link', {name: 'Ideas'});
+        expect(link).toHaveAttribute('href', '/ideas');
+    });
+    test('does not render "Ideas" link when not admin', () => {
+        // Arrange
+        renderWithProviders(<Header/>);
+
+        // Act
+        // ...nothing
+
+        // Assert
+        expect(screen.queryByRole('link', {name: 'Ideas'})).not.toBeInTheDocument();
     });
 });

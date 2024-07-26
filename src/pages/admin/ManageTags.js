@@ -1,13 +1,13 @@
 import React from 'react';
-import AddTag from "../../components/admin/tags/Add";
-import List from "../../components/admin/tags/List";
+import ManageTag from "../../components/admin/tags/ManageTag";
+import ManageTagsList from "../../components/admin/tags/ManageTagsList";
 
 const ManageTags = () => {
    return (
        <>
            <h1>Manage Tags</h1>
-           <AddTag mode="add"/>
-           <List/>
+           <ManageTag mode="add"/>
+           <ManageTagsList/>
        </>
    );
 };
