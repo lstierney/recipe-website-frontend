@@ -10,6 +10,7 @@ const AdminHomePage = () => {
                     <li><Link to="/admin/addRecipe">Add a Recipe</Link></li>
                     <li><Link to="/admin/manageTags">Manage Tags</Link></li>
                     <li><Link to="/admin/manageIdeas">Manage Ideas</Link></li>
+                    <li><Link to="/admin/manageRecipes">Manage Recipes</Link></li>
                 </ul>
             </section>
         </>

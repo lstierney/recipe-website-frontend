@@ -115,7 +115,8 @@ const Recipe = () => {
             methodSteps: methodSteps,
             notes: notes,
             imageFileName: imageFileName,
-            tags: selectedTags
+            tags: selectedTags,
+            deleted: 0
         };
 
         if (crockery > 0) {

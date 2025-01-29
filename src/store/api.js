@@ -37,7 +37,7 @@ const api = createApi({
 
     }),
 
-    tagTypes: ['Tags', 'Units', 'Recipes', 'Crockery', 'Ideas'],
+    tagTypes: ['Tags', 'Units', 'Recipes', 'Crockery', 'Ideas', 'RecipesDeleted'],
 
     endpoints: (builder) => ({
         getRecipesByTag: builder.query({
@@ -82,7 +82,16 @@ const api = createApi({
         getRecipeTitlesAndIds: builder.query({
             query: () => '/recipes/list',
             async onQueryStarted(arg, {queryFulfilled}) {
-                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes ManageTagsList", "get Recipes ManageTagsList");
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes", "get Recipes");
+            }
+
+        }),
+        getRecipesIgnoreDeleted: builder.query({
+            query: () => '/recipes/listIgnoreDeleted',
+            providesTags: [{type: 'RecipesDeleted'}],
+
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleQueryLifeCycle(queryFulfilled, "Loading Recipes", "get Recipes");
             }
 
         }),
@@ -243,7 +252,30 @@ const api = createApi({
             async onQueryStarted(arg, {queryFulfilled}) {
                 await handleMutationLifeCycle(queryFulfilled, "Deleting Idea", "Deleted Idea", "delete Idea");
             }
-        })
+        }),
+        markRecipeAsDeleted: builder.mutation({
+            query: recipe => ({
+                url: '/recipes/markAsDeleted/' + recipe.id,
+                method: 'PUT',
+                headers: {Authorization: 'Bearer ' + getAuthToken()}
+            }),
+
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Marking Recipe as deleted", "Marked Recipe as deleted", "mark Recipe as deleted");
+            },
+            invalidatesTags: ['RecipesDeleted', 'Recipes']
+        }),
+        restoreRecipe: builder.mutation({
+            query: recipe => ({
+                url: '/recipes/restore/' + recipe.id,
+                method: 'PUT',
+                headers: {Authorization: 'Bearer ' + getAuthToken()}
+            }),
+            async onQueryStarted(arg, {queryFulfilled}) {
+                await handleMutationLifeCycle(queryFulfilled, "Restoring Recipe", "Restored Recipe", "restore Recipe");
+            },
+            invalidatesTags: ['RecipesDeleted', 'Recipes']
+        }),
 
     }),
 });
@@ -268,6 +300,9 @@ export const {
     useAddIdeaMutation,
     useUpdateIdeaMutation,
     useDeleteIdeaMutation,
+    useMarkRecipeAsDeletedMutation,
+    useRestoreRecipeMutation,
+    useGetRecipesIgnoreDeletedQuery
 } = api;
 
 export default api;

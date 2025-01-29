@@ -13,5 +13,6 @@ export interface RecipeType extends RecipePreviewType {
     basedOn?: string,
     servedOn?: ServedOnType,
     image?: File,
-    tags?: TagType[]
+    tags?: TagType[],
+    deleted: number
 }

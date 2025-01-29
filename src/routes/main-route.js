@@ -12,6 +12,7 @@ import Convertor from "../pages/convertors/Convertor";
 import Pinned from "../pages/pinned/Pinned";
 import ManageIdeas from "../pages/admin/ManageIdeas";
 import Ideas from "../pages/ideas/Ideas";
+import ManageRecipes from "../pages/admin/ManageRecipes";
 
 export const routes = [
     {
@@ -75,6 +76,10 @@ export const routes = [
                     {
                         path: 'manageIdeas',
                         element: <ManageIdeas/>
+                    },
+                    {
+                        path: 'manageRecipes',
+                        element: <ManageRecipes/>
                     }
                 ]
             }
