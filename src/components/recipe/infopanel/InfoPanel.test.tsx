@@ -20,7 +20,8 @@ const RECIPE: RecipeType = {
     description: 'This is the description for the recipe',
     imageFileName: 'test.jpg',
     servedOn: undefined,
-    cooked: 1
+    cooked: 1,
+    deleted: 0
 };
 
 const CROCKERY_LIST = [

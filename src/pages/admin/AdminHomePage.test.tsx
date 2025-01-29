@@ -3,11 +3,6 @@ import AdminHomePage from "./AdminHomePage";
 import {screen} from "@testing-library/react";
 import React from "react";
 
-/**
- * <li><Link to="/admin/addRecipe">Add a Recipe</Link></li>
- *                     <li><Link to="/admin/manageTags">Manage Tags</Link></li>
- *                     <li><Link to="/admin/manageIdeas">Manage Ideas</Link></li>
- */
 describe('AdminHomePage', () => {
     test('renders "Add a Recipe" link', async () => {
         // Arrange
@@ -30,5 +25,12 @@ describe('AdminHomePage', () => {
 
         // Assert
         expect(screen.getByText('Manage Ideas')).toHaveAttribute('href', '/admin/manageIdeas');
+    });
+    test('renders "Manage Recipes" link', async () => {
+        // Arrange
+        renderWithProviders(<AdminHomePage/>);
+
+        // Assert
+        expect(screen.getByText('Manage Recipes')).toHaveAttribute('href', '/admin/manageRecipes');
     });
 });
