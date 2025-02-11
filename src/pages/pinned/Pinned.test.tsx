@@ -7,8 +7,9 @@ const mockRecipe = {
     cooked: 2,
     cookingTime: 60,
     description: "A Test Recipe description",
-    imageFileName: "image1.jpg",
     name: "Test Recipe",
+    imageFileNames: ['image4.jpg'],
+    imageFolderPath: '/opt/recipe-website/images/2 - Test Recipe/'
 };
 
 const mockJsonPromise = Promise.resolve(mockRecipe); // Corrected to return a single recipe object
@@ -43,7 +44,7 @@ describe('Pinned Component', () => {
         const listitem = screen.getByTestId('listitem');
         const {getByText} = within(listitem);
         expect(getByText(mockRecipe.name)).toBeInTheDocument();
-        expect(screen.getByAltText('Test Recipe')).toHaveAttribute('src', 'http://localhost:8080/images/' + mockRecipe.imageFileName);
+        expect(screen.getByAltText('Test Recipe')).toHaveAttribute('src', 'http://localhost:8080/opt/recipe-website/images/2 - Test Recipe/image4.jpg');
     });
 
     test('renders "No Recipes found" no Pinned Recipes found in local storage', async () => {

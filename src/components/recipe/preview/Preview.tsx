@@ -10,7 +10,7 @@ type Props = {
 
 const Preview = (props: Props) => {
     const {recipe} = props;
-    const imgSrc = process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName;
+    const imgSrc = process.env.REACT_APP_API_HOST + recipe.imageFolderPath + recipe.imageFileNames[0];
     const navigate = useNavigate();
     const [isCookedClicked, setIsCookedClicked] = useState(false);
 

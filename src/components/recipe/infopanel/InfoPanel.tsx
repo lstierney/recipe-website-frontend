@@ -38,7 +38,7 @@ const InfoPanel = (props: Props) => {
     const [crockery, setCrockery] = useState(0);
     const [heated, setHeated] = useState(false);
     const [basedOn, setBasedOn] = useState<string | undefined>('');
-    const [imageFileName, setImageFileName] = useState('');
+    const [imageFileNames, setImageFileNames] = useState<string[]>([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [imgSrc, setImgSrc] = useState('');
 
@@ -112,15 +112,15 @@ const InfoPanel = (props: Props) => {
                 setCrockery(recipe.servedOn.crockery.id);
                 setHeated(recipe.servedOn.heated);
             }
-            setImageFileName(recipe.imageFileName);
-            setImgSrc(process.env.REACT_APP_API_HOST + '/images/' + recipe.imageFileName);
+            setImageFileNames(recipe.imageFileNames);
+            setImgSrc(process.env.REACT_APP_API_HOST + recipe.imageFolderPath + recipe.imageFileNames[0]);
         }
     }, [recipe]);
 
     useEffect(() => {
-        const show: boolean = isEditMode && _.isEmpty(imageFileName);
+        const show: boolean = isEditMode && _.isEmpty(imageFileNames);
         setShowFilePicker(show);
-    }, [isEditMode, imageFileName]);
+    }, [isEditMode, imageFileNames]);
 
     return (
         <>
@@ -128,8 +128,9 @@ const InfoPanel = (props: Props) => {
                 <FullScreenImageModal imageUrl={imgSrc} isOpen={modalIsOpen} closeModal={closeModal}/>
 
                 <div className={classes['info-panel']}>
-                    {!showFilePicker && !_.isEmpty(imageFileName) &&
-                        <RecipeImage imageFileName={imageFileName} alt={name} onClick={handleImageClick}/>
+                    {!showFilePicker && !_.isEmpty(imageFileNames) &&
+                        <RecipeImage imageFolderPath={recipe.imageFolderPath} imageFileName={imageFileNames[0]}
+                                     alt={name} onClick={handleImageClick}/>
                     }
                     {showFilePicker && (
                         <>

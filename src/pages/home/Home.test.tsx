@@ -12,28 +12,38 @@ const mockGetRandomDinnerQuery = useGetRandomDinnerQuery as jest.MockedFunction<
 const RANDOM_DINNERS = [
     {
         id: 1,
-        name: 'Random Dinner One'
+        name: 'Random Dinner One',
+        imageFileNames: ['image1.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/1 - Random Dinner One/'
 
     },
     {
         id: 2,
-        name: 'Random Dinner Two'
+        name: 'Random Dinner Two',
+        imageFileNames: ['image2.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/2 - Random Dinner Two/'
     }
 ];
 const RANDOM_DINNER = {
     id: 3,
-    name: 'Random Dinner Three'
+    name: 'Random Dinner Three',
+    imageFileNames: ['image3.jpg'],
+    imageFolderPath: '/opt/recipe-website/images/3 - Random Dinner Three/'
 
 };
 const LATEST_RECIPES = [
     {
         id: 4,
-        name: 'Latest Recipe Four'
+        name: 'Latest Recipe Four',
+        imageFileNames: ['image4.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/4 - Latest Recipe Four/'
 
     },
     {
         id: 5,
-        name: 'Latest Recipe Five'
+        name: 'Latest Recipe Five',
+        imageFileNames: ['image5.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/5 - Latest Recipe Five/'
     }
 ];
 

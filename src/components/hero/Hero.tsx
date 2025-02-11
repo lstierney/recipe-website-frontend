@@ -31,7 +31,8 @@ const Hero = () => {
         <div className={classes['hero-container']} data-testid={'hero-container'} onClick={handleHeroClick}>
             {randomRecipe &&
                 <div className={classes['hero-image-container']}>
-                    <img className={classes['hero-image']} src={imgHost + '/images/' + randomRecipe.imageFileName}
+                    <img className={classes['hero-image']}
+                         src={imgHost + randomRecipe.imageFolderPath + randomRecipe.imageFileNames[0]}
                          alt={randomRecipe.name}/>
                 </div>
             }

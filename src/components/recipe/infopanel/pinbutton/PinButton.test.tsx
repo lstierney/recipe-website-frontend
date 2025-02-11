@@ -8,9 +8,10 @@ const recipe: RecipeType = {
     cooked: 2,
     cookingTime: 60,
     description: "A Test Recipe description",
-    imageFileName: "image1.jpg",
     name: "Test Recipe",
-    deleted: 0
+    deleted: 0,
+    imageFileNames: ['image1.jpg'],
+    imageFolderPath: '/opt/recipe-website/images/2 - Test Recipe/'
 };
 
 describe('PinButton Component', () => {

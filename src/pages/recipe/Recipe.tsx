@@ -114,7 +114,8 @@ const Recipe = () => {
             ingredients: ingredients,
             methodSteps: methodSteps,
             notes: notes,
-            imageFileName: imageFileName,
+            imageFileNames: [imageFileName],
+            imageFolderPath: '',
             tags: selectedTags,
             deleted: 0
         };

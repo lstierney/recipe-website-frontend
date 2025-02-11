@@ -18,10 +18,11 @@ const RECIPE: RecipeType = {
     cookingTime: 30,
     basedOn: 'http://somerecipe.com',
     description: 'This is the description for the recipe',
-    imageFileName: 'test.jpg',
     servedOn: undefined,
     cooked: 1,
-    deleted: 0
+    deleted: 0,
+    imageFileNames: ['image1.jpg'],
+    imageFolderPath: '/opt/recipe-website/images/2 - Test Recipe/'
 };
 
 const CROCKERY_LIST = [
@@ -239,7 +240,7 @@ describe('InfoPanel', () => {
     test('renders filepicker when recipe.imageFileName is not present and in edit mode', () => {
         // Arrange
         mockIsInEditingMode.mockReturnValue(true);
-        RECIPE.imageFileName = '';
+        RECIPE.imageFileNames = [];
         renderInfoPanel();
 
         // Act
@@ -252,7 +253,7 @@ describe('InfoPanel', () => {
     test('does not render image when recipe.imageFileName is not present and in edit mode', () => {
         // Arrange
         mockIsInEditingMode.mockReturnValue(true);
-        RECIPE.imageFileName = '';
+        RECIPE.imageFileNames = [];
         renderInfoPanel();
 
         // Act
@@ -265,7 +266,7 @@ describe('InfoPanel', () => {
     test('renders filepicker when recipe.imageFileName is present, in edit mode and user clicks image', () => {
         // Arrange
         mockIsInEditingMode.mockReturnValue(true);
-        RECIPE.imageFileName = 'test.jpg'
+        RECIPE.imageFileNames = ['test.jpg'];
         renderInfoPanel();
 
         // Act

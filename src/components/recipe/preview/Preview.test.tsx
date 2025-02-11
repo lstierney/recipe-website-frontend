@@ -8,8 +8,9 @@ const recipePreview: RecipePreviewType = {
     name: 'Recipe Name',
     cooked: 69,
     description: 'Recipe Description',
-    imageFileName: 'recipe.jpg',
-    lastCooked: '2024-01-21T17:41:04'
+    lastCooked: '2024-01-21T17:41:04',
+    imageFileNames: ['image1.jpg'],
+    imageFolderPath: '/opt/recipe-website/images/1 - Recipe Name/'
 }
 
 const renderRecipePreview = () => {
@@ -28,7 +29,7 @@ describe('Recipe Preview component', () => {
         const images = screen.getAllByRole('img', {name: recipePreview.name});
         expect(images).toHaveLength(1);
         expect(images[0]).toHaveAttribute('alt', recipePreview.name);
-        expect(images[0]).toHaveAttribute('src', 'http://localhost:8080/images/recipe.jpg');
+        expect(images[0]).toHaveAttribute('src', 'http://localhost:8080/opt/recipe-website/images/1 - Recipe Name/image1.jpg');
     });
     test('renders cooked image', () => {
         // Arrange

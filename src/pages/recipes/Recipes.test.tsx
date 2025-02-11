@@ -30,15 +30,17 @@ const ALL_RECIPES: RecipePreviewType[] = [
         id: 1,
         name: 'Recipe One',
         description: 'Recipe One Description',
-        imageFileName: 'recipe1.jpg',
-        cooked: 1
+        cooked: 1,
+        imageFileNames: ['image1.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/1 - Recipe One/'
     },
     {
         id: 2,
         name: 'Recipe Two',
         description: 'Recipe Two Description',
-        imageFileName: 'recipe2.jpg',
-        cooked: 2
+        cooked: 2,
+        imageFileNames: ['image2.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/2 - Recipe Two/'
     }
 ];
 const RECIPES_FOR_TAG: RecipePreviewType[] = [
@@ -46,15 +48,17 @@ const RECIPES_FOR_TAG: RecipePreviewType[] = [
         id: 3,
         name: 'Recipe Three',
         description: 'Recipe Three Description',
-        imageFileName: 'recipe3.jpg',
-        cooked: 3
+        cooked: 3,
+        imageFileNames: ['image3.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/3 - Recipe Three/'
     },
     {
         id: 4,
         name: 'Recipe Four',
         description: 'Recipe Four Description',
-        imageFileName: 'recipe4.jpg',
-        cooked: 4
+        cooked: 4,
+        imageFileNames: ['image4.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/4 - Recipe Four/'
     }
 ];
 
