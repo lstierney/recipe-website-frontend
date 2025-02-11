@@ -22,17 +22,19 @@ const RECIPES: RecipeType[] = [
         cookingTime: 30,
         description: 'Recipe One Desc',
         cooked: 1,
-        imageFileName: 'test1.jpg',
-        deleted: 0
+        deleted: 0,
+        imageFileNames: ['image1.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/1 - Recipe One/'
     },
     {
         id: 2,
         name: 'Recipe Two',
         cookingTime: 30,
         description: 'Recipe Two Desc',
-        imageFileName: 'test2.jpg',
         cooked: 1,
-        deleted: 0
+        deleted: 0,
+        imageFileNames: ['image2.jpg'],
+        imageFolderPath: '/opt/recipe-website/images/2 - Recipe Two/'
     }
 ];
 

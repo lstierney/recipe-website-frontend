@@ -12,8 +12,9 @@ const RANDOM_DINNER: RecipePreviewType = {
     id: 2,
     name: 'Recipe Name',
     description: 'Recipe Description',
-    imageFileName: 'recipe2.jpg',
-    cooked: 420
+    cooked: 420,
+    imageFileNames: ['image1.jpg'],
+    imageFolderPath: '/opt/recipe-website/images/2 - Recipe Name/'
 };
 
 const renderHero = () => {
@@ -68,7 +69,7 @@ describe('Hero component page', () => {
         // Assert
         const image = screen.getByRole('img', {});
         expect(image).toHaveAttribute('alt', 'Recipe Name');
-        expect(image).toHaveAttribute('src', 'http://localhost:8080/images/recipe2.jpg');
+        expect(image).toHaveAttribute('src', 'http://localhost:8080/opt/recipe-website/images/2 - Recipe Name/image1.jpg');
     });
 
     test('handleImageClick is invoked on div click', async () => {
