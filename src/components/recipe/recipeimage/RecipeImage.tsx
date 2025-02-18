@@ -9,7 +9,7 @@ type Props = {
 }
 
 const RecipeImage = (props: Props) => {
-    const imgSrc = process.env.REACT_APP_API_HOST + props.imageFolderPath + props.imageFileName;
+    const imgSrc = process.env.REACT_APP_STATIC_HOST + props.imageFolderPath + props.imageFileName;
     return (
         <div>
             <img className={classes.image} alt={props.alt} src={imgSrc} onClick={props.onClick}/>
