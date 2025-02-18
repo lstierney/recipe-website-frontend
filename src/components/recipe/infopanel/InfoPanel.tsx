@@ -113,7 +113,7 @@ const InfoPanel = (props: Props) => {
                 setHeated(recipe.servedOn.heated);
             }
             setImageFileNames(recipe.imageFileNames);
-            setImgSrc(process.env.REACT_APP_HOST + recipe.imageFolderPath + recipe.imageFileNames[0]);
+            setImgSrc(process.env.REACT_APP_STATIC_HOST + recipe.imageFolderPath + recipe.imageFileNames[0]);
         }
     }, [recipe]);
 

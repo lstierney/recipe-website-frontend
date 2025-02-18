@@ -7,7 +7,7 @@ import {RecipeType} from "../../types/recipeType";
 const Hero = () => {
     const getRandomDinnerQuery = useGetRandomDinnerQuery({});
     const [randomRecipe, setRandomRecipe] = useState<RecipeType | null>(null);
-    const imgHost = process.env.REACT_APP_HOST;
+    const imgHost = process.env.REACT_APP_STATIC_HOST;
     const navigate = useNavigate();
 
     const handleHeroClick = () => {
