@@ -3,6 +3,7 @@ import classes from './Hero.module.css';
 import {useNavigate} from "react-router-dom";
 import {useGetRandomDinnerQuery} from "../../store/api";
 import {RecipeType} from "../../types/recipeType";
+import {getRandomImageName} from "../../utils/image/image-utils";
 
 const Hero = () => {
     const getRandomDinnerQuery = useGetRandomDinnerQuery({});
@@ -32,7 +33,7 @@ const Hero = () => {
             {randomRecipe &&
                 <div className={classes['hero-image-container']}>
                     <img className={classes['hero-image']}
-                         src={imgHost + randomRecipe.imageFolderPath + randomRecipe.imageFileNames[0]}
+                         src={imgHost + randomRecipe.imageFolderPath + getRandomImageName(randomRecipe)}
                          alt={randomRecipe.name}/>
                 </div>
             }

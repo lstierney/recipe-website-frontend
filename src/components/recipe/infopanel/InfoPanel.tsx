@@ -14,6 +14,7 @@ import {CrockeryType} from "../../../types/crockeryType";
 import {RecipeType} from "../../../types/recipeType";
 import RecipeLinkParser from "../recipeLinkParser/RecipeLinkParser";
 import PinButton from "./pinbutton/PinButton";
+import {getRandomImageName} from "../../../utils/image/image-utils";
 
 type Props = {
     recipe: RecipeType,
@@ -113,7 +114,7 @@ const InfoPanel = (props: Props) => {
                 setHeated(recipe.servedOn.heated);
             }
             setImageFileNames(recipe.imageFileNames);
-            setImgSrc(process.env.REACT_APP_STATIC_HOST + recipe.imageFolderPath + recipe.imageFileNames[0]);
+            setImgSrc(process.env.REACT_APP_STATIC_HOST + recipe.imageFolderPath + getRandomImageName(recipe));
         }
     }, [recipe]);
 
@@ -129,7 +130,7 @@ const InfoPanel = (props: Props) => {
 
                 <div className={classes['info-panel']}>
                     {!showFilePicker && !_.isEmpty(imageFileNames) &&
-                        <RecipeImage imageFolderPath={recipe.imageFolderPath} imageFileName={imageFileNames[0]}
+                        <RecipeImage imageFolderPath={recipe.imageFolderPath} imageFileName={getRandomImageName(recipe)}
                                      alt={name} onClick={handleImageClick}/>
                     }
                     {showFilePicker && (

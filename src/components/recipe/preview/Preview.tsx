@@ -3,6 +3,7 @@ import classes from './Preview.module.css';
 import {useNavigate} from "react-router-dom";
 import {RecipePreviewType} from "../../../types/recipePreviewType";
 import cookedImage from "../../../assets/images/cooked.svg";
+import {getRandomImageName} from "../../../utils/image/image-utils";
 
 type Props = {
     recipe: RecipePreviewType
@@ -10,7 +11,7 @@ type Props = {
 
 const Preview = (props: Props) => {
     const {recipe} = props;
-    const imgSrc = process.env.REACT_APP_STATIC_HOST + recipe.imageFolderPath + recipe.imageFileNames[0];
+    const imgSrc = process.env.REACT_APP_STATIC_HOST + recipe.imageFolderPath + getRandomImageName(recipe)
     const navigate = useNavigate();
     const [isCookedClicked, setIsCookedClicked] = useState(false);
 
